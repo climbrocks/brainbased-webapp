@@ -6,7 +6,7 @@ const SideNav = () => {
         <div className="side-nav">
             <div className="side-nav-top">
                 <h1 className="side-nav-welcome">
-                    Hi, Elizabeth
+                    Hi, Elisabeth
                 </h1>
                 <div className="side-nav-top-links">
                     <ul>
