@@ -1,0 +1,53 @@
+type Video @model {
+  id: ID!
+  title: String!
+  description: String!
+  url: String!
+  duration: Int!
+  category: Category @belongsTo
+  teacher: Teacher @belongsTo
+  topics: [VideoTopic] @hasMany(indexName: "byVideo")
+  tags: [VideoTag] @hasMany(indexName: "byVideo")
+}
+
+type Category @model {
+  id: ID!
+  name: String!
+  description: String
+  videos: [Video] @hasMany
+}
+
+type Teacher @model {
+  id: ID!
+  name: String!
+  bio: String
+  videos: [Video] @hasMany
+}
+
+type Topic @model {
+  id: ID!
+  name: String!
+  videos: [VideoTopic] @hasMany(indexName: "byTopic")
+}
+
+type Tag @model {
+  id: ID!
+  name: String!
+  videos: [VideoTag] @hasMany(indexName: "byTag")
+}
+
+type VideoTopic @model {
+  id: ID!
+  videoID: ID! @index(name: "byVideo", sortKeyFields: ["topicID"])
+  topicID: ID! @index(name: "byTopic")
+  video: Video! @belongsTo(fields: ["videoID"])
+  topic: Topic! @belongsTo(fields: ["topicID"])
+}
+
+type VideoTag @model {
+  id: ID!
+  videoID: ID! @index(name: "byVideo", sortKeyFields: ["tagID"])
+  tagID: ID! @index(name: "byTag")
+  video: Video! @belongsTo(fields: ["videoID"])
+  tag: Tag! @belongsTo(fields: ["tagID"])
+}
