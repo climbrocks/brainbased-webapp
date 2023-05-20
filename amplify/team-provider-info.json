@@ -10,6 +10,17 @@
       "StackName": "amplify-bbwwebapp-prod-173152",
       "StackId": "arn:aws:cloudformation:us-east-1:793146548349:stack/amplify-bbwwebapp-prod-173152/c07b5590-ede7-11ed-93b1-0a57b24efe49",
       "AmplifyAppId": "d1t4o8gwtbnlae"
+    },
+    "categories": {
+      "api": {
+        "bbwwebapp": {}
+      },
+      "auth": {
+        "bbwwebappef8c0482": {}
+      },
+      "storage": {
+        "webappstorage": {}
+      }
     }
   }
 }
