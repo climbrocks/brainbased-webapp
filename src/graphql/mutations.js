@@ -11,6 +11,7 @@ export const createVideo = /* GraphQL */ `
       title
       description
       url
+      poster
       duration
       category {
         id
@@ -18,19 +19,28 @@ export const createVideo = /* GraphQL */ `
         description
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       teacher {
         id
         name
+        image
         bio
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       topics {
         items {
@@ -39,10 +49,14 @@ export const createVideo = /* GraphQL */ `
           topicID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTopicsId
           topicVideosId
         }
         nextToken
+        startedAt
       }
       tags {
         items {
@@ -51,13 +65,20 @@ export const createVideo = /* GraphQL */ `
           tagID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTagsId
           tagVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       categoryVideosId
       teacherVideosId
     }
@@ -73,6 +94,7 @@ export const updateVideo = /* GraphQL */ `
       title
       description
       url
+      poster
       duration
       category {
         id
@@ -80,19 +102,28 @@ export const updateVideo = /* GraphQL */ `
         description
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       teacher {
         id
         name
+        image
         bio
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       topics {
         items {
@@ -101,10 +132,14 @@ export const updateVideo = /* GraphQL */ `
           topicID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTopicsId
           topicVideosId
         }
         nextToken
+        startedAt
       }
       tags {
         items {
@@ -113,13 +148,20 @@ export const updateVideo = /* GraphQL */ `
           tagID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTagsId
           tagVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       categoryVideosId
       teacherVideosId
     }
@@ -135,6 +177,7 @@ export const deleteVideo = /* GraphQL */ `
       title
       description
       url
+      poster
       duration
       category {
         id
@@ -142,19 +185,28 @@ export const deleteVideo = /* GraphQL */ `
         description
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       teacher {
         id
         name
+        image
         bio
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       topics {
         items {
@@ -163,10 +215,14 @@ export const deleteVideo = /* GraphQL */ `
           topicID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTopicsId
           topicVideosId
         }
         nextToken
+        startedAt
       }
       tags {
         items {
@@ -175,13 +231,20 @@ export const deleteVideo = /* GraphQL */ `
           tagID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTagsId
           tagVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       categoryVideosId
       teacherVideosId
     }
@@ -202,16 +265,24 @@ export const createCategory = /* GraphQL */ `
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -230,16 +301,24 @@ export const updateCategory = /* GraphQL */ `
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -258,16 +337,24 @@ export const deleteCategory = /* GraphQL */ `
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -279,6 +366,7 @@ export const createTeacher = /* GraphQL */ `
     createTeacher(input: $input, condition: $condition) {
       id
       name
+      image
       bio
       videos {
         items {
@@ -286,16 +374,24 @@ export const createTeacher = /* GraphQL */ `
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -307,6 +403,7 @@ export const updateTeacher = /* GraphQL */ `
     updateTeacher(input: $input, condition: $condition) {
       id
       name
+      image
       bio
       videos {
         items {
@@ -314,16 +411,24 @@ export const updateTeacher = /* GraphQL */ `
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -335,6 +440,7 @@ export const deleteTeacher = /* GraphQL */ `
     deleteTeacher(input: $input, condition: $condition) {
       id
       name
+      image
       bio
       videos {
         items {
@@ -342,16 +448,24 @@ export const deleteTeacher = /* GraphQL */ `
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -370,13 +484,20 @@ export const createTopic = /* GraphQL */ `
           topicID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTopicsId
           topicVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -395,13 +516,20 @@ export const updateTopic = /* GraphQL */ `
           topicID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTopicsId
           topicVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -420,13 +548,20 @@ export const deleteTopic = /* GraphQL */ `
           topicID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTopicsId
           topicVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -445,13 +580,20 @@ export const createTag = /* GraphQL */ `
           tagID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTagsId
           tagVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -470,13 +612,20 @@ export const updateTag = /* GraphQL */ `
           tagID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTagsId
           tagVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -495,13 +644,20 @@ export const deleteTag = /* GraphQL */ `
           tagID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTagsId
           tagVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -519,6 +675,7 @@ export const createVideoTopic = /* GraphQL */ `
         title
         description
         url
+        poster
         duration
         category {
           id
@@ -526,22 +683,34 @@ export const createVideoTopic = /* GraphQL */ `
           description
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         teacher {
           id
           name
+          image
           bio
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         topics {
           nextToken
+          startedAt
         }
         tags {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         categoryVideosId
         teacherVideosId
       }
@@ -550,12 +719,19 @@ export const createVideoTopic = /* GraphQL */ `
         name
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       videoTopicsId
       topicVideosId
     }
@@ -575,6 +751,7 @@ export const updateVideoTopic = /* GraphQL */ `
         title
         description
         url
+        poster
         duration
         category {
           id
@@ -582,22 +759,34 @@ export const updateVideoTopic = /* GraphQL */ `
           description
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         teacher {
           id
           name
+          image
           bio
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         topics {
           nextToken
+          startedAt
         }
         tags {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         categoryVideosId
         teacherVideosId
       }
@@ -606,12 +795,19 @@ export const updateVideoTopic = /* GraphQL */ `
         name
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       videoTopicsId
       topicVideosId
     }
@@ -631,6 +827,7 @@ export const deleteVideoTopic = /* GraphQL */ `
         title
         description
         url
+        poster
         duration
         category {
           id
@@ -638,22 +835,34 @@ export const deleteVideoTopic = /* GraphQL */ `
           description
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         teacher {
           id
           name
+          image
           bio
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         topics {
           nextToken
+          startedAt
         }
         tags {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         categoryVideosId
         teacherVideosId
       }
@@ -662,12 +871,19 @@ export const deleteVideoTopic = /* GraphQL */ `
         name
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       videoTopicsId
       topicVideosId
     }
@@ -687,6 +903,7 @@ export const createVideoTag = /* GraphQL */ `
         title
         description
         url
+        poster
         duration
         category {
           id
@@ -694,22 +911,34 @@ export const createVideoTag = /* GraphQL */ `
           description
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         teacher {
           id
           name
+          image
           bio
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         topics {
           nextToken
+          startedAt
         }
         tags {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         categoryVideosId
         teacherVideosId
       }
@@ -718,12 +947,19 @@ export const createVideoTag = /* GraphQL */ `
         name
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       videoTagsId
       tagVideosId
     }
@@ -743,6 +979,7 @@ export const updateVideoTag = /* GraphQL */ `
         title
         description
         url
+        poster
         duration
         category {
           id
@@ -750,22 +987,34 @@ export const updateVideoTag = /* GraphQL */ `
           description
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         teacher {
           id
           name
+          image
           bio
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         topics {
           nextToken
+          startedAt
         }
         tags {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         categoryVideosId
         teacherVideosId
       }
@@ -774,12 +1023,19 @@ export const updateVideoTag = /* GraphQL */ `
         name
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       videoTagsId
       tagVideosId
     }
@@ -799,6 +1055,7 @@ export const deleteVideoTag = /* GraphQL */ `
         title
         description
         url
+        poster
         duration
         category {
           id
@@ -806,22 +1063,34 @@ export const deleteVideoTag = /* GraphQL */ `
           description
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         teacher {
           id
           name
+          image
           bio
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         topics {
           nextToken
+          startedAt
         }
         tags {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         categoryVideosId
         teacherVideosId
       }
@@ -830,12 +1099,19 @@ export const deleteVideoTag = /* GraphQL */ `
         name
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       videoTagsId
       tagVideosId
     }

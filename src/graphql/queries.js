@@ -8,6 +8,7 @@ export const getVideo = /* GraphQL */ `
       title
       description
       url
+      poster
       duration
       category {
         id
@@ -15,19 +16,28 @@ export const getVideo = /* GraphQL */ `
         description
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       teacher {
         id
         name
+        image
         bio
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       topics {
         items {
@@ -36,10 +46,14 @@ export const getVideo = /* GraphQL */ `
           topicID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTopicsId
           topicVideosId
         }
         nextToken
+        startedAt
       }
       tags {
         items {
@@ -48,13 +62,20 @@ export const getVideo = /* GraphQL */ `
           tagID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTagsId
           tagVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       categoryVideosId
       teacherVideosId
     }
@@ -72,6 +93,7 @@ export const listVideos = /* GraphQL */ `
         title
         description
         url
+        poster
         duration
         category {
           id
@@ -79,26 +101,101 @@ export const listVideos = /* GraphQL */ `
           description
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         teacher {
           id
           name
+          image
           bio
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         topics {
           nextToken
+          startedAt
         }
         tags {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         categoryVideosId
         teacherVideosId
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncVideos = /* GraphQL */ `
+  query SyncVideos(
+    $filter: ModelVideoFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncVideos(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        title
+        description
+        url
+        poster
+        duration
+        category {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        teacher {
+          id
+          name
+          image
+          bio
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        topics {
+          nextToken
+          startedAt
+        }
+        tags {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        categoryVideosId
+        teacherVideosId
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -114,16 +211,24 @@ export const getCategory = /* GraphQL */ `
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -140,11 +245,48 @@ export const listCategories = /* GraphQL */ `
         description
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncCategories = /* GraphQL */ `
+  query SyncCategories(
+    $filter: ModelCategoryFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncCategories(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        description
+        videos {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -153,6 +295,7 @@ export const getTeacher = /* GraphQL */ `
     getTeacher(id: $id) {
       id
       name
+      image
       bio
       videos {
         items {
@@ -160,16 +303,24 @@ export const getTeacher = /* GraphQL */ `
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -183,14 +334,53 @@ export const listTeachers = /* GraphQL */ `
       items {
         id
         name
+        image
         bio
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncTeachers = /* GraphQL */ `
+  query SyncTeachers(
+    $filter: ModelTeacherFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncTeachers(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        image
+        bio
+        videos {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -206,13 +396,20 @@ export const getTopic = /* GraphQL */ `
           topicID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTopicsId
           topicVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -228,11 +425,47 @@ export const listTopics = /* GraphQL */ `
         name
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncTopics = /* GraphQL */ `
+  query SyncTopics(
+    $filter: ModelTopicFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncTopics(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        videos {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -248,13 +481,20 @@ export const getTag = /* GraphQL */ `
           tagID
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           videoTagsId
           tagVideosId
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -270,11 +510,47 @@ export const listTags = /* GraphQL */ `
         name
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncTags = /* GraphQL */ `
+  query SyncTags(
+    $filter: ModelTagFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncTags(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        videos {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -289,6 +565,7 @@ export const getVideoTopic = /* GraphQL */ `
         title
         description
         url
+        poster
         duration
         category {
           id
@@ -296,22 +573,34 @@ export const getVideoTopic = /* GraphQL */ `
           description
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         teacher {
           id
           name
+          image
           bio
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         topics {
           nextToken
+          startedAt
         }
         tags {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         categoryVideosId
         teacherVideosId
       }
@@ -320,12 +609,19 @@ export const getVideoTopic = /* GraphQL */ `
         name
         videos {
           nextToken
+          startedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       videoTopicsId
       topicVideosId
     }
@@ -347,9 +643,13 @@ export const listVideoTopics = /* GraphQL */ `
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
@@ -358,103 +658,74 @@ export const listVideoTopics = /* GraphQL */ `
           name
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         videoTopicsId
         topicVideosId
       }
       nextToken
+      startedAt
     }
   }
 `;
-export const getVideoTag = /* GraphQL */ `
-  query GetVideoTag($id: ID!) {
-    getVideoTag(id: $id) {
-      id
-      videoID
-      tagID
-      video {
-        id
-        title
-        description
-        url
-        duration
-        category {
-          id
-          name
-          description
-          createdAt
-          updatedAt
-        }
-        teacher {
-          id
-          name
-          bio
-          createdAt
-          updatedAt
-        }
-        topics {
-          nextToken
-        }
-        tags {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        categoryVideosId
-        teacherVideosId
-      }
-      tag {
-        id
-        name
-        videos {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-      videoTagsId
-      tagVideosId
-    }
-  }
-`;
-export const listVideoTags = /* GraphQL */ `
-  query ListVideoTags(
-    $filter: ModelVideoTagFilterInput
+export const syncVideoTopics = /* GraphQL */ `
+  query SyncVideoTopics(
+    $filter: ModelVideoTopicFilterInput
     $limit: Int
     $nextToken: String
+    $lastSync: AWSTimestamp
   ) {
-    listVideoTags(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    syncVideoTopics(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
       items {
         id
         videoID
-        tagID
+        topicID
         video {
           id
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
-        tag {
+        topic {
           id
           name
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
-        videoTagsId
-        tagVideosId
+        _version
+        _deleted
+        _lastChangedAt
+        videoTopicsId
+        topicVideosId
       }
       nextToken
+      startedAt
     }
   }
 `;
@@ -484,9 +755,13 @@ export const videoTopicsByVideoIDAndTopicID = /* GraphQL */ `
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
@@ -495,13 +770,20 @@ export const videoTopicsByVideoIDAndTopicID = /* GraphQL */ `
           name
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         videoTopicsId
         topicVideosId
       }
       nextToken
+      startedAt
     }
   }
 `;
@@ -529,9 +811,13 @@ export const videoTopicsByTopicID = /* GraphQL */ `
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
@@ -540,13 +826,195 @@ export const videoTopicsByTopicID = /* GraphQL */ `
           name
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         videoTopicsId
         topicVideosId
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const getVideoTag = /* GraphQL */ `
+  query GetVideoTag($id: ID!) {
+    getVideoTag(id: $id) {
+      id
+      videoID
+      tagID
+      video {
+        id
+        title
+        description
+        url
+        poster
+        duration
+        category {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        teacher {
+          id
+          name
+          image
+          bio
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        topics {
+          nextToken
+          startedAt
+        }
+        tags {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        categoryVideosId
+        teacherVideosId
+      }
+      tag {
+        id
+        name
+        videos {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      videoTagsId
+      tagVideosId
+    }
+  }
+`;
+export const listVideoTags = /* GraphQL */ `
+  query ListVideoTags(
+    $filter: ModelVideoTagFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listVideoTags(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        videoID
+        tagID
+        video {
+          id
+          title
+          description
+          url
+          poster
+          duration
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          categoryVideosId
+          teacherVideosId
+        }
+        tag {
+          id
+          name
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        videoTagsId
+        tagVideosId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncVideoTags = /* GraphQL */ `
+  query SyncVideoTags(
+    $filter: ModelVideoTagFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncVideoTags(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        videoID
+        tagID
+        video {
+          id
+          title
+          description
+          url
+          poster
+          duration
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          categoryVideosId
+          teacherVideosId
+        }
+        tag {
+          id
+          name
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        videoTagsId
+        tagVideosId
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -576,9 +1044,13 @@ export const videoTagsByVideoIDAndTagID = /* GraphQL */ `
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
@@ -587,13 +1059,20 @@ export const videoTagsByVideoIDAndTagID = /* GraphQL */ `
           name
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         videoTagsId
         tagVideosId
       }
       nextToken
+      startedAt
     }
   }
 `;
@@ -621,9 +1100,13 @@ export const videoTagsByTagID = /* GraphQL */ `
           title
           description
           url
+          poster
           duration
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
           categoryVideosId
           teacherVideosId
         }
@@ -632,13 +1115,20 @@ export const videoTagsByTagID = /* GraphQL */ `
           name
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         videoTagsId
         tagVideosId
       }
       nextToken
+      startedAt
     }
   }
 `;
