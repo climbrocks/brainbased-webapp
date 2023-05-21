@@ -6,19 +6,15 @@
     left: 320px;
     width: 100%;
     height: 100%;
-    //background-color: #FFF;
     overflow-x: hidden;
     transition: .3s;
-    padding: 102px 30px 30px 30px;
+    padding: 100px 30px 30px 30px;
     color: variables.$text-dark;
-    display: grid;
-    grid-template-rows: 1fr 1fr;
     justify-items: left;
 }
 
 .image-container {
     position: flex;
-    
     width: 430px;
     height: 320px;
 }
