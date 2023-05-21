@@ -1,8 +1,9 @@
-type Video @model {
+type Video @model @auth(rules: [{allow: public}]) {
   id: ID!
   title: String!
   description: String!
   url: String!
+  poster: String!
   duration: Int!
   category: Category @belongsTo
   teacher: Teacher @belongsTo
@@ -10,33 +11,34 @@ type Video @model {
   tags: [VideoTag] @hasMany(indexName: "byVideo")
 }
 
-type Category @model {
+type Category @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   description: String
   videos: [Video] @hasMany
 }
 
-type Teacher @model {
+type Teacher @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
+  image: String!
   bio: String
   videos: [Video] @hasMany
 }
 
-type Topic @model {
+type Topic @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   videos: [VideoTopic] @hasMany(indexName: "byTopic")
 }
 
-type Tag @model {
+type Tag @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   videos: [VideoTag] @hasMany(indexName: "byTag")
 }
 
-type VideoTopic @model {
+type VideoTopic @model @auth(rules: [{allow: public}]) {
   id: ID!
   videoID: ID! @index(name: "byVideo", sortKeyFields: ["topicID"])
   topicID: ID! @index(name: "byTopic")
@@ -44,10 +46,11 @@ type VideoTopic @model {
   topic: Topic! @belongsTo(fields: ["topicID"])
 }
 
-type VideoTag @model {
+type VideoTag @model @auth(rules: [{allow: public}]) {
   id: ID!
   videoID: ID! @index(name: "byVideo", sortKeyFields: ["tagID"])
   tagID: ID! @index(name: "byTag")
   video: Video! @belongsTo(fields: ["videoID"])
   tag: Tag! @belongsTo(fields: ["tagID"])
 }
+ 
