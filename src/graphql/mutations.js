@@ -42,34 +42,16 @@ export const createVideo = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
-      topics {
-        items {
-          id
-          videoID
-          topicID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTopicsId
-          topicVideosId
-        }
-        nextToken
-        startedAt
-      }
       tags {
         items {
           id
-          videoID
-          tagID
+          name
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
           videoTagsId
-          tagVideosId
         }
         nextToken
         startedAt
@@ -125,34 +107,16 @@ export const updateVideo = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
-      topics {
-        items {
-          id
-          videoID
-          topicID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTopicsId
-          topicVideosId
-        }
-        nextToken
-        startedAt
-      }
       tags {
         items {
           id
-          videoID
-          tagID
+          name
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
           videoTagsId
-          tagVideosId
         }
         nextToken
         startedAt
@@ -208,34 +172,16 @@ export const deleteVideo = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
-      topics {
-        items {
-          id
-          videoID
-          topicID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTopicsId
-          topicVideosId
-        }
-        nextToken
-        startedAt
-      }
       tags {
         items {
           id
-          videoID
-          tagID
+          name
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
           videoTagsId
-          tagVideosId
         }
         nextToken
         startedAt
@@ -469,102 +415,6 @@ export const deleteTeacher = /* GraphQL */ `
     }
   }
 `;
-export const createTopic = /* GraphQL */ `
-  mutation CreateTopic(
-    $input: CreateTopicInput!
-    $condition: ModelTopicConditionInput
-  ) {
-    createTopic(input: $input, condition: $condition) {
-      id
-      name
-      videos {
-        items {
-          id
-          videoID
-          topicID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTopicsId
-          topicVideosId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const updateTopic = /* GraphQL */ `
-  mutation UpdateTopic(
-    $input: UpdateTopicInput!
-    $condition: ModelTopicConditionInput
-  ) {
-    updateTopic(input: $input, condition: $condition) {
-      id
-      name
-      videos {
-        items {
-          id
-          videoID
-          topicID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTopicsId
-          topicVideosId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const deleteTopic = /* GraphQL */ `
-  mutation DeleteTopic(
-    $input: DeleteTopicInput!
-    $condition: ModelTopicConditionInput
-  ) {
-    deleteTopic(input: $input, condition: $condition) {
-      id
-      name
-      videos {
-        items {
-          id
-          videoID
-          topicID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTopicsId
-          topicVideosId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
 export const createTag = /* GraphQL */ `
   mutation CreateTag(
     $input: CreateTagInput!
@@ -573,27 +423,52 @@ export const createTag = /* GraphQL */ `
     createTag(input: $input, condition: $condition) {
       id
       name
-      videos {
-        items {
+      video {
+        id
+        title
+        description
+        url
+        poster
+        duration
+        category {
           id
-          videoID
-          tagID
+          name
+          description
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          videoTagsId
-          tagVideosId
         }
-        nextToken
-        startedAt
+        teacher {
+          id
+          name
+          image
+          bio
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        tags {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        categoryVideosId
+        teacherVideosId
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      videoTagsId
     }
   }
 `;
@@ -605,27 +480,52 @@ export const updateTag = /* GraphQL */ `
     updateTag(input: $input, condition: $condition) {
       id
       name
-      videos {
-        items {
+      video {
+        id
+        title
+        description
+        url
+        poster
+        duration
+        category {
           id
-          videoID
-          tagID
+          name
+          description
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          videoTagsId
-          tagVideosId
         }
-        nextToken
-        startedAt
+        teacher {
+          id
+          name
+          image
+          bio
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        tags {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        categoryVideosId
+        teacherVideosId
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      videoTagsId
     }
   }
 `;
@@ -637,39 +537,6 @@ export const deleteTag = /* GraphQL */ `
     deleteTag(input: $input, condition: $condition) {
       id
       name
-      videos {
-        items {
-          id
-          videoID
-          tagID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTagsId
-          tagVideosId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const createVideoTopic = /* GraphQL */ `
-  mutation CreateVideoTopic(
-    $input: CreateVideoTopicInput!
-    $condition: ModelVideoTopicConditionInput
-  ) {
-    createVideoTopic(input: $input, condition: $condition) {
-      id
-      videoID
-      topicID
       video {
         id
         title
@@ -698,10 +565,6 @@ export const createVideoTopic = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        topics {
-          nextToken
-          startedAt
-        }
         tags {
           nextToken
           startedAt
@@ -713,247 +576,6 @@ export const createVideoTopic = /* GraphQL */ `
         _lastChangedAt
         categoryVideosId
         teacherVideosId
-      }
-      topic {
-        id
-        name
-        videos {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      videoTopicsId
-      topicVideosId
-    }
-  }
-`;
-export const updateVideoTopic = /* GraphQL */ `
-  mutation UpdateVideoTopic(
-    $input: UpdateVideoTopicInput!
-    $condition: ModelVideoTopicConditionInput
-  ) {
-    updateVideoTopic(input: $input, condition: $condition) {
-      id
-      videoID
-      topicID
-      video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
-          id
-          name
-          description
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        topics {
-          nextToken
-          startedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
-      }
-      topic {
-        id
-        name
-        videos {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      videoTopicsId
-      topicVideosId
-    }
-  }
-`;
-export const deleteVideoTopic = /* GraphQL */ `
-  mutation DeleteVideoTopic(
-    $input: DeleteVideoTopicInput!
-    $condition: ModelVideoTopicConditionInput
-  ) {
-    deleteVideoTopic(input: $input, condition: $condition) {
-      id
-      videoID
-      topicID
-      video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
-          id
-          name
-          description
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        topics {
-          nextToken
-          startedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
-      }
-      topic {
-        id
-        name
-        videos {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      videoTopicsId
-      topicVideosId
-    }
-  }
-`;
-export const createVideoTag = /* GraphQL */ `
-  mutation CreateVideoTag(
-    $input: CreateVideoTagInput!
-    $condition: ModelVideoTagConditionInput
-  ) {
-    createVideoTag(input: $input, condition: $condition) {
-      id
-      videoID
-      tagID
-      video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
-          id
-          name
-          description
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        topics {
-          nextToken
-          startedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
-      }
-      tag {
-        id
-        name
-        videos {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
@@ -961,159 +583,6 @@ export const createVideoTag = /* GraphQL */ `
       _deleted
       _lastChangedAt
       videoTagsId
-      tagVideosId
-    }
-  }
-`;
-export const updateVideoTag = /* GraphQL */ `
-  mutation UpdateVideoTag(
-    $input: UpdateVideoTagInput!
-    $condition: ModelVideoTagConditionInput
-  ) {
-    updateVideoTag(input: $input, condition: $condition) {
-      id
-      videoID
-      tagID
-      video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
-          id
-          name
-          description
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        topics {
-          nextToken
-          startedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
-      }
-      tag {
-        id
-        name
-        videos {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      videoTagsId
-      tagVideosId
-    }
-  }
-`;
-export const deleteVideoTag = /* GraphQL */ `
-  mutation DeleteVideoTag(
-    $input: DeleteVideoTagInput!
-    $condition: ModelVideoTagConditionInput
-  ) {
-    deleteVideoTag(input: $input, condition: $condition) {
-      id
-      videoID
-      tagID
-      video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
-          id
-          name
-          description
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        topics {
-          nextToken
-          startedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
-      }
-      tag {
-        id
-        name
-        videos {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      videoTagsId
-      tagVideosId
     }
   }
 `;
