@@ -4,14 +4,11 @@ import { schema } from './schema';
 
 
 
-const { Video, Category, Teacher, Topic, Tag, VideoTopic, VideoTag } = initSchema(schema);
+const { Video, Category, Teacher, Tag } = initSchema(schema);
 
 export {
   Video,
   Category,
   Teacher,
-  Topic,
-  Tag,
-  VideoTopic,
-  VideoTag
+  Tag
 };

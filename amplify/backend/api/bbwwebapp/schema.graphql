@@ -7,8 +7,7 @@ type Video @model @auth(rules: [{allow: public}]) {
   duration: Int!
   category: Category @belongsTo
   teacher: Teacher @belongsTo
-  topics: [VideoTopic] @hasMany(indexName: "byVideo")
-  tags: [VideoTag] @hasMany(indexName: "byVideo")
+  tags: [Tag] @hasMany
 }
 
 type Category @model @auth(rules: [{allow: public}]) {
@@ -26,31 +25,8 @@ type Teacher @model @auth(rules: [{allow: public}]) {
   videos: [Video] @hasMany
 }
 
-type Topic @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  name: String!
-  videos: [VideoTopic] @hasMany(indexName: "byTopic")
-}
-
 type Tag @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
-  videos: [VideoTag] @hasMany(indexName: "byTag")
+  video: Video @belongsTo
 }
-
-type VideoTopic @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  videoID: ID! @index(name: "byVideo", sortKeyFields: ["topicID"])
-  topicID: ID! @index(name: "byTopic")
-  video: Video! @belongsTo(fields: ["videoID"])
-  topic: Topic! @belongsTo(fields: ["topicID"])
-}
-
-type VideoTag @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  videoID: ID! @index(name: "byVideo", sortKeyFields: ["tagID"])
-  tagID: ID! @index(name: "byTag")
-  video: Video! @belongsTo(fields: ["videoID"])
-  tag: Tag! @belongsTo(fields: ["tagID"])
-}
- 

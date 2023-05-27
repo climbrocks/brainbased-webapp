@@ -11,7 +11,5 @@ export { default as CategoryCreateForm } from "./CategoryCreateForm";
 export { default as CategoryUpdateForm } from "./CategoryUpdateForm";
 export { default as TeacherCreateForm } from "./TeacherCreateForm";
 export { default as TeacherUpdateForm } from "./TeacherUpdateForm";
-export { default as TopicCreateForm } from "./TopicCreateForm";
-export { default as TopicUpdateForm } from "./TopicUpdateForm";
 export { default as TagCreateForm } from "./TagCreateForm";
 export { default as TagUpdateForm } from "./TagUpdateForm";

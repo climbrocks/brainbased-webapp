@@ -39,34 +39,16 @@ export const onCreateVideo = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
-      topics {
-        items {
-          id
-          videoID
-          topicID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTopicsId
-          topicVideosId
-        }
-        nextToken
-        startedAt
-      }
       tags {
         items {
           id
-          videoID
-          tagID
+          name
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
           videoTagsId
-          tagVideosId
         }
         nextToken
         startedAt
@@ -119,34 +101,16 @@ export const onUpdateVideo = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
-      topics {
-        items {
-          id
-          videoID
-          topicID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTopicsId
-          topicVideosId
-        }
-        nextToken
-        startedAt
-      }
       tags {
         items {
           id
-          videoID
-          tagID
+          name
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
           videoTagsId
-          tagVideosId
         }
         nextToken
         startedAt
@@ -199,34 +163,16 @@ export const onDeleteVideo = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
-      topics {
-        items {
-          id
-          videoID
-          topicID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTopicsId
-          topicVideosId
-        }
-        nextToken
-        startedAt
-      }
       tags {
         items {
           id
-          videoID
-          tagID
+          name
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
           videoTagsId
-          tagVideosId
         }
         nextToken
         startedAt
@@ -442,119 +388,57 @@ export const onDeleteTeacher = /* GraphQL */ `
     }
   }
 `;
-export const onCreateTopic = /* GraphQL */ `
-  subscription OnCreateTopic($filter: ModelSubscriptionTopicFilterInput) {
-    onCreateTopic(filter: $filter) {
-      id
-      name
-      videos {
-        items {
-          id
-          videoID
-          topicID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTopicsId
-          topicVideosId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateTopic = /* GraphQL */ `
-  subscription OnUpdateTopic($filter: ModelSubscriptionTopicFilterInput) {
-    onUpdateTopic(filter: $filter) {
-      id
-      name
-      videos {
-        items {
-          id
-          videoID
-          topicID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTopicsId
-          topicVideosId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteTopic = /* GraphQL */ `
-  subscription OnDeleteTopic($filter: ModelSubscriptionTopicFilterInput) {
-    onDeleteTopic(filter: $filter) {
-      id
-      name
-      videos {
-        items {
-          id
-          videoID
-          topicID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTopicsId
-          topicVideosId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
 export const onCreateTag = /* GraphQL */ `
   subscription OnCreateTag($filter: ModelSubscriptionTagFilterInput) {
     onCreateTag(filter: $filter) {
       id
       name
-      videos {
-        items {
+      video {
+        id
+        title
+        description
+        url
+        poster
+        duration
+        category {
           id
-          videoID
-          tagID
+          name
+          description
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          videoTagsId
-          tagVideosId
         }
-        nextToken
-        startedAt
+        teacher {
+          id
+          name
+          image
+          bio
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        tags {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        categoryVideosId
+        teacherVideosId
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      videoTagsId
     }
   }
 `;
@@ -563,27 +447,52 @@ export const onUpdateTag = /* GraphQL */ `
     onUpdateTag(filter: $filter) {
       id
       name
-      videos {
-        items {
+      video {
+        id
+        title
+        description
+        url
+        poster
+        duration
+        category {
           id
-          videoID
-          tagID
+          name
+          description
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          videoTagsId
-          tagVideosId
         }
-        nextToken
-        startedAt
+        teacher {
+          id
+          name
+          image
+          bio
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        tags {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        categoryVideosId
+        teacherVideosId
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      videoTagsId
     }
   }
 `;
@@ -592,38 +501,6 @@ export const onDeleteTag = /* GraphQL */ `
     onDeleteTag(filter: $filter) {
       id
       name
-      videos {
-        items {
-          id
-          videoID
-          tagID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          videoTagsId
-          tagVideosId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onCreateVideoTopic = /* GraphQL */ `
-  subscription OnCreateVideoTopic(
-    $filter: ModelSubscriptionVideoTopicFilterInput
-  ) {
-    onCreateVideoTopic(filter: $filter) {
-      id
-      videoID
-      topicID
       video {
         id
         title
@@ -652,10 +529,6 @@ export const onCreateVideoTopic = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        topics {
-          nextToken
-          startedAt
-        }
         tags {
           nextToken
           startedAt
@@ -667,242 +540,6 @@ export const onCreateVideoTopic = /* GraphQL */ `
         _lastChangedAt
         categoryVideosId
         teacherVideosId
-      }
-      topic {
-        id
-        name
-        videos {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      videoTopicsId
-      topicVideosId
-    }
-  }
-`;
-export const onUpdateVideoTopic = /* GraphQL */ `
-  subscription OnUpdateVideoTopic(
-    $filter: ModelSubscriptionVideoTopicFilterInput
-  ) {
-    onUpdateVideoTopic(filter: $filter) {
-      id
-      videoID
-      topicID
-      video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
-          id
-          name
-          description
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        topics {
-          nextToken
-          startedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
-      }
-      topic {
-        id
-        name
-        videos {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      videoTopicsId
-      topicVideosId
-    }
-  }
-`;
-export const onDeleteVideoTopic = /* GraphQL */ `
-  subscription OnDeleteVideoTopic(
-    $filter: ModelSubscriptionVideoTopicFilterInput
-  ) {
-    onDeleteVideoTopic(filter: $filter) {
-      id
-      videoID
-      topicID
-      video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
-          id
-          name
-          description
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        topics {
-          nextToken
-          startedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
-      }
-      topic {
-        id
-        name
-        videos {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      videoTopicsId
-      topicVideosId
-    }
-  }
-`;
-export const onCreateVideoTag = /* GraphQL */ `
-  subscription OnCreateVideoTag($filter: ModelSubscriptionVideoTagFilterInput) {
-    onCreateVideoTag(filter: $filter) {
-      id
-      videoID
-      tagID
-      video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
-          id
-          name
-          description
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        topics {
-          nextToken
-          startedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
-      }
-      tag {
-        id
-        name
-        videos {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
@@ -910,153 +547,6 @@ export const onCreateVideoTag = /* GraphQL */ `
       _deleted
       _lastChangedAt
       videoTagsId
-      tagVideosId
-    }
-  }
-`;
-export const onUpdateVideoTag = /* GraphQL */ `
-  subscription OnUpdateVideoTag($filter: ModelSubscriptionVideoTagFilterInput) {
-    onUpdateVideoTag(filter: $filter) {
-      id
-      videoID
-      tagID
-      video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
-          id
-          name
-          description
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        topics {
-          nextToken
-          startedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
-      }
-      tag {
-        id
-        name
-        videos {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      videoTagsId
-      tagVideosId
-    }
-  }
-`;
-export const onDeleteVideoTag = /* GraphQL */ `
-  subscription OnDeleteVideoTag($filter: ModelSubscriptionVideoTagFilterInput) {
-    onDeleteVideoTag(filter: $filter) {
-      id
-      videoID
-      tagID
-      video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
-          id
-          name
-          description
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        topics {
-          nextToken
-          startedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
-      }
-      tag {
-        id
-        name
-        videos {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      videoTagsId
-      tagVideosId
     }
   }
 `;
