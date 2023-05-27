@@ -14,6 +14,7 @@ const MainDisplay = () => {
     const [categories, setCategories] = useState([]);
     const [videos, setVideos] = useState([]);
     const [initPoster, setInitPoster] = useState('');
+    const [initUrl, setInitUrl] = useState('');
     const [videoUrl, setVideoUrl] = useState('');
     const [posterUrl, setPosterUrl] = useState('');
     
@@ -33,14 +34,17 @@ const MainDisplay = () => {
        const response = await DataStore.query(Video);
        setVideos(response);
        setInitPoster(response[0].poster);
+       setInitUrl(response[0].url);
     };
     
-    
+    //console.log(initUrl);
+    //console.log(initPoster);
+    //console.log(videos);
     
     async function fetchUrls() {
         try{
-            const videoKey = 'Videos/GMT20230519-123202_Recording_640x360_Mp4_Avc_Aac_16x9_1280x720p_24Hz_4.5Mbps_qvbr.mp4';
-            const posterKey = 'Images/Neuro-Training-Shorty.jpg';
+            const videoKey = initUrl;
+            const posterKey = initPoster;
             //const captionKey = 'Videos/GMT20230519-123202_Recording_640x360_Mp4_Avc_Aac_16x9_1280x720p_24Hz_4.5Mbps_qvbr.srt'
 
             const [videoUrl, posterUrl] = await Promise.all([
@@ -58,6 +62,7 @@ const MainDisplay = () => {
         }
     }
 
+    
  
     return (
 
