@@ -9,10 +9,10 @@ const TopNav = () => {
             </div>
             <div className="top-nav-links-container">
                 <ul>
-                    <li><a href="#">Neuro Training Sessions</a></li>
-                    <li><a href="#">Brain Based Pilates</a></li>
-                    <li><a href="#">Strategic Muscle Training</a></li>
-                    <li><a href="#">HIIT</a></li>
+                    <li><a href="#">Neuro-Somatic Reset</a></li>
+                    <li><a href="#">Neuro-Somatic Mat Flow</a></li>
+                    <li><a href="#">Neuro-Somatic Applied Neurology Session::</a></li>
+                    <li><a href="#">Neuro Training Shorties</a></li>
                 </ul>
             </div>
         </div>
