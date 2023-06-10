@@ -1,0 +1,101 @@
+@use "../global-styles/variables";
+@use "../global-styles/mixins";
+
+.navigation-container {
+    @include mixins.grid-for-components;
+    background: variables.$main-red;
+}
+
+.navigation-bar {
+    @include mixins.grid-area-for-components;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: variables.$main-red;
+}
+
+.logo {
+    margin-right: auto;
+    width: 256px;
+    padding: 10px;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+}
+
+.links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    margin: 0 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.links a:hover {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.dropdowns {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 20px;
+    transition: all 0.3 ease-in-out;
+    height: auto;
+
+    .dropdown-icon {
+        color: #fff;
+        width: 26px;
+        height: 26px;
+    }
+}
+
+.dropdown-button:hover,
+.dropdown-button:active {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-content {
+    position: absolute;
+    display: grid;
+    right: 0px;
+    background-color: variables.$main-red;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+
+    .dropdown-content-link {
+        color: #fff;
+        padding: 15px 30px;
+    }
+}
+
+.dropdown.active .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown.active {
+    .dropdown-button,
+    .dropdown-content-link {
+        background: rgba(0, 0, 0, 0.2);
+    }
+    .dropdown-content-link {
+        transition: all 0.3s ease-in-out;
+    }
+    .dropdown-content-link:hover {
+        background: variables.$main-red;
+    }
+}
+
+.dropdown-content-link-icon {
+    margin-right: 15px;
+}
