@@ -1,0 +1,23 @@
+@use "../global-styles/variables";
+@use "../global-styles/mixins";
+
+.video-grid-container {
+    @include mixins.grid-for-components;
+    margin-top: 30px;
+}
+
+.video-grid {
+    @include mixins.grid-area-for-components;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    grid-gap: 30px;
+}
+
+.entry-test {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: black;
+    display: inline-grid;
+}
