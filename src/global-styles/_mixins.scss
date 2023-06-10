@@ -1,0 +1,12 @@
+@mixin grid-for-components {
+    display: grid;
+    grid-template-columns: minmax(20px, auto) minmax(360px, 1680px) minmax(
+            20px,
+            auto
+        );
+    width: 100%;
+}
+
+@mixin grid-area-for-components {
+    grid-area: 1 / 2 / 2 / 3;
+}
