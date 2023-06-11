@@ -4,6 +4,9 @@ import "./Thumbnail.scss";
 // Image Imports
 import instructorimg from "../images/instructor.png";
 
+// TODO
+// Add heart to top right of thumbnail for favorites
+
 const Thumbnail = () => {
     return (
         <>

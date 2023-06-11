@@ -1,0 +1,53 @@
+@use "../global-styles/variables";
+@use "../global-styles/mixins";
+
+.video-data {
+    height: 100%;
+    width: 100%;
+    padding: 30px;
+    display: grid;
+    justify-content: space-between;
+
+    .video-title-instructor {
+        .video-title {
+            font-family: "Yeseva One", serif;
+            color: variables.$main-red;
+        }
+
+        .video-instructor {
+            color: variables.$text-dark;
+        }
+    }
+
+    .video-description {
+        color: variables.$text-dark;
+    }
+
+    .video-social-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, auto);
+        grid-auto-flow: column;
+        grid-gap: 15px;
+        align-self: end;
+
+        button {
+            border: none;
+            background: none;
+            border-radius: 15px;
+            background: variables.$main-red;
+            padding: 20px 0;
+
+            .social-icon {
+            }
+        }
+        button:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+    }
+}
+
+.social-icon {
+    height: 26px;
+    color: #fff;
+}

@@ -4,6 +4,7 @@
 .navigation-container {
     @include mixins.grid-for-components;
     background: variables.$main-red;
+    height: 72px;
 }
 
 .navigation-bar {
