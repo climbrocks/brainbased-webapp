@@ -1,6 +1,13 @@
+// SCSS Imports
 import "./MainNavigation.scss";
+
+// React Imports
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+
+// Component Imports
+
+// Image Imports
 import logo from "../images/logo.png";
 
 //Font Awesome Icons
@@ -61,7 +68,7 @@ const Navigation = () => {
                 <img className="logo" src={logo} />
                 <div className="links">
                     <Link to="/"></Link>
-                    <Link to="/about"></Link>
+                    <Link to="/videoplayer">Video Player</Link>
                     <Link to="/contact"></Link>
                 </div>
                 <div className="dropdowns" ref={dropdownRef}>
