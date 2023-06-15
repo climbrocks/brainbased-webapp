@@ -16,6 +16,7 @@ const VideoPlayerData = () => {
         <div className="video-data-container">
             <div className="video-data">
                 <div className="video-title-instructor">
+                    <h4 class="breadcrumbs">Videos / Category</h4>
                     <h1 className="video-title">Applied Neurology</h1>
                     <h3 className="video-instructor">Instructor: Elisabeth</h3>
                 </div>
@@ -40,12 +41,14 @@ const VideoPlayerData = () => {
                             className="social-icon"
                             icon={faHeart}
                         />
+                        <span class="social-text">Favorite</span>
                     </button>
                     <button>
                         <FontAwesomeIcon
                             className="social-icon"
                             icon={faShare}
                         />
+                        <span class="social-text">Share</span>
                     </button>
                 </div>
             </div>
