@@ -9,6 +9,7 @@ import MainNavigation from "./components/MainNavigation.js";
 
 // Routing
 import Home from "./pages/Home";
+import UserAccount from "./pages/UserAccount";
 import VideoPlayer from "./pages/VideoPlayer";
 //import Contact from './components/Contact';
 
@@ -20,6 +21,7 @@ const App = () => {
 
             <Routes>
                 <Route path="/" exact element={<Home />} />
+                <Route path="/UserAccount" element={<UserAccount />} />
                 <Route path="/videoplayer" element={<VideoPlayer />} />
                 <Route path="/contact" />
             </Routes>

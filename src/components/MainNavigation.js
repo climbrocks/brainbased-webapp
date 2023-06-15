@@ -85,6 +85,7 @@ const Navigation = () => {
                                 className="dropdown-icon"
                                 icon={faUserCircle}
                             />
+                            <span class="dropdown-button-text">Elisabeth</span>
                         </button>
                         <div className="dropdown-content">
                             <Link
@@ -124,10 +125,7 @@ const Navigation = () => {
                             />
                         </button>
                         <div className="dropdown-content">
-                            <Link
-                                className="dropdown-content-link"
-                                to="/dropdown3"
-                            >
+                            <Link className="dropdown-content-link" to="/">
                                 <FontAwesomeIcon
                                     className="dropdown-content-link-icon"
                                     icon={faHome}

@@ -1,0 +1,58 @@
+@use "../global-styles/variables";
+@use "../global-styles/mixins";
+
+.user-account-data-container {
+    @include mixins.grid-for-components;
+
+    .user-account-data {
+        @include mixins.grid-area-for-components;
+        padding-top: 30px;
+
+        .user-info-title {
+            color: variables.$main-red;
+            font-family: "Yeseva One", sans-serif;
+        }
+
+        .user-info {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            padding-top: 30px;
+            border-radius: 8px;
+            display: grid;
+            grid-auto-flow: row;
+            justify-items: center;
+            grid-gap: 30px;
+
+            .user-avatar {
+                border-radius: 150px;
+                height: 196px;
+                display: block;
+            }
+
+            .user-information {
+                border-top: 1px solid rgba(0, 0, 0, 0.2);
+                width: 100%;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                grid-auto-flow: column;
+                grid-gap: 1px;
+                background-color: rgba(0, 0, 0, 0.2);
+                border-bottom-left-radius: 8px;
+                border-bottom-right-radius: 8px;
+
+                p {
+                    text-align: center;
+                    background-color: white;
+                    display: block;
+                    padding: 15px 0;
+                }
+                p:nth-of-type(1) {
+                    border-bottom-left-radius: 8px;
+                }
+                p:nth-last-of-type(1) {
+                    border-bottom-right-radius: 8px;
+                }
+            }
+        }
+    }
+}

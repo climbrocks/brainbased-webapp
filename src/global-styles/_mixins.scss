@@ -10,3 +10,7 @@
 @mixin grid-area-for-components {
     grid-area: 1 / 2 / 2 / 3;
 }
+
+@mixin drop-shadow {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
