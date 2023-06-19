@@ -1,5 +1,6 @@
 // React Imports
 import React from "react";
+import { Storage } from "aws-amplify";
 
 // SCSS Imports
 import "./VideoGrid.scss";
@@ -19,9 +20,17 @@ const VideoGrid = ({ videos, filters }) => {
     const [selectedVideo, setSelectedVideo] = React.useState(null);
     const [isPlayerVisible, setPlayerVisible] = React.useState(false);
 
-    const handleVideoSelect = (video) => {
-        setSelectedVideo(video);
-        setPlayerVisible(true);
+    const handleVideoSelect = async (video) => {
+        try {
+            const file = await Storage.get(video.url, {
+                level: "public",
+            });
+
+            setSelectedVideo({ ...video, url: file });
+            setPlayerVisible(true);
+        } catch (error) {
+            console.log("Error fetching video:", error);
+        }
     };
 
     const closeVideoPlayer = () => {
@@ -65,4 +74,5 @@ const VideoGrid = ({ videos, filters }) => {
         </>
     );
 };
+
 export default VideoGrid;
