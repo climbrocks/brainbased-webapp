@@ -2,6 +2,7 @@
 import "./VideoPlayer.scss";
 
 // React Imports
+import React from "react";
 
 // Component Imports
 import VideoPlayerData from "../components/VideoPlayerData.js";
@@ -10,11 +11,13 @@ import VideoPlayerData from "../components/VideoPlayerData.js";
 
 // Font Awesome Icons
 
-const VideoPlayer = () => {
+const VideoPlayer = ({ videoUrl }) => {
     return (
         <div className="video-player-container">
             <div className="video-container">
-                <div className="video"></div>
+                <video autoPlay controls className="video">
+                    <source src={videoUrl} type="video/mp4" />
+                </video>
             </div>
             <VideoPlayerData />
         </div>

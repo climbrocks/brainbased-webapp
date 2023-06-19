@@ -1,16 +1,19 @@
 // SCSS Imports
 import "./Thumbnail.scss";
 
+// React Imports
+import React from "react";
+
 // Image Imports
 import instructorimg from "../images/instructor.png";
 
 // TODO
 // Add heart to top right of thumbnail for favorites
 
-const Thumbnail = () => {
+const Thumbnail = ({ title, onClick }) => {
     return (
         <>
-            <div className="thumbnail-container">
+            <div className="thumbnail-container" onClick={onClick}>
                 <div className="thumbnail-content">
                     <h3 className="date-and-duration">
                         April 01, 2023 | 53:43

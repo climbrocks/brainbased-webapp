@@ -15,7 +15,7 @@
 
         .user-info {
             width: 100%;
-            background: rgba(255, 255, 255, 0.4);
+            background: variables.$background-light;
             padding-top: 30px;
             border-radius: 8px;
             display: grid;
@@ -42,7 +42,7 @@
 
                 p {
                     text-align: center;
-                    background-color: white;
+                    background-color: variables.$background-light;
                     display: block;
                     padding: 15px 0;
                 }
