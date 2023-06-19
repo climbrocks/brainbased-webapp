@@ -21,3 +21,38 @@
     background: black;
     display: inline-grid;
 }
+
+.video-player-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: variables.$background-red;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.video-player-fullscreen.visible {
+    opacity: 1;
+}
+
+.close-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 16px;
+    margin-top: -3px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s all ease-in-out;
+}
+
+.close-button:hover {
+    color: variables.$main-red;
+}

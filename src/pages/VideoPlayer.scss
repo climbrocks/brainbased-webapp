@@ -4,7 +4,7 @@
 .video-player-container {
     display: grid;
     grid-template-columns: auto 480px;
-    grid-template-rows: calc(100vh - 72px);
+    grid-template-rows: 100vh;
 
     .video-container {
         grid-area: 1 / 1 / 2 / 2;
@@ -17,7 +17,6 @@
             aspect-ratio: 16 / 9;
             align-self: center;
             width: 100%;
-            background: url("../images/thumbnail.jpg");
         }
     }
 }
