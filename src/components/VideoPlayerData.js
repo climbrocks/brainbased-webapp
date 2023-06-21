@@ -2,6 +2,7 @@
 import "./VideoPlayerData.scss";
 
 // React Imports
+import React from "react";
 
 // Component Imports
 
@@ -11,48 +12,43 @@ import "./VideoPlayerData.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faShare } from "@fortawesome/free-solid-svg-icons";
 
-const VideoPlayerData = () => {
+const VideoPlayerData = ({ video, instructor }) => {
+    if (!video) {
+        return; // Return null if video is undefined
+    }
+
+    const { title, description } = video;
+
     return (
         <div className="video-data-container">
             <div className="video-data">
                 <div className="video-title-instructor">
-                    <h4 class="breadcrumbs">Videos / Category</h4>
-                    <h1 className="video-title">Applied Neurology</h1>
-                    <h3 className="video-instructor">Instructor: Elisabeth</h3>
+                    <h4 className="breadcrumbs">Videos / Categories</h4>
+                    <h1 className="video-title">{title}</h1>
+                    <h3 className="video-instructor">
+                        Instructor: {instructor}
+                    </h3>
                 </div>
-                <p className="video-description">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                    imperdiet pretium risus, tincidunt dictum lectus efficitur
-                    et. Curabitur consequat odio id nisl posuere porta. Quisque
-                    nunc urna, lacinia vitae interdum eget, lobortis ut purus.
-                    Praesent elementum est quis libero suscipit tincidunt.
-                    Vivamus non dolor erat. Donec ullamcorper eu urna vel
-                    commodo. Class aptent taciti sociosqu ad litora torquent per
-                    conubia nostra, per inceptos himenaeos. Vestibulum gravida
-                    neque vel justo pretium, ut ornare arcu auctor. Pellentesque
-                    eget tellus a arcu porttitor sagittis eget id diam. Nam sit
-                    amet lectus faucibus, cursus eros a, tempus velit. Donec nec
-                    mollis neque. Suspendisse pellentesque semper augue vitae
-                    iaculis. Nam id nisl a ipsum lacinia egestas ac non massa.
-                </p>
+                <p className="video-description">{description}</p>
                 <div className="video-social-buttons">
                     <button>
                         <FontAwesomeIcon
                             className="social-icon"
                             icon={faHeart}
                         />
-                        <span class="social-text">Favorite</span>
+                        <span className="social-text">Favorite</span>
                     </button>
                     <button>
                         <FontAwesomeIcon
                             className="social-icon"
                             icon={faShare}
                         />
-                        <span class="social-text">Share</span>
+                        <span className="social-text">Share</span>
                     </button>
                 </div>
             </div>
         </div>
     );
 };
+
 export default VideoPlayerData;

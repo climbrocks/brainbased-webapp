@@ -6,6 +6,7 @@ import awsconfig from "./aws-exports";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import React from "react";
 import MainNavigation from "./components/MainNavigation.js";
+import AuthStatus from "./components/AuthStatus";
 
 // Routing
 import Home from "./pages/Home";
@@ -24,6 +25,7 @@ const App = () => {
                 <Route path="/UserAccount" element={<UserAccount />} />
                 <Route path="/videoplayer" element={<VideoPlayer />} />
                 <Route path="/contact" />
+                <Route path="/auth" element={<AuthStatus />} />
             </Routes>
         </Router>
     );
