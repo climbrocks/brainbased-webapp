@@ -11,11 +11,11 @@ import VideoPlayerData from "../components/VideoPlayerData.js";
 
 // Font Awesome Icons
 
-const VideoPlayer = ({ videoUrl }) => {
+const VideoPlayer = ({ videoUrl, poster }) => {
     return (
         <div className="video-player-container">
             <div className="video-container">
-                <video autoPlay controls className="video">
+                <video poster={poster} autoPlay controls className="video">
                     <source src={videoUrl} type="video/mp4" />
                 </video>
             </div>
