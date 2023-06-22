@@ -2,6 +2,7 @@
 import "./FilterBar.scss";
 
 // React Imports
+import React from "react";
 
 // Component Imports
 
@@ -11,15 +12,18 @@ import "./FilterBar.scss";
 
 const FilterBar = ({ filters, selectedFilters, onFilterSelect }) => {
     const handleFilterSelect = (filter) => {
-        if (selectedFilters.includes(filter)) {
-            onFilterSelect(
-                selectedFilters.filter(
-                    (selectedFilter) => selectedFilter !== filter
-                )
-            );
+        const updatedFilters = [...selectedFilters]; // Create a copy of selectedFilters
+
+        if (updatedFilters.includes(filter.id)) {
+            // Filter already exists, remove it
+            const index = updatedFilters.indexOf(filter.id);
+            updatedFilters.splice(index, 1);
         } else {
-            onFilterSelect([...selectedFilters, filter]);
+            // Filter doesn't exist, add it
+            updatedFilters.push(filter.id);
         }
+
+        onFilterSelect(updatedFilters); // Pass the updated filters to the parent component
     };
 
     return (
@@ -29,11 +33,11 @@ const FilterBar = ({ filters, selectedFilters, onFilterSelect }) => {
                     <div
                         key={index}
                         className={`filter-item ${
-                            selectedFilters.includes(filter) ? "active" : ""
+                            selectedFilters.includes(filter.id) ? "active" : ""
                         }`}
                         onClick={() => handleFilterSelect(filter)}
                     >
-                        {filter}
+                        {filter.name}
                     </div>
                 ))}
             </div>

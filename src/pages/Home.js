@@ -1,45 +1,61 @@
 // React Imports
-import React, { useEffect, useState, useRef } from "react";
-import { Amplify, DataStore, Storage } from "aws-amplify";
-import "@aws-amplify/ui-react/styles.css";
-import { Flex, View, Button } from "@aws-amplify/ui-react";
-import { Category, Video } from "../models";
-import awsconfig from "../aws-exports";
+import React, { useEffect, useState } from "react";
+import { API, graphqlOperation } from "aws-amplify";
+
+import { listVideos, listCategories } from "../graphql/queries";
 
 // Component Imports
-import FilterBar from "../components/FilterBar.js";
-import VideoGrid from "../components/VideoGrid.js";
-
-Amplify.configure(awsconfig);
+import FilterBar from "../components/FilterBar";
+import VideoGrid from "../components/VideoGrid";
 
 const Home = () => {
     const [videos, setVideos] = useState([]);
-
-    const allFilters = ["category1", "category2", "category3", "category4"];
-
-    // State to keep track of selected filters
+    const [categories, setCategories] = useState([]);
     const [selectedFilters, setSelectedFilters] = useState([]);
-
-    // Handler for filter selection
-    const handleFilterSelect = (selectedFilters) => {
-        setSelectedFilters(selectedFilters);
-    };
 
     useEffect(() => {
         const fetchVideos = async () => {
-            const fetchedVideos = await DataStore.query(Video);
-            setVideos(fetchedVideos);
+            try {
+                const videosResponse = await API.graphql(
+                    graphqlOperation(listVideos)
+                );
+                const videosData = videosResponse.data.listVideos.items;
+                setVideos(videosData);
+            } catch (error) {
+                console.log("Error fetching videos:", error);
+            }
+        };
+
+        const fetchCategories = async () => {
+            try {
+                const categoriesResponse = await API.graphql(
+                    graphqlOperation(listCategories)
+                );
+                const categoriesData =
+                    categoriesResponse.data.listCategories.items;
+                setCategories(categoriesData);
+            } catch (error) {
+                console.log("Error fetching categories:", error);
+            }
         };
 
         fetchVideos();
+        fetchCategories();
     }, []);
 
-    console.log(videos);
+    const handleFilterSelect = (filters) => {
+        setSelectedFilters(filters);
+    };
+
+    const filters = categories.map((category) => ({
+        id: category.id, // Add the id property
+        name: category.name,
+    }));
 
     return (
         <>
             <FilterBar
-                filters={allFilters}
+                filters={filters}
                 selectedFilters={selectedFilters}
                 onFilterSelect={handleFilterSelect}
             />

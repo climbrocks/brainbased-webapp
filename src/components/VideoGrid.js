@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Storage, API, graphqlOperation } from "aws-amplify";
 
-import { getTeacher } from "../graphql/queries";
+import { getTeacher, listCategories } from "../graphql/queries";
 
 // SCSS Imports
 import "./VideoGrid.scss";
@@ -16,7 +16,6 @@ const VideoGrid = ({ videos, filters }) => {
     const [filteredVideos, setFilteredVideos] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [isPlayerVisible, setPlayerVisible] = useState(false);
-    const [instructorData, setInstructorData] = useState(null);
 
     const fetchInstructorData = async (teacherVideosId) => {
         try {
@@ -43,8 +42,18 @@ const VideoGrid = ({ videos, filters }) => {
 
     useEffect(() => {
         const fetchVideoData = async () => {
+            const categoriesResponse = await API.graphql(
+                graphqlOperation(listCategories)
+            );
+            const categories = categoriesResponse.data.listCategories.items;
+            const categoryIds = categories.map((category) => category.id);
+
+            const filteredVideos = videos.filter((video) =>
+                categoryIds.includes(video.categoryVideosId)
+            );
+
             const videosWithImageUrls = await Promise.all(
-                videos.map(async (video) => {
+                filteredVideos.map(async (video) => {
                     try {
                         const imageUrl = await Storage.get(video.poster, {
                             level: "public",
@@ -71,11 +80,25 @@ const VideoGrid = ({ videos, filters }) => {
                     }
                 })
             );
-            setFilteredVideos(videosWithImageUrls);
+
+            const filteredVideosByFilters = videosWithImageUrls.filter(
+                (video) => {
+                    if (filters.length === 0) {
+                        return true; // No filters selected, include all videos
+                    } else {
+                        const matchingFilters = filters.filter(
+                            (filter) => filter === video.categoryVideosId
+                        );
+                        return matchingFilters.length > 0;
+                    }
+                }
+            );
+
+            setFilteredVideos(filteredVideosByFilters);
         };
 
         fetchVideoData();
-    }, [videos]);
+    }, [videos, filters]);
 
     const handleVideoSelect = async (video) => {
         try {
