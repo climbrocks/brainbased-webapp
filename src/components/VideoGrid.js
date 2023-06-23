@@ -12,7 +12,7 @@ import Thumbnail from "./Thumbnail";
 import VideoPlayer from "../pages/VideoPlayer";
 import VideoPlayerData from "./VideoPlayerData";
 
-const VideoGrid = ({ videos, filters }) => {
+const VideoGrid = ({ videos, filters, favorites }) => {
     const [filteredVideos, setFilteredVideos] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [isPlayerVisible, setPlayerVisible] = useState(false);
@@ -152,6 +152,7 @@ const VideoGrid = ({ videos, filters }) => {
                                     ? selectedVideo.instructor.name
                                     : ""
                             }
+                            isFavorite={favorites.includes(selectedVideo.id)}
                         />
                         <VideoPlayer
                             videoUrl={selectedVideo.url}

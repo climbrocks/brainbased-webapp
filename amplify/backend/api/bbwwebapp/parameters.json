@@ -2,5 +2,11 @@
   "AppSyncApiName": "bbwwebapp",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2023-05-21T10:19:05.967Z"
+  "AuthModeLastUpdated": "2023-05-21T10:19:05.967Z",
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authbbwwebappef8c0482",
+      "Outputs.UserPoolId"
+    ]
+  }
 }

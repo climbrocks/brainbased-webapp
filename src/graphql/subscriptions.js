@@ -550,3 +550,45 @@ export const onDeleteTag = /* GraphQL */ `
     }
   }
 `;
+export const onCreateUserData = /* GraphQL */ `
+  subscription OnCreateUserData($filter: ModelSubscriptionUserDataFilterInput) {
+    onCreateUserData(filter: $filter) {
+      id
+      cognitoSub
+      favorites
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateUserData = /* GraphQL */ `
+  subscription OnUpdateUserData($filter: ModelSubscriptionUserDataFilterInput) {
+    onUpdateUserData(filter: $filter) {
+      id
+      cognitoSub
+      favorites
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteUserData = /* GraphQL */ `
+  subscription OnDeleteUserData($filter: ModelSubscriptionUserDataFilterInput) {
+    onDeleteUserData(filter: $filter) {
+      id
+      cognitoSub
+      favorites
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
