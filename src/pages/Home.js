@@ -7,11 +7,13 @@ import { listVideos, listCategories } from "../graphql/queries";
 // Component Imports
 import FilterBar from "../components/FilterBar";
 import VideoGrid from "../components/VideoGrid";
+import { fetchFavorites } from "../FavoritesUtils";
 
 const Home = () => {
     const [videos, setVideos] = useState([]);
     const [categories, setCategories] = useState([]);
     const [selectedFilters, setSelectedFilters] = useState([]);
+    const [favorites, setFavorites] = useState([]);
 
     useEffect(() => {
         const fetchVideos = async () => {
@@ -39,8 +41,14 @@ const Home = () => {
             }
         };
 
+        const fetchUserFavorites = async () => {
+            const userFavorites = await fetchFavorites();
+            setFavorites(userFavorites);
+        };
+
         fetchVideos();
         fetchCategories();
+        fetchUserFavorites();
     }, []);
 
     const handleFilterSelect = (filters) => {
@@ -59,7 +67,11 @@ const Home = () => {
                 selectedFilters={selectedFilters}
                 onFilterSelect={handleFilterSelect}
             />
-            <VideoGrid videos={videos} filters={selectedFilters} />
+            <VideoGrid
+                videos={videos}
+                filters={selectedFilters}
+                favorites={favorites}
+            />
         </>
     );
 };

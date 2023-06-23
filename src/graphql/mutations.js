@@ -586,3 +586,54 @@ export const deleteTag = /* GraphQL */ `
     }
   }
 `;
+export const createUserData = /* GraphQL */ `
+  mutation CreateUserData(
+    $input: CreateUserDataInput!
+    $condition: ModelUserDataConditionInput
+  ) {
+    createUserData(input: $input, condition: $condition) {
+      id
+      cognitoSub
+      favorites
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateUserData = /* GraphQL */ `
+  mutation UpdateUserData(
+    $input: UpdateUserDataInput!
+    $condition: ModelUserDataConditionInput
+  ) {
+    updateUserData(input: $input, condition: $condition) {
+      id
+      cognitoSub
+      favorites
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteUserData = /* GraphQL */ `
+  mutation DeleteUserData(
+    $input: DeleteUserDataInput!
+    $condition: ModelUserDataConditionInput
+  ) {
+    deleteUserData(input: $input, condition: $condition) {
+      id
+      cognitoSub
+      favorites
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;

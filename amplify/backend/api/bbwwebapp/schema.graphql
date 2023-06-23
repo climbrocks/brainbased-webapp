@@ -1,32 +1,38 @@
-type Video @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  title: String!
-  description: String!
-  url: String!
-  poster: String!
-  duration: Int!
-  category: Category @belongsTo
-  teacher: Teacher @belongsTo
-  tags: [Tag] @hasMany
+type Video @model @auth(rules: [{ allow: public }]) {
+    id: ID!
+    title: String!
+    description: String!
+    url: String!
+    poster: String!
+    duration: Int!
+    category: Category @belongsTo
+    teacher: Teacher @belongsTo
+    tags: [Tag] @hasMany
 }
 
-type Category @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  name: String!
-  description: String
-  videos: [Video] @hasMany
+type Category @model @auth(rules: [{ allow: public }]) {
+    id: ID!
+    name: String!
+    description: String
+    videos: [Video] @hasMany
 }
 
-type Teacher @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  name: String!
-  image: String!
-  bio: String
-  videos: [Video] @hasMany
+type Teacher @model @auth(rules: [{ allow: public }]) {
+    id: ID!
+    name: String!
+    image: String!
+    bio: String
+    videos: [Video] @hasMany
 }
 
-type Tag @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  name: String!
-  video: Video @belongsTo
+type Tag @model @auth(rules: [{ allow: public }]) {
+    id: ID!
+    name: String!
+    video: Video @belongsTo
+}
+
+type UserData @model @auth(rules: [{ allow: public }]) {
+    id: ID
+    cognitoSub: String!
+    favorites: [String]
 }

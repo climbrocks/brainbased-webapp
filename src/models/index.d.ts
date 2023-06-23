@@ -149,3 +149,33 @@ export declare type Tag = LazyLoading extends LazyLoadingDisabled ? EagerTag : L
 export declare const Tag: (new (init: ModelInit<Tag>) => Tag) & {
   copyOf(source: Tag, mutator: (draft: MutableModel<Tag>) => MutableModel<Tag> | void): Tag;
 }
+
+type EagerUserData = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<UserData, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly cognitoSub: string;
+  readonly favorites?: (string | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyUserData = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<UserData, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly cognitoSub: string;
+  readonly favorites?: (string | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type UserData = LazyLoading extends LazyLoadingDisabled ? EagerUserData : LazyUserData
+
+export declare const UserData: (new (init: ModelInit<UserData>) => UserData) & {
+  copyOf(source: UserData, mutator: (draft: MutableModel<UserData>) => MutableModel<UserData> | void): UserData;
+}
