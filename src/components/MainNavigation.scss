@@ -47,6 +47,33 @@
     background-color: rgba(0, 0, 0, 0.2);
 }
 
+.account-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 23px;
+    transition: all 0.3 ease-in-out;
+    height: auto;
+    display: flex;
+    align-items: center;
+
+    .dropdown-icon {
+        color: #fff;
+        width: 26px;
+        height: 26px;
+    }
+
+    .dropdown-button-text {
+        color: #fff;
+        margin-bottom: -4px;
+        margin-left: 10px;
+    }
+}
+.account-button:hover {
+    background-color: variables.$main-red;
+    cursor: default;
+}
+
 .dropdowns {
     display: flex;
     align-items: center;

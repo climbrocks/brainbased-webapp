@@ -94,9 +94,11 @@ const Navigation = () => {
             <nav ref={navigationBarRef} className="navigation-bar">
                 <img className="logo" src={logo} />
                 <div className="links">
+                    {/* SAVED FOR LATER 
                     <Link to="/"></Link>
-                    <Link to="/videoplayer">Video Player</Link>
-                    <Link to="/contact"></Link>
+                    <Link to="/"></Link>
+                    <Link to="/"></Link>
+                    */}
                 </div>
                 <div className="dropdowns" ref={dropdownRef}>
                     <div
@@ -105,8 +107,11 @@ const Navigation = () => {
                         }`}
                     >
                         <button
+                            /* UNCOMMENT WHEN USED AS A DROPDOWN
                             className="dropdown-button"
                             onClick={toggleAccountDropdown}
+                            */
+                            className="account-button"
                         >
                             <FontAwesomeIcon
                                 className="dropdown-icon"

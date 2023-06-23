@@ -10,7 +10,9 @@
     background-image: linear-gradient(-90deg, transparent, rgba(0, 0, 0, 0.5)),
         url("../images/thumbnail.jpg");
     background-size: cover;
+    cursor: pointer;
     @include mixins.drop-shadow;
+    transition: all 0.3s ease-in-out;
 
     .thumbnail-content {
         width: 100%;
@@ -31,6 +33,7 @@
             grid-area: 2 / 1 / 3 / 2;
             display: grid;
             grid-gap: 0;
+            align-self: end;
 
             .video-title {
                 font-family: "Yeseva One", serif;
@@ -58,4 +61,8 @@
             font-size: clamp(16px, 0.8vw, 18px);
         }
     }
+}
+
+.thumbnail-container:hover {
+    transform: scale(1.05);
 }

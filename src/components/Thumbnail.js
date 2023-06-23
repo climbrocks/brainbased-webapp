@@ -9,7 +9,7 @@ import React from "react";
 
 const Thumbnail = ({ title, instructor, image, instructorImage, onClick }) => {
     const thumbnailStyle = {
-        backgroundImage: `linear-gradient(-90deg, transparent, rgba(0, 0, 0, 0.5)), url(${image})`,
+        backgroundImage: `linear-gradient(-90deg, transparent, rgba(0, 0, 0, .7)), url(${image})`,
     };
 
     //console.log(instructorImage);
