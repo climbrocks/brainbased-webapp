@@ -4,8 +4,7 @@ import "./MainNavigation.scss";
 // React Imports
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-
-// Component Imports
+import CognitoData from "./CognitoData";
 
 // Image Imports
 import logo from "../images/logo.png";
@@ -27,6 +26,7 @@ const Navigation = () => {
     const dropdownRef = useRef(null);
     const navigationBarRef = useRef(null);
     const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+    const user = CognitoData(); // Fetching user data from CognitoData component
 
     const toggleAccountDropdown = () => {
         setAccountDropdownOpen(!isAccountDropdownOpen);
@@ -92,7 +92,7 @@ const Navigation = () => {
     return (
         <div className="navigation-container">
             <nav ref={navigationBarRef} className="navigation-bar">
-                <img className="logo" src={logo} />
+                <img className="logo" src={logo} alt="Logo" />
                 <div className="links">
                     {/* SAVED FOR LATER 
                     <Link to="/"></Link>
@@ -117,7 +117,9 @@ const Navigation = () => {
                                 className="dropdown-icon"
                                 icon={faUserCircle}
                             />
-                            <span class="dropdown-button-text">Elisabeth</span>
+                            <span className="dropdown-button-text">
+                                {user ? user.username : "Loading..."}
+                            </span>
                         </button>
                         <div
                             className="dropdown-content"
