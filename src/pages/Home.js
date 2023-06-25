@@ -1,6 +1,6 @@
-// React Imports
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
+import { useParams } from "react-router-dom";
 
 import { listVideos, listCategories } from "../graphql/queries";
 
@@ -10,6 +10,7 @@ import VideoGrid from "../components/VideoGrid";
 import { fetchFavorites } from "../FavoritesUtils";
 
 const Home = () => {
+    const { videoId } = useParams();
     const [videos, setVideos] = useState([]);
     const [categories, setCategories] = useState([]);
     const [selectedFilters, setSelectedFilters] = useState([]);
@@ -56,7 +57,7 @@ const Home = () => {
     };
 
     const filters = categories.map((category) => ({
-        id: category.id, // Add the id property
+        id: category.id,
         name: category.name,
     }));
 
@@ -71,6 +72,7 @@ const Home = () => {
                 videos={videos}
                 filters={selectedFilters}
                 favorites={favorites}
+                videoId={videoId} // Pass the videoId parameter
             />
         </>
     );

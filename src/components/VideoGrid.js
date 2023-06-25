@@ -1,6 +1,7 @@
 // React Imports
 import React, { useEffect, useState } from "react";
 import { Storage, API, graphqlOperation } from "aws-amplify";
+import { useParams } from "react-router-dom";
 
 import { getTeacher, listCategories } from "../graphql/queries";
 
@@ -12,10 +13,11 @@ import Thumbnail from "./Thumbnail";
 import VideoPlayer from "../pages/VideoPlayer";
 import VideoPlayerData from "./VideoPlayerData";
 
-const VideoGrid = ({ videos, filters, favorites }) => {
+const VideoGrid = ({ videos, filters, favorites, videoId }) => {
     const [filteredVideos, setFilteredVideos] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [isPlayerVisible, setPlayerVisible] = useState(false);
+    //const videoId = "12f7f69a-717b-4e57-9663-a9d733427c05";
 
     const fetchInstructorData = async (teacherVideosId) => {
         try {
@@ -102,18 +104,42 @@ const VideoGrid = ({ videos, filters, favorites }) => {
 
     const handleVideoSelect = async (video) => {
         try {
-            const file = await Storage.get(video.url, { level: "public" });
-            const selectedVideoWithImageUrl = {
+            const videoUrl = await Storage.get(video.url, { level: "public" });
+            const imageUrl = await Storage.get(video.poster, {
+                level: "public",
+            });
+
+            const instructor = await fetchInstructorData(video.teacherVideosId);
+            const instructorImage = await fetchInstructorImage(
+                instructor.image
+            );
+
+            const selectedVideoWithUrls = {
                 ...video,
-                url: file,
-                imageUrl: video.imageUrl,
+                url: videoUrl,
+                imageUrl: imageUrl,
+                instructor: {
+                    ...instructor,
+                    image: instructorImage,
+                },
             };
-            setSelectedVideo(selectedVideoWithImageUrl);
+
+            setSelectedVideo(selectedVideoWithUrls);
             setPlayerVisible(true);
         } catch (error) {
-            console.log("Error fetching video:", error);
+            console.log("Error fetching video or image:", error);
         }
     };
+
+    useEffect(() => {
+        const selectedVideo = videos.find((video) => video.id === videoId);
+        if (selectedVideo) {
+            handleVideoSelect(selectedVideo);
+        } else {
+            setSelectedVideo(null);
+            setPlayerVisible(false);
+        }
+    }, [videos, videoId]);
 
     const closeVideoPlayer = () => {
         setPlayerVisible(false);
