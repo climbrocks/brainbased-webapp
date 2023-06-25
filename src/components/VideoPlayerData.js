@@ -115,6 +115,18 @@ const VideoPlayerData = ({ video, instructor, isFavorite }) => {
         }
     };
 
+    const handleShareClick = () => {
+        const shareUrl = `${window.location.origin}/play/${video.id}`;
+
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(shareUrl);
+            alert("Share link copied to clipboard!");
+        } else {
+            // Fallback for browsers that don't support clipboard API
+            alert(`Share link: ${shareUrl}`);
+        }
+    };
+
     if (!video) {
         return null; // Return null if video is undefined
     }
@@ -146,7 +158,7 @@ const VideoPlayerData = ({ video, instructor, isFavorite }) => {
                                 : "Add Favorite"}
                         </span>
                     </button>
-                    <button>
+                    <button onClick={handleShareClick}>
                         <FontAwesomeIcon
                             className="social-icon"
                             icon={faShare}

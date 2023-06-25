@@ -12,6 +12,8 @@ import AuthStatus from "./components/AuthStatus";
 import Home from "./pages/Home";
 import UserAccount from "./pages/UserAccount";
 import VideoPlayer from "./pages/VideoPlayer";
+import Play from "./pages/Play";
+
 //import Contact from './components/Contact';
 
 Amplify.configure(awsconfig);
@@ -22,8 +24,10 @@ const App = () => {
 
             <Routes>
                 <Route path="/" exact element={<Home />} />
+                <Route path="/home/:videoId?" element={<Home />} />
                 <Route path="/UserAccount" element={<UserAccount />} />
                 <Route path="/videoplayer" element={<VideoPlayer />} />
+                <Route path="/play/:videoId?" element={<Play />} />
                 <Route path="/contact" />
                 <Route path="/auth" element={<AuthStatus />} />
             </Routes>
