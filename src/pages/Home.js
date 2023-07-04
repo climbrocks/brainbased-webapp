@@ -6,6 +6,7 @@ import { listVideos, listCategories } from "../graphql/queries";
 
 // Component Imports
 import FilterBar from "../components/FilterBar";
+import TagBar from "../components/TagBar";
 import VideoGrid from "../components/VideoGrid";
 import { fetchFavorites } from "../FavoritesUtils";
 
@@ -15,6 +16,7 @@ const Home = () => {
     const [categories, setCategories] = useState([]);
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [favorites, setFavorites] = useState([]);
+    const [selectedTags, setSelectedTags] = useState([]);
 
     useEffect(() => {
         const fetchVideos = async () => {
@@ -56,10 +58,29 @@ const Home = () => {
         setSelectedFilters(filters);
     };
 
+    const handleTagSelect = (tags) => {
+        setSelectedTags(tags);
+    };
+
     const filters = categories.map((category) => ({
         id: category.id,
         name: category.name,
     }));
+
+    const tags = [
+        "Tag1",
+        "Tag2",
+        "Tag3",
+        "Tag4",
+        "Tag5",
+        "Tag6",
+        "Tag7",
+        "Tag8",
+        "Tag9",
+        "Tag10",
+        "Tag11",
+        "Tag12",
+    ];
 
     return (
         <>
@@ -67,6 +88,11 @@ const Home = () => {
                 filters={filters}
                 selectedFilters={selectedFilters}
                 onFilterSelect={handleFilterSelect}
+            />
+            <TagBar
+                tags={tags}
+                selectedTags={selectedTags}
+                onTagSelect={handleTagSelect}
             />
             <VideoGrid
                 videos={videos}
