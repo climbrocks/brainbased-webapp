@@ -48,7 +48,7 @@ const Thumbnail = ({
                     <FontAwesomeIcon
                         className="heart-icon"
                         icon={faHeart}
-                        color={favorite ? "red" : "black"}
+                        color={favorite ? "#ae564a" : "rgba(0,0,0,0.5)"}
                         strokeWidth={favorite ? 0 : 2}
                     />
                 </button>
