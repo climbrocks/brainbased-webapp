@@ -66,3 +66,18 @@
 .thumbnail-container:hover {
     transform: scale(1.05);
 }
+
+.thumbnail-favorite-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    grid-area: 1 / 2 / 2 / 3;
+    justify-self: end;
+    height: 32px;
+    width: 43px;
+
+    .heart-icon {
+        height: 32px;
+    }
+}
