@@ -1,38 +1,46 @@
-// Image Imports
-//import instructorimg from "../images/instructor.png";
-
-// SCSS Imports
-import "./Thumbnail.scss";
-
 // React Imports
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
+// SCSS Imports
+import "./Thumbnail.scss";
+import useFavorites from "../FavoritesUtils";
+import CognitoData from "./CognitoData"; // Import CognitoData
+
 const Thumbnail = ({
+    video,
     title,
     instructor,
     image,
     instructorImage,
-    isFavorite,
+    //isFavorite,
+    //onFavoriteToggle,
     onClick,
 }) => {
     const thumbnailStyle = {
         backgroundImage: `linear-gradient(-90deg, transparent, rgba(0, 0, 0, .7)), url(${image})`,
     };
 
-    const [favorite, setFavorite] = useState(isFavorite);
+    //const [favorite, setFavorite] = useState(isFavorite);
+    const { favorites, toggleFavorite } = useFavorites({ CognitoData }); // Use useFavorites and pass CognitoData as a prop
 
-    const handleFavoriteToggle = () => {
-        setFavorite((prevFavorite) => !prevFavorite);
-    };
+    //const handleButtonClicked = (e) => {
+    //  e.stopPropagation();
+    //const updatedFavoriteStatus = !favorite;
+    //setFavorite(updatedFavoriteStatus);
+    //if (onFavoriteToggle) {
+    //    onFavoriteToggle(video.id, updatedFavoriteStatus);
+    //}
+    //};
+
+    const isFavorite = favorites.includes(video.id);
 
     const handleButtonClicked = (e) => {
         e.stopPropagation();
-        handleFavoriteToggle();
+        toggleFavorite(video.id, isFavorite);
     };
 
-    //console.log(instructorImage);
     return (
         <div
             className="thumbnail-container"
@@ -48,8 +56,8 @@ const Thumbnail = ({
                     <FontAwesomeIcon
                         className="heart-icon"
                         icon={faHeart}
-                        color={favorite ? "#ae564a" : "rgba(0,0,0,0.5)"}
-                        strokeWidth={favorite ? 0 : 2}
+                        color={isFavorite ? "#ae564a" : "rgba(0,0,0,0.5)"}
+                        strokeWidth={isFavorite ? 0 : 2}
                     />
                 </button>
                 <div className="title-and-instructor-container">

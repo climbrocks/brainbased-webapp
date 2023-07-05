@@ -2,20 +2,22 @@ import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { useParams } from "react-router-dom";
 
-import { listVideos, listCategories } from "../graphql/queries";
+import { listVideos, listCategories, listTags } from "../graphql/queries";
 
 // Component Imports
 import FilterBar from "../components/FilterBar";
 import TagBar from "../components/TagBar";
 import VideoGrid from "../components/VideoGrid";
-import { fetchFavorites } from "../FavoritesUtils";
+import useFavorites from "../FavoritesUtils";
+import CognitoData from "../components/CognitoData";
 
 const Home = () => {
     const { videoId } = useParams();
     const [videos, setVideos] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [tags, setTags] = useState([]);
     const [selectedFilters, setSelectedFilters] = useState([]);
-    const [favorites, setFavorites] = useState([]);
+    const { favorites, toggleFavorite } = useFavorites({ CognitoData });
     const [selectedTags, setSelectedTags] = useState([]);
 
     useEffect(() => {
@@ -44,14 +46,21 @@ const Home = () => {
             }
         };
 
-        const fetchUserFavorites = async () => {
-            const userFavorites = await fetchFavorites();
-            setFavorites(userFavorites);
+        const fetchTags = async () => {
+            try {
+                const tagsResponse = await API.graphql(
+                    graphqlOperation(listTags)
+                );
+                const tagsData = tagsResponse.data.listTags.items;
+                setTags(tagsData);
+            } catch (error) {
+                console.log("Error fetching tags:", error);
+            }
         };
 
         fetchVideos();
         fetchCategories();
-        fetchUserFavorites();
+        fetchTags();
     }, []);
 
     const handleFilterSelect = (filters) => {
@@ -67,20 +76,11 @@ const Home = () => {
         name: category.name,
     }));
 
-    const tags = [
-        "Tag1",
-        "Tag2",
-        "Tag3",
-        "Tag4",
-        "Tag5",
-        "Tag6",
-        "Tag7",
-        "Tag8",
-        "Tag9",
-        "Tag10",
-        "Tag11",
-        "Tag12",
-    ];
+    const tagNames = tags.map((tag) => tag.name);
+
+    const handleFavoriteToggle = (videoId, isFavorite) => {
+        toggleFavorite(videoId, isFavorite);
+    };
 
     return (
         <>
@@ -90,7 +90,7 @@ const Home = () => {
                 onFilterSelect={handleFilterSelect}
             />
             <TagBar
-                tags={tags}
+                tags={tagNames}
                 selectedTags={selectedTags}
                 onTagSelect={handleTagSelect}
             />
@@ -98,7 +98,9 @@ const Home = () => {
                 videos={videos}
                 filters={selectedFilters}
                 favorites={favorites}
-                videoId={videoId} // Pass the videoId parameter
+                videoId={videoId}
+                onFavoriteToggle={handleFavoriteToggle}
+                selectedTags={selectedTags} // Pass the selectedTags state to VideoGrid
             />
         </>
     );
