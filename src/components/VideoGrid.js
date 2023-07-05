@@ -1,23 +1,30 @@
 // React Imports
+
 import React, { useEffect, useState } from "react";
 import { Storage, API, graphqlOperation } from "aws-amplify";
 import { useParams } from "react-router-dom";
 
 import { getTeacher, listCategories } from "../graphql/queries";
 
-// SCSS Imports
 import "./VideoGrid.scss";
-
-// Component Imports
 import Thumbnail from "./Thumbnail";
 import VideoPlayer from "../pages/VideoPlayer";
 import VideoPlayerData from "./VideoPlayerData";
+import useFavorites from "../FavoritesUtils";
 
-const VideoGrid = ({ videos, filters, favorites, videoId }) => {
+const VideoGrid = ({
+    videos,
+    filters,
+    initialFavorites,
+    videoId,
+    onFavoriteToggle,
+    selectedTags,
+}) => {
     const [filteredVideos, setFilteredVideos] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [isPlayerVisible, setPlayerVisible] = useState(false);
-    //const videoId = "12f7f69a-717b-4e57-9663-a9d733427c05";
+
+    const { favorites, updateFavorites } = useFavorites(initialFavorites);
 
     const fetchInstructorData = async (teacherVideosId) => {
         try {
@@ -85,14 +92,25 @@ const VideoGrid = ({ videos, filters, favorites, videoId }) => {
 
             const filteredVideosByFilters = videosWithImageUrls.filter(
                 (video) => {
-                    if (filters.length === 0) {
-                        return true; // No filters selected, include all videos
-                    } else {
-                        const matchingFilters = filters.filter(
-                            (filter) => filter === video.categoryVideosId
-                        );
-                        return matchingFilters.length > 0;
+                    // Filter by categories
+                    if (
+                        filters.length > 0 &&
+                        !filters.includes(video.categoryVideosId)
+                    ) {
+                        return false;
                     }
+
+                    // Filter by tags
+                    if (selectedTags.length > 0) {
+                        const videoTags = video.tags.map((tag) => tag.id);
+                        if (
+                            !selectedTags.some((tag) => videoTags.includes(tag))
+                        ) {
+                            return false;
+                        }
+                    }
+
+                    return true;
                 }
             );
 
@@ -100,7 +118,7 @@ const VideoGrid = ({ videos, filters, favorites, videoId }) => {
         };
 
         fetchVideoData();
-    }, [videos, filters]);
+    }, [videos, filters, selectedTags]);
 
     const handleVideoSelect = async (video) => {
         try {
@@ -148,6 +166,13 @@ const VideoGrid = ({ videos, filters, favorites, videoId }) => {
         }, 300); // Delay the reset of selectedVideo to allow the fade-out animation to complete
     };
 
+    const handleFavoriteClick = (videoId, isFavorite) => {
+        if (isFavorite) {
+            updateFavorites(videoId, true); // Call updateFavorites with the videoId and true
+        } else {
+            updateFavorites(videoId, false); // Call updateFavorites with the videoId and false
+        }
+    };
     return (
         <>
             <div className="video-grid-container">
@@ -155,12 +180,15 @@ const VideoGrid = ({ videos, filters, favorites, videoId }) => {
                     {filteredVideos.map((video, index) => (
                         <Thumbnail
                             key={index}
+                            video={video} // Pass the video prop
                             title={video.title}
                             image={video.imageUrl}
                             instructor={
                                 video.instructor ? video.instructor.name : ""
                             }
                             instructorImage={video.instructorImage}
+                            isFavorite={favorites.includes(video.id)}
+                            onFavoriteToggle={onFavoriteToggle} // Use the handleFavoriteClick function
                             onClick={() => handleVideoSelect(video)}
                         />
                     ))}
