@@ -1,0 +1,9 @@
+@use "../global-styles/variables";
+@use "../global-styles/mixins";
+
+.footer {
+    margin-top: 60px;
+    height: 30px;
+    width: 100%;
+    background-color: variables.$main-red;
+}

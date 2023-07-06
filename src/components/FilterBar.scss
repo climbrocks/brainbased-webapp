@@ -10,11 +10,29 @@
 .filter-bar {
     @include mixins.grid-area-for-components;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(auto, 1fr));
+    grid-template-columns: 75px 1fr;
     grid-auto-flow: column;
-    grid-gap: 30px;
     overflow-x: auto;
     white-space: nowrap;
+    align-items: center;
+
+    span {
+        text-transform: uppercase;
+        font-size: 0.8em;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.5);
+        display: block;
+        width: auto;
+    }
+
+    .filters {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(auto, 1fr));
+        grid-auto-flow: column;
+        overflow-x: auto;
+        white-space: nowrap;
+        align-items: center;
+    }
 }
 
 .filter-item {
@@ -23,11 +41,28 @@
     text-align: center;
     transition: all 0.3s ease-in-out;
     padding: 30px 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 .filter-item:hover {
-    color: variables.$main-blue;
+    //color: variables.$main-blue;
+    //background-color: rgba(0, 0, 0, 0.02);
+    //box-shadow: inset 0 -5px 0 variables.$main-blue;
+
+    background-color: variables.$main-blue;
+    color: #fff;
 }
 
 .filter-item.active {
     color: variables.$main-blue;
+    box-shadow: inset 0 -5px 0 variables.$main-blue;
+}
+
+.favorites-filter {
+    display: flex;
+    justify-self: center;
+
+    .favorites-filter-icon {
+    }
 }

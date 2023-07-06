@@ -113,13 +113,14 @@ const Navigation = () => {
                             */
                             className="account-button"
                         >
+                            <span className="dropdown-button-text">
+                                {user ? user.username : "Loading..."}
+                            </span>
+
                             <FontAwesomeIcon
                                 className="dropdown-icon"
                                 icon={faUserCircle}
                             />
-                            <span className="dropdown-button-text">
-                                {user ? user.username : "Loading..."}
-                            </span>
                         </button>
                         <div
                             className="dropdown-content"

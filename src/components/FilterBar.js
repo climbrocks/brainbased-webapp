@@ -29,17 +29,22 @@ const FilterBar = ({ filters, selectedFilters, onFilterSelect }) => {
     return (
         <div className="filter-bar-container">
             <div className="filter-bar">
-                {filters.map((filter, index) => (
-                    <div
-                        key={index}
-                        className={`filter-item ${
-                            selectedFilters.includes(filter.id) ? "active" : ""
-                        }`}
-                        onClick={() => handleFilterSelect(filter)}
-                    >
-                        {filter.name}
-                    </div>
-                ))}
+                <span>Filters:</span>
+                <div className="filters">
+                    {filters.map((filter, index) => (
+                        <div
+                            key={index}
+                            className={`filter-item ${
+                                selectedFilters.includes(filter.id)
+                                    ? "active"
+                                    : ""
+                            }`}
+                            onClick={() => handleFilterSelect(filter)}
+                        >
+                            {filter.name}
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );

@@ -7,6 +7,7 @@ import { withAuthenticator } from "@aws-amplify/ui-react";
 import React from "react";
 import MainNavigation from "./components/MainNavigation.js";
 import AuthStatus from "./components/AuthStatus";
+import Footer from "./components/Footer";
 
 // Routing
 import Home from "./pages/Home";
@@ -31,6 +32,8 @@ const App = () => {
                 <Route path="/contact" />
                 <Route path="/auth" element={<AuthStatus />} />
             </Routes>
+
+            <Footer />
         </Router>
     );
 };
