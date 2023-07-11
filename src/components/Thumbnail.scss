@@ -37,7 +37,7 @@
 
             .video-title {
                 font-family: "Yeseva One", serif;
-                font-size: clamp(32px, 1vw, 36px);
+                font-size: clamp(1.25rem, 1.0326rem + 1.1594vw, 2rem);
                 color: #fff;
                 line-height: 1.2;
                 padding-bottom: 10px;
@@ -60,13 +60,14 @@
 
         .date-and-duration,
         .instructor-name {
-            font-size: clamp(16px, 0.8vw, 18px);
+            font-size: clamp(0.75rem, 0.6685rem + 0.4348vw, 1.125rem);
         }
     }
 }
 
 .thumbnail-container:hover {
     transform: scale(1.05);
+    filter: contrast(150%);
 }
 
 .thumbnail-favorite-button {
@@ -81,5 +82,63 @@
 
     .heart-icon {
         height: 32px;
+    }
+}
+
+@media screen and (max-width: 1150px) {
+    // body {
+    //     font-size: 14px;
+    // }
+}
+
+@media screen and (max-width: 460px) {
+    .thumbnail-content {
+        width: 100%;
+        height: 100%;
+        color: rgba(255, 255, 255, 0.6);
+        display: grid;
+        grid-template-columns: 80% 20%;
+        grid-template-rows: repeat(2, 1fr);
+        grid-gap: 0;
+        padding: 15px;
+
+        .date-and-duration {
+            font-weight: 300;
+            grid-area: 1 / 1 / 2 / 2;
+        }
+
+        .title-and-instructor-container {
+            grid-area: 2 / 1 / 3 / 2;
+            display: grid;
+            grid-gap: 0;
+            align-self: end;
+
+            .video-title {
+                font-family: "Yeseva One", serif;
+                font-size: clamp(32px, 1vw, 36px);
+                color: #fff;
+                line-height: 1.2;
+                padding-bottom: 10px;
+            }
+            .instructor-name {
+                font-weight: 300;
+            }
+        }
+
+        .instructor-image {
+            width: 100%;
+            border-radius: 100px;
+            justify-self: end;
+            align-self: end;
+            grid-area: 2 / 2 / 3 / 3;
+            transform: scale(1);
+            border: 3px solid variables.$main-red;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .date-and-duration,
+        .instructor-name {
+            font-size: clamp(16px, 0.8vw, 18px);
+        }
     }
 }

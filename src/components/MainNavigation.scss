@@ -137,3 +137,18 @@
 .dropdown-content-link-icon {
     margin-right: 15px;
 }
+
+@media screen and (max-width: 1279px) {
+    .navigation-container {
+        grid-template-columns: minmax(0, auto) minmax(320px, 1680px) minmax(
+                0,
+                auto
+            );
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .logo {
+        width: 128px;
+    }
+}
