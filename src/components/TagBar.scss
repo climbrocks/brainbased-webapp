@@ -87,3 +87,12 @@
         padding-right: 15px;
     }
 }
+
+@media screen and (max-width: 460px) {
+    .tag-bar-container {
+        grid-template-columns: minmax(10px, auto) minmax(280px, 1680px) minmax(
+                10px,
+                auto
+            );
+    }
+}

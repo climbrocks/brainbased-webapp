@@ -62,9 +62,6 @@
 .favorites-filter {
     display: flex;
     justify-self: center;
-
-    .favorites-filter-icon {
-    }
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -89,10 +86,17 @@
             text-align: center;
         }
     }
-    .filters {
-    }
     .filter-item {
         padding-left: 30px;
         padding-right: 30px;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .filter-bar-container {
+        grid-template-columns: minmax(10px, auto) minmax(280px, 1680px) minmax(
+                10px,
+                auto
+            );
     }
 }
