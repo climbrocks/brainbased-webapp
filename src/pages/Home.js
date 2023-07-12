@@ -53,6 +53,8 @@ const Home = () => {
                 );
                 const tagsData = tagsResponse.data.listTags.items;
                 setTags(tagsData);
+                console.log("Tag Data");
+                console.log(tagsData);
             } catch (error) {
                 console.log("Error fetching tags:", error);
             }
