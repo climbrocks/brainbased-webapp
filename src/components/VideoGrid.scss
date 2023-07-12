@@ -8,7 +8,7 @@
 .video-grid {
     @include mixins.grid-area-for-components;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     grid-gap: 30px;
 }
 
@@ -74,4 +74,55 @@
 
 .close-button:hover {
     color: variables.$main-red;
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+    .video-grid {
+        grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .video-player-fullscreen {
+        grid-template-columns: none;
+        grid-template-rows: auto 1fr;
+        grid-auto-flow: row;
+        height: auto;
+        min-height: 100vh;
+        overflow: scroll;
+
+        .video-container {
+            grid-area: 1 / 1 / 2 / 2;
+            width: 100%;
+            height: auto;
+            background: #000;
+            display: grid;
+
+            .video {
+                aspect-ratio: 16 / 9;
+                align-self: center;
+                width: 100%;
+            }
+        }
+
+        .video-data-container {
+            grid-area: 2 / 1 / 3 / 2;
+        }
+    }
+
+    .close-button {
+        color: rgba(255, 255, 255, 0.4);
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .video-grid-container {
+        grid-template-columns: minmax(10px, auto) minmax(200px, 1680px) minmax(
+                10px,
+                auto
+            );
+    }
+    .video-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
 }

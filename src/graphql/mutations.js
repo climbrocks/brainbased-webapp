@@ -45,13 +45,13 @@ export const createVideo = /* GraphQL */ `
       tags {
         items {
           id
-          name
+          videoId
+          tagId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          videoTagsId
         }
         nextToken
         startedAt
@@ -110,13 +110,13 @@ export const updateVideo = /* GraphQL */ `
       tags {
         items {
           id
-          name
+          videoId
+          tagId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          videoTagsId
         }
         nextToken
         startedAt
@@ -175,13 +175,13 @@ export const deleteVideo = /* GraphQL */ `
       tags {
         items {
           id
-          name
+          videoId
+          tagId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          videoTagsId
         }
         nextToken
         startedAt
@@ -424,51 +424,24 @@ export const createTag = /* GraphQL */ `
       id
       name
       video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
+        items {
           id
-          name
-          description
+          videoId
+          tagId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
         }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      videoTagsId
     }
   }
 `;
@@ -481,51 +454,24 @@ export const updateTag = /* GraphQL */ `
       id
       name
       video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
+        items {
           id
-          name
-          description
+          videoId
+          tagId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
         }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      videoTagsId
     }
   }
 `;
@@ -538,51 +484,24 @@ export const deleteTag = /* GraphQL */ `
       id
       name
       video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
+        items {
           id
-          name
-          description
+          videoId
+          tagId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
         }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      videoTagsId
     }
   }
 `;
@@ -629,6 +548,216 @@ export const deleteUserData = /* GraphQL */ `
       id
       cognitoSub
       favorites
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const createVideoTags = /* GraphQL */ `
+  mutation CreateVideoTags(
+    $input: CreateVideoTagsInput!
+    $condition: ModelVideoTagsConditionInput
+  ) {
+    createVideoTags(input: $input, condition: $condition) {
+      id
+      videoId
+      tagId
+      video {
+        id
+        title
+        description
+        url
+        poster
+        duration
+        category {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        teacher {
+          id
+          name
+          image
+          bio
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        tags {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        categoryVideosId
+        teacherVideosId
+      }
+      tag {
+        id
+        name
+        video {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateVideoTags = /* GraphQL */ `
+  mutation UpdateVideoTags(
+    $input: UpdateVideoTagsInput!
+    $condition: ModelVideoTagsConditionInput
+  ) {
+    updateVideoTags(input: $input, condition: $condition) {
+      id
+      videoId
+      tagId
+      video {
+        id
+        title
+        description
+        url
+        poster
+        duration
+        category {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        teacher {
+          id
+          name
+          image
+          bio
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        tags {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        categoryVideosId
+        teacherVideosId
+      }
+      tag {
+        id
+        name
+        video {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteVideoTags = /* GraphQL */ `
+  mutation DeleteVideoTags(
+    $input: DeleteVideoTagsInput!
+    $condition: ModelVideoTagsConditionInput
+  ) {
+    deleteVideoTags(input: $input, condition: $condition) {
+      id
+      videoId
+      tagId
+      video {
+        id
+        title
+        description
+        url
+        poster
+        duration
+        category {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        teacher {
+          id
+          name
+          image
+          bio
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        tags {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        categoryVideosId
+        teacherVideosId
+      }
+      tag {
+        id
+        name
+        video {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       createdAt
       updatedAt
       _version

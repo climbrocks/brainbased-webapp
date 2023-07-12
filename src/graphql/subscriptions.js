@@ -42,13 +42,13 @@ export const onCreateVideo = /* GraphQL */ `
       tags {
         items {
           id
-          name
+          videoId
+          tagId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          videoTagsId
         }
         nextToken
         startedAt
@@ -104,13 +104,13 @@ export const onUpdateVideo = /* GraphQL */ `
       tags {
         items {
           id
-          name
+          videoId
+          tagId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          videoTagsId
         }
         nextToken
         startedAt
@@ -166,13 +166,13 @@ export const onDeleteVideo = /* GraphQL */ `
       tags {
         items {
           id
-          name
+          videoId
+          tagId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          videoTagsId
         }
         nextToken
         startedAt
@@ -394,51 +394,24 @@ export const onCreateTag = /* GraphQL */ `
       id
       name
       video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
+        items {
           id
-          name
-          description
+          videoId
+          tagId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
         }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      videoTagsId
     }
   }
 `;
@@ -448,51 +421,24 @@ export const onUpdateTag = /* GraphQL */ `
       id
       name
       video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
+        items {
           id
-          name
-          description
+          videoId
+          tagId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
         }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      videoTagsId
     }
   }
 `;
@@ -502,51 +448,24 @@ export const onDeleteTag = /* GraphQL */ `
       id
       name
       video {
-        id
-        title
-        description
-        url
-        poster
-        duration
-        category {
+        items {
           id
-          name
-          description
+          videoId
+          tagId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
         }
-        teacher {
-          id
-          name
-          image
-          bio
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        tags {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        categoryVideosId
-        teacherVideosId
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      videoTagsId
     }
   }
 `;
@@ -584,6 +503,213 @@ export const onDeleteUserData = /* GraphQL */ `
       id
       cognitoSub
       favorites
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onCreateVideoTags = /* GraphQL */ `
+  subscription OnCreateVideoTags(
+    $filter: ModelSubscriptionVideoTagsFilterInput
+  ) {
+    onCreateVideoTags(filter: $filter) {
+      id
+      videoId
+      tagId
+      video {
+        id
+        title
+        description
+        url
+        poster
+        duration
+        category {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        teacher {
+          id
+          name
+          image
+          bio
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        tags {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        categoryVideosId
+        teacherVideosId
+      }
+      tag {
+        id
+        name
+        video {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateVideoTags = /* GraphQL */ `
+  subscription OnUpdateVideoTags(
+    $filter: ModelSubscriptionVideoTagsFilterInput
+  ) {
+    onUpdateVideoTags(filter: $filter) {
+      id
+      videoId
+      tagId
+      video {
+        id
+        title
+        description
+        url
+        poster
+        duration
+        category {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        teacher {
+          id
+          name
+          image
+          bio
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        tags {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        categoryVideosId
+        teacherVideosId
+      }
+      tag {
+        id
+        name
+        video {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteVideoTags = /* GraphQL */ `
+  subscription OnDeleteVideoTags(
+    $filter: ModelSubscriptionVideoTagsFilterInput
+  ) {
+    onDeleteVideoTags(filter: $filter) {
+      id
+      videoId
+      tagId
+      video {
+        id
+        title
+        description
+        url
+        poster
+        duration
+        category {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        teacher {
+          id
+          name
+          image
+          bio
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        tags {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        categoryVideosId
+        teacherVideosId
+      }
+      tag {
+        id
+        name
+        video {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       createdAt
       updatedAt
       _version
