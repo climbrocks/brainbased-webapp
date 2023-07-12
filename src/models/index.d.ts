@@ -19,7 +19,7 @@ type EagerVideo = {
   readonly duration: number;
   readonly category?: Category | null;
   readonly teacher?: Teacher | null;
-  readonly tags?: (Tag | null)[] | null;
+  readonly tags?: (VideoTags | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly categoryVideosId?: string | null;
@@ -39,7 +39,7 @@ type LazyVideo = {
   readonly duration: number;
   readonly category: AsyncItem<Category | undefined>;
   readonly teacher: AsyncItem<Teacher | undefined>;
-  readonly tags: AsyncCollection<Tag>;
+  readonly tags: AsyncCollection<VideoTags>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly categoryVideosId?: string | null;
@@ -125,10 +125,9 @@ type EagerTag = {
   };
   readonly id: string;
   readonly name: string;
-  readonly video?: Video | null;
+  readonly video?: (VideoTags | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly videoTagsId?: string | null;
 }
 
 type LazyTag = {
@@ -138,10 +137,9 @@ type LazyTag = {
   };
   readonly id: string;
   readonly name: string;
-  readonly video: AsyncItem<Video | undefined>;
+  readonly video: AsyncCollection<VideoTags>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly videoTagsId?: string | null;
 }
 
 export declare type Tag = LazyLoading extends LazyLoadingDisabled ? EagerTag : LazyTag
@@ -178,4 +176,38 @@ export declare type UserData = LazyLoading extends LazyLoadingDisabled ? EagerUs
 
 export declare const UserData: (new (init: ModelInit<UserData>) => UserData) & {
   copyOf(source: UserData, mutator: (draft: MutableModel<UserData>) => MutableModel<UserData> | void): UserData;
+}
+
+type EagerVideoTags = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<VideoTags, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly videoId?: string | null;
+  readonly tagId?: string | null;
+  readonly video: Video;
+  readonly tag: Tag;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyVideoTags = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<VideoTags, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly videoId?: string | null;
+  readonly tagId?: string | null;
+  readonly video: AsyncItem<Video>;
+  readonly tag: AsyncItem<Tag>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type VideoTags = LazyLoading extends LazyLoadingDisabled ? EagerVideoTags : LazyVideoTags
+
+export declare const VideoTags: (new (init: ModelInit<VideoTags>) => VideoTags) & {
+  copyOf(source: VideoTags, mutator: (draft: MutableModel<VideoTags>) => MutableModel<VideoTags> | void): VideoTags;
 }

@@ -7,7 +7,7 @@ type Video @model @auth(rules: [{ allow: public }]) {
     duration: Int!
     category: Category @belongsTo
     teacher: Teacher @belongsTo
-    tags: [Tag] @hasMany
+    tags: [Tag] @manyToMany(relationName: "VideoTags")
 }
 
 type Category @model @auth(rules: [{ allow: public }]) {
@@ -28,7 +28,7 @@ type Teacher @model @auth(rules: [{ allow: public }]) {
 type Tag @model @auth(rules: [{ allow: public }]) {
     id: ID!
     name: String!
-    video: Video @belongsTo
+    video: [Video] @manyToMany(relationName: "VideoTags")
 }
 
 type UserData @model @auth(rules: [{ allow: public }]) {

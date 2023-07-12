@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 import CognitoData from "./CognitoData";
 
 // Image Imports
-import logo from "../images/logo.png";
+import logo from "../images/logo-large.png";
+import smallLogo from "../images/logo-small.png";
 
 //Font Awesome Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -92,7 +93,11 @@ const Navigation = () => {
     return (
         <div className="navigation-container">
             <nav ref={navigationBarRef} className="navigation-bar">
-                <img className="logo" src={logo} alt="Logo" />
+                <img
+                    className="logo"
+                    src={viewportWidth <= 460 ? smallLogo : logo}
+                    alt="Logo"
+                />
                 <div className="links">
                     {/* SAVED FOR LATER 
                     <Link to="/"></Link>

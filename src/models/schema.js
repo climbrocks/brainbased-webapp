@@ -79,7 +79,7 @@ export const schema = {
                     "name": "tags",
                     "isArray": true,
                     "type": {
-                        "model": "Tag"
+                        "model": "VideoTags"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -87,7 +87,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "videoTagsId"
+                            "video"
                         ]
                     }
                 },
@@ -337,16 +337,17 @@ export const schema = {
                 },
                 "video": {
                     "name": "video",
-                    "isArray": false,
+                    "isArray": true,
                     "type": {
-                        "model": "Video"
+                        "model": "VideoTags"
                     },
                     "isRequired": false,
                     "attributes": [],
+                    "isArrayNullable": true,
                     "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "videoTagsId"
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "tag"
                         ]
                     }
                 },
@@ -365,13 +366,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
-                },
-                "videoTagsId": {
-                    "name": "videoTagsId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
                 }
             },
             "syncable": true,
@@ -465,10 +459,108 @@ export const schema = {
                     }
                 }
             ]
+        },
+        "VideoTags": {
+            "name": "VideoTags",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "videoId": {
+                    "name": "videoId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "tagId": {
+                    "name": "tagId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "video": {
+                    "name": "video",
+                    "isArray": false,
+                    "type": {
+                        "model": "Video"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "videoId"
+                        ]
+                    }
+                },
+                "tag": {
+                    "name": "tag",
+                    "isArray": false,
+                    "type": {
+                        "model": "Tag"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "tagId"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "VideoTags",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byVideo",
+                        "fields": [
+                            "videoId"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byTag",
+                        "fields": [
+                            "tagId"
+                        ]
+                    }
+                }
+            ]
         }
     },
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "f19f098a711a52cf568aa9800170485d"
+    "version": "dc771443aa9721e11023a8b5e1be9d03"
 };
