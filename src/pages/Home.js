@@ -99,7 +99,7 @@ const Home = () => {
             <VideoGrid
                 videos={videos}
                 filters={selectedFilters}
-                favorites={favorites}
+                initialFavorites={favorites}
                 videoId={videoId}
                 onFavoriteToggle={handleFavoriteToggle}
                 selectedTags={selectedTags} // Pass the selectedTags state to VideoGrid

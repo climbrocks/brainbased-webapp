@@ -1,12 +1,9 @@
-// React Imports
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
-// SCSS Imports
 import "./Thumbnail.scss";
 import useFavorites from "../FavoritesUtils";
-import CognitoData from "./CognitoData"; // Import CognitoData
 
 const Thumbnail = ({
     video,
@@ -14,25 +11,13 @@ const Thumbnail = ({
     instructor,
     image,
     instructorImage,
-    //isFavorite,
-    //onFavoriteToggle,
     onClick,
 }) => {
     const thumbnailStyle = {
         backgroundImage: `linear-gradient(-90deg, transparent, rgba(0, 0, 0, .7)), url(${image})`,
     };
 
-    //const [favorite, setFavorite] = useState(isFavorite);
-    const { favorites, toggleFavorite } = useFavorites({ CognitoData }); // Use useFavorites and pass CognitoData as a prop
-
-    //const handleButtonClicked = (e) => {
-    //  e.stopPropagation();
-    //const updatedFavoriteStatus = !favorite;
-    //setFavorite(updatedFavoriteStatus);
-    //if (onFavoriteToggle) {
-    //    onFavoriteToggle(video.id, updatedFavoriteStatus);
-    //}
-    //};
+    const { favorites, toggleFavorite } = useFavorites(); // Use useFavorites without passing any props
 
     const isFavorite = favorites.includes(video.id);
 
