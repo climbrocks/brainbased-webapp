@@ -1,5 +1,3 @@
-// React Imports
-
 import React, { useEffect, useState } from "react";
 import { Storage, API, graphqlOperation } from "aws-amplify";
 import { useParams } from "react-router-dom";
@@ -24,30 +22,7 @@ const VideoGrid = ({
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [isPlayerVisible, setPlayerVisible] = useState(false);
 
-    const { favorites, updateFavorites } = useFavorites(initialFavorites);
-
-    const fetchInstructorData = async (teacherVideosId) => {
-        try {
-            const response = await API.graphql(
-                graphqlOperation(getTeacher, { id: teacherVideosId })
-            );
-            const { getTeacher: teacher } = response.data;
-            return teacher;
-        } catch (error) {
-            console.log("Error fetching instructor data:", error);
-            return null;
-        }
-    };
-
-    const fetchInstructorImage = async (image) => {
-        try {
-            const imageUrl = await Storage.get(image, { level: "public" });
-            return imageUrl;
-        } catch (error) {
-            console.log("Error fetching instructor image:", error);
-            return "";
-        }
-    };
+    const { favorites, toggleFavorite } = useFavorites(initialFavorites);
 
     useEffect(() => {
         const fetchVideoData = async () => {
@@ -120,6 +95,29 @@ const VideoGrid = ({
         fetchVideoData();
     }, [videos, filters, selectedTags]);
 
+    const fetchInstructorData = async (teacherVideosId) => {
+        try {
+            const response = await API.graphql(
+                graphqlOperation(getTeacher, { id: teacherVideosId })
+            );
+            const { getTeacher: teacher } = response.data;
+            return teacher;
+        } catch (error) {
+            console.log("Error fetching instructor data:", error);
+            return null;
+        }
+    };
+
+    const fetchInstructorImage = async (image) => {
+        try {
+            const imageUrl = await Storage.get(image, { level: "public" });
+            return imageUrl;
+        } catch (error) {
+            console.log("Error fetching instructor image:", error);
+            return "";
+        }
+    };
+
     const handleVideoSelect = async (video) => {
         try {
             const videoUrl = await Storage.get(video.url, { level: "public" });
@@ -168,11 +166,12 @@ const VideoGrid = ({
 
     const handleFavoriteClick = (videoId, isFavorite) => {
         if (isFavorite) {
-            updateFavorites(videoId, true); // Call updateFavorites with the videoId and true
+            toggleFavorite(videoId, true); // Call toggleFavorite with the videoId and true
         } else {
-            updateFavorites(videoId, false); // Call updateFavorites with the videoId and false
+            toggleFavorite(videoId, false); // Call toggleFavorite with the videoId and false
         }
     };
+
     return (
         <>
             <div className="video-grid-container">
@@ -180,7 +179,7 @@ const VideoGrid = ({
                     {filteredVideos.map((video, index) => (
                         <Thumbnail
                             key={index}
-                            video={video} // Pass the video prop
+                            video={video}
                             title={video.title}
                             image={video.imageUrl}
                             instructor={
@@ -188,7 +187,7 @@ const VideoGrid = ({
                             }
                             instructorImage={video.instructorImage}
                             isFavorite={favorites.includes(video.id)}
-                            onFavoriteToggle={onFavoriteToggle} // Use the handleFavoriteClick function
+                            onFavoriteToggle={handleFavoriteClick}
                             onClick={() => handleVideoSelect(video)}
                         />
                     ))}
