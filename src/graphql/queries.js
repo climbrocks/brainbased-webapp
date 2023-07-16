@@ -10,6 +10,7 @@ export const getVideo = /* GraphQL */ `
       url
       poster
       duration
+      date
       category {
         id
         name
@@ -77,6 +78,7 @@ export const listVideos = /* GraphQL */ `
         url
         poster
         duration
+        date
         category {
           id
           name
@@ -135,6 +137,7 @@ export const syncVideos = /* GraphQL */ `
         url
         poster
         duration
+        date
         category {
           id
           name
@@ -187,6 +190,7 @@ export const getCategory = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -279,6 +283,7 @@ export const getTeacher = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -518,6 +523,7 @@ export const getVideoTags = /* GraphQL */ `
         url
         poster
         duration
+        date
         category {
           id
           name
@@ -590,6 +596,7 @@ export const listVideoTags = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -642,6 +649,7 @@ export const syncVideoTags = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -696,6 +704,7 @@ export const videoTagsByVideoId = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -750,6 +759,7 @@ export const videoTagsByTagId = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version

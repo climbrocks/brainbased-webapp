@@ -13,6 +13,7 @@ export const createVideo = /* GraphQL */ `
       url
       poster
       duration
+      date
       category {
         id
         name
@@ -78,6 +79,7 @@ export const updateVideo = /* GraphQL */ `
       url
       poster
       duration
+      date
       category {
         id
         name
@@ -143,6 +145,7 @@ export const deleteVideo = /* GraphQL */ `
       url
       poster
       duration
+      date
       category {
         id
         name
@@ -213,6 +216,7 @@ export const createCategory = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -249,6 +253,7 @@ export const updateCategory = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -285,6 +290,7 @@ export const deleteCategory = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -322,6 +328,7 @@ export const createTeacher = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -359,6 +366,7 @@ export const updateTeacher = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -396,6 +404,7 @@ export const deleteTeacher = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -572,6 +581,7 @@ export const createVideoTags = /* GraphQL */ `
         url
         poster
         duration
+        date
         category {
           id
           name
@@ -642,6 +652,7 @@ export const updateVideoTags = /* GraphQL */ `
         url
         poster
         duration
+        date
         category {
           id
           name
@@ -712,6 +723,7 @@ export const deleteVideoTags = /* GraphQL */ `
         url
         poster
         duration
+        date
         category {
           id
           name

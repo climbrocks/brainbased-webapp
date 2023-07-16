@@ -28,12 +28,12 @@ const TagBar = ({ tags, selectedTags, onTagSelect }) => {
         };
     }, []);
 
-    const handleTagSelect = (tag) => {
-        const updatedTags = selectedTags.includes(tag)
-            ? selectedTags.filter((t) => t !== tag) // Remove the tag if it exists in the selectedTags
-            : [...selectedTags, tag]; // Add the tag if it doesn't exist in the selectedTags
+    const handleTagSelect = (tagId) => {
+        const updatedTags = selectedTags.includes(tagId)
+            ? selectedTags.filter((id) => id !== tagId)
+            : [...selectedTags, tagId];
 
-        onTagSelect(updatedTags); // Pass the updated tags to the parent component
+        onTagSelect(updatedTags);
     };
 
     return (
@@ -49,7 +49,7 @@ const TagBar = ({ tags, selectedTags, onTagSelect }) => {
                             }`}
                             onClick={() => handleTagSelect(tag)}
                         >
-                            {tag}
+                            {tag.name}
                         </div>
                     ))}
                 </div>

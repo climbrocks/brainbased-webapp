@@ -17,6 +17,7 @@ const VideoGrid = ({
     videoId,
     onFavoriteToggle,
     selectedTags,
+    videoTags,
 }) => {
     const [filteredVideos, setFilteredVideos] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null);
@@ -45,6 +46,7 @@ const VideoGrid = ({
                         const instructor = await fetchInstructorData(
                             video.teacherVideosId
                         );
+
                         const instructorImage = await fetchInstructorImage(
                             instructor.image
                         );
@@ -77,9 +79,21 @@ const VideoGrid = ({
 
                     // Filter by tags
                     if (selectedTags.length > 0) {
-                        const videoTags = video.tags.map((tag) => tag.id);
+                        const videoTagsIds = videoTags
+                            .filter((tag) => tag.video.id === video.id)
+                            .map((tag) => tag.tag.id);
+
+                        console.log("Video ID:", video.id);
+                        console.log("Video Tags IDs:", videoTagsIds);
+                        console.log(
+                            "Selected Tags:",
+                            selectedTags.map((tag) => tag.id)
+                        );
+
                         if (
-                            !selectedTags.some((tag) => videoTags.includes(tag))
+                            !selectedTags.every((tag) =>
+                                videoTagsIds.includes(tag.id)
+                            )
                         ) {
                             return false;
                         }
@@ -181,6 +195,8 @@ const VideoGrid = ({
                             key={index}
                             video={video}
                             title={video.title}
+                            date={video.date}
+                            duration={video.duration}
                             image={video.imageUrl}
                             instructor={
                                 video.instructor ? video.instructor.name : ""

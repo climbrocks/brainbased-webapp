@@ -9,6 +9,8 @@ const Thumbnail = ({
     video,
     title,
     instructor,
+    date,
+    duration,
     image,
     instructorImage,
     onClick,
@@ -33,7 +35,9 @@ const Thumbnail = ({
             onClick={onClick}
         >
             <div className="thumbnail-content">
-                <h3 className="date-and-duration">April 01, 2023 | 53:43</h3>
+                <h3 className="date-and-duration">
+                    {date} | {duration} min
+                </h3>
                 <button
                     className="thumbnail-favorite-button"
                     onClick={handleButtonClicked}

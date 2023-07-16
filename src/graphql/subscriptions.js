@@ -10,6 +10,7 @@ export const onCreateVideo = /* GraphQL */ `
       url
       poster
       duration
+      date
       category {
         id
         name
@@ -72,6 +73,7 @@ export const onUpdateVideo = /* GraphQL */ `
       url
       poster
       duration
+      date
       category {
         id
         name
@@ -134,6 +136,7 @@ export const onDeleteVideo = /* GraphQL */ `
       url
       poster
       duration
+      date
       category {
         id
         name
@@ -201,6 +204,7 @@ export const onCreateCategory = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -234,6 +238,7 @@ export const onUpdateCategory = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -267,6 +272,7 @@ export const onDeleteCategory = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -301,6 +307,7 @@ export const onCreateTeacher = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -335,6 +342,7 @@ export const onUpdateTeacher = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -369,6 +377,7 @@ export const onDeleteTeacher = /* GraphQL */ `
           url
           poster
           duration
+          date
           createdAt
           updatedAt
           _version
@@ -526,6 +535,7 @@ export const onCreateVideoTags = /* GraphQL */ `
         url
         poster
         duration
+        date
         category {
           id
           name
@@ -595,6 +605,7 @@ export const onUpdateVideoTags = /* GraphQL */ `
         url
         poster
         duration
+        date
         category {
           id
           name
@@ -664,6 +675,7 @@ export const onDeleteVideoTags = /* GraphQL */ `
         url
         poster
         duration
+        date
         category {
           id
           name
