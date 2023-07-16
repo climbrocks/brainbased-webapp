@@ -45,6 +45,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "date": {
+                    "name": "date",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "category": {
                     "name": "category",
                     "isArray": false,
@@ -562,5 +569,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "dc771443aa9721e11023a8b5e1be9d03"
+    "version": "85b42b1a4672e318bd21bab6e6b003de"
 };

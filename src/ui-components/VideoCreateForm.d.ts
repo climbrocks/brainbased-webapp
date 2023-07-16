@@ -18,6 +18,7 @@ export declare type VideoCreateFormInputValues = {
     url?: string;
     poster?: string;
     duration?: number;
+    date?: string;
 };
 export declare type VideoCreateFormValidationValues = {
     title?: ValidationFunction<string>;
@@ -25,6 +26,7 @@ export declare type VideoCreateFormValidationValues = {
     url?: ValidationFunction<string>;
     poster?: ValidationFunction<string>;
     duration?: ValidationFunction<number>;
+    date?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type VideoCreateFormOverridesProps = {
@@ -34,6 +36,7 @@ export declare type VideoCreateFormOverridesProps = {
     url?: PrimitiveOverrideProps<TextFieldProps>;
     poster?: PrimitiveOverrideProps<TextFieldProps>;
     duration?: PrimitiveOverrideProps<TextFieldProps>;
+    date?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type VideoCreateFormProps = React.PropsWithChildren<{
     overrides?: VideoCreateFormOverridesProps | undefined | null;

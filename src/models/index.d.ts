@@ -17,6 +17,7 @@ type EagerVideo = {
   readonly url: string;
   readonly poster: string;
   readonly duration: number;
+  readonly date: string;
   readonly category?: Category | null;
   readonly teacher?: Teacher | null;
   readonly tags?: (VideoTags | null)[] | null;
@@ -37,6 +38,7 @@ type LazyVideo = {
   readonly url: string;
   readonly poster: string;
   readonly duration: number;
+  readonly date: string;
   readonly category: AsyncItem<Category | undefined>;
   readonly teacher: AsyncItem<Teacher | undefined>;
   readonly tags: AsyncCollection<VideoTags>;

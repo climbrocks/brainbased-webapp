@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { useParams } from "react-router-dom";
 
-import { listVideos, listCategories, listTags } from "../graphql/queries";
+import {
+    listVideos,
+    listCategories,
+    listTags,
+    listVideoTags,
+} from "../graphql/queries";
 
 // Component Imports
 import FilterBar from "../components/FilterBar";
@@ -19,6 +24,10 @@ const Home = () => {
     const [selectedFilters, setSelectedFilters] = useState([]);
     const { favorites, toggleFavorite } = useFavorites({ CognitoData });
     const [selectedTags, setSelectedTags] = useState([]);
+    const [videoTags, setVideoTags] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+
+    const [filteredVideos, setFilteredVideos] = useState([]);
 
     useEffect(() => {
         const fetchVideos = async () => {
@@ -53,24 +62,38 @@ const Home = () => {
                 );
                 const tagsData = tagsResponse.data.listTags.items;
                 setTags(tagsData);
-                console.log("Tag Data");
-                console.log(tagsData);
             } catch (error) {
                 console.log("Error fetching tags:", error);
+            }
+        };
+
+        const fetchVideoTags = async () => {
+            try {
+                const videoTagsResponse = await API.graphql(
+                    graphqlOperation(listVideoTags)
+                );
+                const videoTagsData =
+                    videoTagsResponse.data.listVideoTags.items;
+                setVideoTags(videoTagsData);
+                //console.log(videoTagsData);
+                //console.log(videoTagsData[0].tag.id);
+            } catch (error) {
+                console.log("Error fetching video tags:", error);
             }
         };
 
         fetchVideos();
         fetchCategories();
         fetchTags();
+        fetchVideoTags();
     }, []);
 
     const handleFilterSelect = (filters) => {
         setSelectedFilters(filters);
     };
 
-    const handleTagSelect = (tags) => {
-        setSelectedTags(tags);
+    const handleTagSelect = (selectedTags) => {
+        setSelectedTags(selectedTags);
     };
 
     const filters = categories.map((category) => ({
@@ -78,7 +101,7 @@ const Home = () => {
         name: category.name,
     }));
 
-    const tagNames = tags.map((tag) => tag.name);
+    //const tagNames = tags.map((tag) => tag.name);
 
     const handleFavoriteToggle = (videoId, isFavorite) => {
         toggleFavorite(videoId, isFavorite);
@@ -92,7 +115,7 @@ const Home = () => {
                 onFilterSelect={handleFilterSelect}
             />
             <TagBar
-                tags={tagNames}
+                tags={tags}
                 selectedTags={selectedTags}
                 onTagSelect={handleTagSelect}
             />
@@ -100,6 +123,7 @@ const Home = () => {
                 videos={videos}
                 filters={selectedFilters}
                 initialFavorites={favorites}
+                videoTags={videoTags}
                 videoId={videoId}
                 onFavoriteToggle={handleFavoriteToggle}
                 selectedTags={selectedTags} // Pass the selectedTags state to VideoGrid

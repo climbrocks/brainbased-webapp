@@ -29,6 +29,7 @@ export default function VideoUpdateForm(props) {
     url: "",
     poster: "",
     duration: "",
+    date: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [description, setDescription] = React.useState(
@@ -37,6 +38,7 @@ export default function VideoUpdateForm(props) {
   const [url, setUrl] = React.useState(initialValues.url);
   const [poster, setPoster] = React.useState(initialValues.poster);
   const [duration, setDuration] = React.useState(initialValues.duration);
+  const [date, setDate] = React.useState(initialValues.date);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = videoRecord
@@ -47,6 +49,7 @@ export default function VideoUpdateForm(props) {
     setUrl(cleanValues.url);
     setPoster(cleanValues.poster);
     setDuration(cleanValues.duration);
+    setDate(cleanValues.date);
     setErrors({});
   };
   const [videoRecord, setVideoRecord] = React.useState(videoModelProp);
@@ -66,6 +69,7 @@ export default function VideoUpdateForm(props) {
     url: [{ type: "Required" }],
     poster: [{ type: "Required" }],
     duration: [{ type: "Required" }],
+    date: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -84,6 +88,23 @@ export default function VideoUpdateForm(props) {
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
   };
+  const convertToLocal = (date) => {
+    const df = new Intl.DateTimeFormat("default", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      calendar: "iso8601",
+      numberingSystem: "latn",
+      hourCycle: "h23",
+    });
+    const parts = df.formatToParts(date).reduce((acc, part) => {
+      acc[part.type] = part.value;
+      return acc;
+    }, {});
+    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+  };
   return (
     <Grid
       as="form"
@@ -98,6 +119,7 @@ export default function VideoUpdateForm(props) {
           url,
           poster,
           duration,
+          date,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -158,6 +180,7 @@ export default function VideoUpdateForm(props) {
               url,
               poster,
               duration,
+              date,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -186,6 +209,7 @@ export default function VideoUpdateForm(props) {
               url,
               poster,
               duration,
+              date,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -214,6 +238,7 @@ export default function VideoUpdateForm(props) {
               url: value,
               poster,
               duration,
+              date,
             };
             const result = onChange(modelFields);
             value = result?.url ?? value;
@@ -242,6 +267,7 @@ export default function VideoUpdateForm(props) {
               url,
               poster: value,
               duration,
+              date,
             };
             const result = onChange(modelFields);
             value = result?.poster ?? value;
@@ -274,6 +300,7 @@ export default function VideoUpdateForm(props) {
               url,
               poster,
               duration: value,
+              date,
             };
             const result = onChange(modelFields);
             value = result?.duration ?? value;
@@ -287,6 +314,37 @@ export default function VideoUpdateForm(props) {
         errorMessage={errors.duration?.errorMessage}
         hasError={errors.duration?.hasError}
         {...getOverrideProps(overrides, "duration")}
+      ></TextField>
+      <TextField
+        label="Date"
+        isRequired={true}
+        isReadOnly={false}
+        type="datetime-local"
+        value={date && convertToLocal(new Date(date))}
+        onChange={(e) => {
+          let value =
+            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
+          if (onChange) {
+            const modelFields = {
+              title,
+              description,
+              url,
+              poster,
+              duration,
+              date: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.date ?? value;
+          }
+          if (errors.date?.hasError) {
+            runValidationTasks("date", value);
+          }
+          setDate(value);
+        }}
+        onBlur={() => runValidationTasks("date", date)}
+        errorMessage={errors.date?.errorMessage}
+        hasError={errors.date?.hasError}
+        {...getOverrideProps(overrides, "date")}
       ></TextField>
       <Flex
         justifyContent="space-between"

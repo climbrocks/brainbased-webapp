@@ -5,6 +5,7 @@ type Video @model @auth(rules: [{ allow: public }]) {
     url: String!
     poster: String!
     duration: Int!
+    date: AWSDateTime!
     category: Category @belongsTo
     teacher: Teacher @belongsTo
     tags: [Tag] @manyToMany(relationName: "VideoTags")

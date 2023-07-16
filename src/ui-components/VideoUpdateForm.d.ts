@@ -19,6 +19,7 @@ export declare type VideoUpdateFormInputValues = {
     url?: string;
     poster?: string;
     duration?: number;
+    date?: string;
 };
 export declare type VideoUpdateFormValidationValues = {
     title?: ValidationFunction<string>;
@@ -26,6 +27,7 @@ export declare type VideoUpdateFormValidationValues = {
     url?: ValidationFunction<string>;
     poster?: ValidationFunction<string>;
     duration?: ValidationFunction<number>;
+    date?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type VideoUpdateFormOverridesProps = {
@@ -35,6 +37,7 @@ export declare type VideoUpdateFormOverridesProps = {
     url?: PrimitiveOverrideProps<TextFieldProps>;
     poster?: PrimitiveOverrideProps<TextFieldProps>;
     duration?: PrimitiveOverrideProps<TextFieldProps>;
+    date?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type VideoUpdateFormProps = React.PropsWithChildren<{
     overrides?: VideoUpdateFormOverridesProps | undefined | null;
