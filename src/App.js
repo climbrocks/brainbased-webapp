@@ -33,7 +33,7 @@ const App = () => {
                 <Route path="/auth" element={<AuthStatus />} />
             </Routes>
 
-            <Footer />
+            {/* <Footer /> */}
         </Router>
     );
 };

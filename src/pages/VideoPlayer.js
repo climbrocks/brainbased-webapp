@@ -17,6 +17,7 @@ const VideoPlayer = ({ videoUrl, poster }) => {
             <div className="video-container">
                 <video poster={poster} autoPlay controls className="video">
                     <source src={videoUrl} type="video/mp4" />
+                    {/* VIDEO SUBITLES <track <track src="/captions_file.vtt" label="English" kind="captions" srclang="en-us" default > */}
                 </video>
             </div>
             <VideoPlayerData />

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { useParams } from "react-router-dom";
+import "./Home.scss";
 
 import {
     listVideos,
@@ -15,6 +16,7 @@ import TagBar from "../components/TagBar";
 import VideoGrid from "../components/VideoGrid";
 import useFavorites from "../FavoritesUtils";
 import CognitoData from "../components/CognitoData";
+import FilterSideBar from "../components/FilterSideBar";
 
 const Home = () => {
     const { videoId } = useParams();
@@ -107,9 +109,15 @@ const Home = () => {
         toggleFavorite(videoId, isFavorite);
     };
 
+    const [isOpen, setIsOpen] = useState(true);
+
+    const handleToggle = () => {
+        setIsOpen((prevIsOpen) => !prevIsOpen);
+    };
+
     return (
         <>
-            <FilterBar
+            {/* <FilterBar
                 filters={filters}
                 selectedFilters={selectedFilters}
                 onFilterSelect={handleFilterSelect}
@@ -118,16 +126,53 @@ const Home = () => {
                 tags={tags}
                 selectedTags={selectedTags}
                 onTagSelect={handleTagSelect}
-            />
-            <VideoGrid
-                videos={videos}
-                filters={selectedFilters}
-                initialFavorites={favorites}
-                videoTags={videoTags}
-                videoId={videoId}
-                onFavoriteToggle={handleFavoriteToggle}
-                selectedTags={selectedTags} // Pass the selectedTags state to VideoGrid
-            />
+            /> */}
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: isOpen
+                        ? "minmax(0, 360px) auto"
+                        : "0 auto",
+                    gridTemplateAreas: "filterbar video-grid",
+                    transition: "grid-template-columns 0.3s ease-in-out",
+                }}
+            >
+                <div
+                    className={`filter-sidebar-component ${
+                        isOpen ? "open" : "closed"
+                    }`}
+                    style={{
+                        marginTop: "72px",
+                        marginLeft: isOpen ? "0" : "-360px",
+                        transition: "margin-left 0.3s ease-in-out",
+                    }}
+                >
+                    <FilterSideBar
+                        isOpen={isOpen}
+                        handleToggle={handleToggle}
+                    />
+                </div>
+                <div
+                    className="video-grid-component"
+                    style={{
+                        marginTop: "72px",
+                        width: isOpen ? "calc(100%)" : "calc(100% - 25px)",
+                        marginLeft: isOpen ? "0" : "25px",
+                        transition: "all 0.3s ease-in-out",
+                    }}
+                >
+                    <VideoGrid
+                        videos={videos}
+                        filters={selectedFilters}
+                        initialFavorites={favorites}
+                        videoTags={videoTags}
+                        videoId={videoId}
+                        onFavoriteToggle={handleFavoriteToggle}
+                        selectedTags={selectedTags}
+                        isOpen={isOpen}
+                    />
+                </div>
+            </div>
         </>
     );
 };

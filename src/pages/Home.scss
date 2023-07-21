@@ -1,0 +1,18 @@
+@use "../global-styles/variables";
+@use "../global-styles/mixins";
+
+.home-main-content-container {
+    display: grid;
+    grid-template-columns: minmax(0, 360px) auto;
+    grid-template-areas: "filterbar video-grid";
+
+    .filter-sidebar-component {
+        margin-top: 72px;
+    }
+
+    .video-grid-component {
+        margin-top: 72px;
+        height: calc(100vh - 72px);
+        overflow: scroll;
+    }
+}

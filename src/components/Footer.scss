@@ -2,8 +2,10 @@
 @use "../global-styles/mixins";
 
 .footer {
-    margin-top: 60px;
     height: 30px;
     width: 100%;
     background-color: variables.$main-red;
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
 }

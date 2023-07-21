@@ -18,6 +18,7 @@ const VideoGrid = ({
     onFavoriteToggle,
     selectedTags,
     videoTags,
+    isOpen,
 }) => {
     const [filteredVideos, setFilteredVideos] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null);

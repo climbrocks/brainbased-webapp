@@ -1,7 +1,7 @@
 @mixin grid-for-components {
     display: grid;
-    grid-template-columns: minmax(20px, auto) minmax(280px, 1680px) minmax(
-            20px,
+    grid-template-columns: minmax(30px, auto) minmax(280px, 2560px) minmax(
+            30px,
             auto
         );
     width: 100%;
