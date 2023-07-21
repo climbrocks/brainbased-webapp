@@ -6,6 +6,8 @@
     @include mixins.drop-shadow;
     background: variables.$main-red;
     height: 72px;
+    position: fixed;
+    z-index: 1000;
 }
 
 .navigation-bar {
