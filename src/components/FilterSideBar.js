@@ -12,7 +12,39 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
-const FilterSideBar = ({ isOpen, handleToggle }) => {
+const FilterSideBar = ({
+    isOpen,
+    handleToggle,
+    filters,
+    selectedFilters,
+    onFilterSelect,
+    tags,
+    selectedTags,
+    onTagSelect,
+}) => {
+    const handleFilterSelect = (filter) => {
+        const updatedFilters = [...selectedFilters]; // Create a copy of selectedFilters
+
+        if (updatedFilters.includes(filter.id)) {
+            // Filter already exists, remove it
+            const index = updatedFilters.indexOf(filter.id);
+            updatedFilters.splice(index, 1);
+        } else {
+            // Filter doesn't exist, add it
+            updatedFilters.push(filter.id);
+        }
+
+        onFilterSelect(updatedFilters); // Pass the updated filters to the parent component
+    };
+
+    const handleTagSelect = (tagId) => {
+        const updatedTags = selectedTags.includes(tagId)
+            ? selectedTags.filter((id) => id !== tagId)
+            : [...selectedTags, tagId];
+
+        onTagSelect(updatedTags);
+    };
+
     return (
         <div
             className={`filter-side-bar-container ${
@@ -33,13 +65,19 @@ const FilterSideBar = ({ isOpen, handleToggle }) => {
                     <div className="filter-section class-type">
                         <h3>Class-Type</h3>
                         <div className="pill-box">
-                            <p className="pill">WOrds</p>
-                            <p className="pill">More Words</p>
-                            <p className="pill">Longer Word</p>
-                            <p className="pill">Wat up</p>
-                            <p className="pill">Longer Word</p>
-                            <p className="pill">Short</p>
-                            <p className="pill">Neuro Stuff</p>
+                            {filters.map((filter, index) => (
+                                <div
+                                    key={index}
+                                    className={`pill ${
+                                        selectedFilters.includes(filter.id)
+                                            ? "active"
+                                            : ""
+                                    }`}
+                                    onClick={() => handleFilterSelect(filter)}
+                                >
+                                    {filter.name}
+                                </div>
+                            ))}
                         </div>
                     </div>
                     <div className="filter-section duration">
@@ -87,13 +125,19 @@ const FilterSideBar = ({ isOpen, handleToggle }) => {
                     <div className="filter-section class-focus">
                         <h3>Class Focus</h3>
                         <div className="pill-box">
-                            <p className="pill">WOrds</p>
-                            <p className="pill">More Words</p>
-                            <p className="pill">Longer Word</p>
-                            <p className="pill">Wat up</p>
-                            <p className="pill">Longer Word</p>
-                            <p className="pill">Short</p>
-                            <p className="pill">Neuro Stuff</p>
+                            {tags.map((tag, index) => (
+                                <div
+                                    key={index}
+                                    className={`pill ${
+                                        selectedTags.includes(tag)
+                                            ? "active"
+                                            : ""
+                                    }`}
+                                    onClick={() => handleTagSelect(tag)}
+                                >
+                                    {tag.name}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>

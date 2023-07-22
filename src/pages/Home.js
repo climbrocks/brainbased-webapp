@@ -150,6 +150,12 @@ const Home = () => {
                     <FilterSideBar
                         isOpen={isOpen}
                         handleToggle={handleToggle}
+                        filters={filters}
+                        selectedFilters={selectedFilters}
+                        onFilterSelect={handleFilterSelect}
+                        tags={tags}
+                        selectedTags={selectedTags}
+                        onTagSelect={handleTagSelect}
                     />
                 </div>
                 <div
