@@ -21,20 +21,62 @@ const FilterSideBar = ({
     tags,
     selectedTags,
     onTagSelect,
+    instructors,
 }) => {
+    const [selectedDurationFilters, setSelectedDurationFilters] = useState([]);
+
     const handleFilterSelect = (filter) => {
-        const updatedFilters = [...selectedFilters]; // Create a copy of selectedFilters
+        if (filter.type === "duration") {
+            // Update the duration filter in the parent component
+            const updatedDurationFilters = selectedDurationFilters.includes(
+                filter.value
+            )
+                ? selectedDurationFilters.filter(
+                      (duration) => duration !== filter.value
+                  )
+                : [...selectedDurationFilters, filter.value];
 
-        if (updatedFilters.includes(filter.id)) {
-            // Filter already exists, remove it
-            const index = updatedFilters.indexOf(filter.id);
-            updatedFilters.splice(index, 1);
+            setSelectedDurationFilters(updatedDurationFilters);
+
+            // Create a new selectedFilters object with updated duration filters
+            const updatedFilters = {
+                ...selectedFilters,
+                duration: updatedDurationFilters,
+            };
+
+            onFilterSelect(updatedFilters); // Pass the updated filters to the parent component
+        } else if (filter.type === "teacher") {
+            // Update the teacher filter in the parent component
+            const updatedTeachers = selectedFilters.teacher.includes(
+                filter.value
+            )
+                ? selectedFilters.teacher.filter(
+                      (teacherId) => teacherId !== filter.value
+                  )
+                : [...selectedFilters.teacher, filter.value];
+
+            onFilterSelect({
+                ...selectedFilters,
+                teacher: updatedTeachers,
+            });
         } else {
-            // Filter doesn't exist, add it
-            updatedFilters.push(filter.id);
-        }
+            // Handle other filters (categories)
+            const updatedFilters = {
+                ...selectedFilters,
+                category: [...selectedFilters.category], // Create a copy of selected category filters
+            };
 
-        onFilterSelect(updatedFilters); // Pass the updated filters to the parent component
+            if (updatedFilters.category.includes(filter.id)) {
+                // Filter already exists, remove it
+                const index = updatedFilters.category.indexOf(filter.id);
+                updatedFilters.category.splice(index, 1);
+            } else {
+                // Filter doesn't exist, add it
+                updatedFilters.category.push(filter.id);
+            }
+
+            onFilterSelect(updatedFilters); // Pass the updated filters to the parent component
+        }
     };
 
     const handleTagSelect = (tagId) => {
@@ -69,11 +111,18 @@ const FilterSideBar = ({
                                 <div
                                     key={index}
                                     className={`pill ${
-                                        selectedFilters.includes(filter.id)
+                                        selectedFilters.category.includes(
+                                            filter.id
+                                        ) // Check if filter.id is in the category filter array
                                             ? "active"
                                             : ""
                                     }`}
-                                    onClick={() => handleFilterSelect(filter)}
+                                    onClick={() =>
+                                        handleFilterSelect({
+                                            type: "category",
+                                            ...filter,
+                                        })
+                                    }
                                 >
                                     {filter.name}
                                 </div>
@@ -84,42 +133,87 @@ const FilterSideBar = ({
                         <h3>Duration</h3>
                         <ul>
                             <li>
-                                <input type="checkbox" />
-                                &#60;15min
+                                <input
+                                    type="checkbox"
+                                    checked={selectedDurationFilters.includes(
+                                        "<15"
+                                    )}
+                                    onChange={() =>
+                                        handleFilterSelect({
+                                            type: "duration",
+                                            value: "<15",
+                                        })
+                                    }
+                                />
+                                &#60; 15 min
                             </li>
                             <li>
-                                <input type="checkbox" />
-                                15 - 30min
+                                <input
+                                    type="checkbox"
+                                    checked={selectedDurationFilters.includes(
+                                        "15-30"
+                                    )}
+                                    onChange={() =>
+                                        handleFilterSelect({
+                                            type: "duration",
+                                            value: "15-30",
+                                        })
+                                    }
+                                />
+                                15 - 30 min
                             </li>
                             <li>
-                                <input type="checkbox" />
-                                30 - 45min
+                                <input
+                                    type="checkbox"
+                                    checked={selectedDurationFilters.includes(
+                                        "30-60"
+                                    )}
+                                    onChange={() =>
+                                        handleFilterSelect({
+                                            type: "duration",
+                                            value: "30-60",
+                                        })
+                                    }
+                                />
+                                30 - 60 min
                             </li>
                             <li>
-                                <input type="checkbox" />
-                                45 - 15min
-                            </li>
-                            <li>
-                                <input type="checkbox" />
-                                &#62;60min
+                                <input
+                                    type="checkbox"
+                                    checked={selectedDurationFilters.includes(
+                                        ">60"
+                                    )}
+                                    onChange={() =>
+                                        handleFilterSelect({
+                                            type: "duration",
+                                            value: ">60",
+                                        })
+                                    }
+                                />
+                                &#62; 60 min
                             </li>
                         </ul>
                     </div>
                     <div className="filter-section teacher">
                         <h3>Teachers</h3>
                         <ul>
-                            <li>
-                                <input type="checkbox" />
-                                Elisabeth Kristof
-                            </li>
-                            <li>
-                                <input type="checkbox" />
-                                Jennifer Wallace
-                            </li>
-                            <li>
-                                <input type="checkbox" />
-                                Jennifer Simpson
-                            </li>
+                            {instructors.map((instructor, index) => (
+                                <li key={index}>
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedFilters.teacher.includes(
+                                            instructor.id
+                                        )}
+                                        onChange={() =>
+                                            handleFilterSelect({
+                                                type: "teacher",
+                                                value: instructor.id,
+                                            })
+                                        }
+                                    />
+                                    {instructor.name}
+                                </li>
+                            ))}
                         </ul>
                     </div>
                     <div className="filter-section class-focus">

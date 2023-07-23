@@ -8,6 +8,7 @@ import {
     listCategories,
     listTags,
     listVideoTags,
+    listTeachers,
 } from "../graphql/queries";
 
 // Component Imports
@@ -23,11 +24,16 @@ const Home = () => {
     const [videos, setVideos] = useState([]);
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
-    const [selectedFilters, setSelectedFilters] = useState([]);
+    const [selectedFilters, setSelectedFilters] = useState({
+        category: [], // Your existing category filters
+        duration: [], // Array to store selected duration filters
+        teacher: [], // Array to store selected teacher filters
+    });
     const { favorites, toggleFavorite } = useFavorites({ CognitoData });
     const [selectedTags, setSelectedTags] = useState([]);
     const [videoTags, setVideoTags] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const [instructors, setInstructors] = useState([]);
 
     const [filteredVideos, setFilteredVideos] = useState([]);
 
@@ -39,6 +45,7 @@ const Home = () => {
                 );
                 const videosData = videosResponse.data.listVideos.items;
                 setVideos(videosData);
+                //console.log(videosData);
             } catch (error) {
                 console.log("Error fetching videos:", error);
             }
@@ -83,14 +90,29 @@ const Home = () => {
                 console.log("Error fetching video tags:", error);
             }
         };
+        // Fetch instructor data
+        const fetchInstructors = async () => {
+            try {
+                const instructorsResponse = await API.graphql(
+                    graphqlOperation(listTeachers)
+                );
+                const instructorsData =
+                    instructorsResponse.data.listTeachers.items;
+                setInstructors(instructorsData);
+            } catch (error) {
+                console.log("Error fetching instructors:", error);
+            }
+        };
 
         fetchVideos();
         fetchCategories();
         fetchTags();
         fetchVideoTags();
+        fetchInstructors();
     }, []);
 
     const handleFilterSelect = (filters) => {
+        //console.log("selected filters", filters);
         setSelectedFilters(filters);
     };
 
@@ -156,6 +178,7 @@ const Home = () => {
                         tags={tags}
                         selectedTags={selectedTags}
                         onTagSelect={handleTagSelect}
+                        instructors={instructors}
                     />
                 </div>
                 <div
@@ -175,6 +198,7 @@ const Home = () => {
                         videoId={videoId}
                         onFavoriteToggle={handleFavoriteToggle}
                         selectedTags={selectedTags}
+                        instructors={instructors}
                         isOpen={isOpen}
                     />
                 </div>

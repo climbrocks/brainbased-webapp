@@ -19,12 +19,16 @@ const VideoGrid = ({
     selectedTags,
     videoTags,
     isOpen,
+    instructors,
 }) => {
     const [filteredVideos, setFilteredVideos] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [isPlayerVisible, setPlayerVisible] = useState(false);
 
     const { favorites, toggleFavorite } = useFavorites(initialFavorites);
+    const getVideoDurationInMinutes = (duration) => {
+        return parseInt(duration, 10);
+    };
 
     useEffect(() => {
         const fetchVideoData = async () => {
@@ -44,8 +48,9 @@ const VideoGrid = ({
                         const imageUrl = await Storage.get(video.poster, {
                             level: "public",
                         });
-                        const instructor = await fetchInstructorData(
-                            video.teacherVideosId
+                        const instructor = instructors.find(
+                            (instructor) =>
+                                instructor.id === video.teacherVideosId
                         );
 
                         const instructorImage = await fetchInstructorImage(
@@ -72,8 +77,8 @@ const VideoGrid = ({
                 (video) => {
                     // Filter by categories
                     if (
-                        filters.length > 0 &&
-                        !filters.includes(video.categoryVideosId)
+                        filters.category.length > 0 &&
+                        !filters.category.includes(video.categoryVideosId)
                     ) {
                         return false;
                     }
@@ -84,16 +89,71 @@ const VideoGrid = ({
                             .filter((tag) => tag.video.id === video.id)
                             .map((tag) => tag.tag.id);
 
-                        console.log("Video ID:", video.id);
-                        console.log("Video Tags IDs:", videoTagsIds);
-                        console.log(
-                            "Selected Tags:",
-                            selectedTags.map((tag) => tag.id)
-                        );
+                        //console.log("Video ID:", video.id);
+                        //console.log("Video Tags IDs:", videoTagsIds);
+                        //console.log(
+                        //  "Selected Tags:",
+                        // selectedTags.map((tag) => tag.id)
+                        //);
 
                         if (
                             !selectedTags.every((tag) =>
                                 videoTagsIds.includes(tag.id)
+                            )
+                        ) {
+                            return false;
+                        }
+                    }
+
+                    // Filter by duration
+                    if (filters.duration.length > 0) {
+                        const videoDuration = getVideoDurationInMinutes(
+                            video.duration
+                        );
+
+                        // Check if the video duration falls within the selected range
+                        if (
+                            !filters.duration.some((selectedDuration) => {
+                                if (
+                                    selectedDuration === "<15" &&
+                                    videoDuration < 15
+                                ) {
+                                    return true;
+                                }
+                                if (
+                                    selectedDuration === "15-30" &&
+                                    videoDuration >= 15 &&
+                                    videoDuration <= 30
+                                ) {
+                                    return true;
+                                }
+                                if (
+                                    selectedDuration === "30-60" &&
+                                    videoDuration >= 30 &&
+                                    videoDuration <= 60
+                                ) {
+                                    return true;
+                                }
+                                if (
+                                    selectedDuration === ">60" &&
+                                    videoDuration > 60
+                                ) {
+                                    return true;
+                                }
+                                return false;
+                            })
+                        ) {
+                            return false;
+                        }
+                    }
+
+                    // Filter by teachers
+                    if (filters.teacher.length > 0) {
+                        const videoTeacherIds =
+                            video.teacherVideosId.split(",");
+                        if (
+                            !filters.teacher.some((teacherId) =>
+                                videoTeacherIds.includes(teacherId)
                             )
                         ) {
                             return false;
@@ -110,6 +170,7 @@ const VideoGrid = ({
         fetchVideoData();
     }, [videos, filters, selectedTags]);
 
+    /*
     const fetchInstructorData = async (teacherVideosId) => {
         try {
             const response = await API.graphql(
@@ -122,7 +183,7 @@ const VideoGrid = ({
             return null;
         }
     };
-
+*/
     const fetchInstructorImage = async (image) => {
         try {
             const imageUrl = await Storage.get(image, { level: "public" });
@@ -140,7 +201,10 @@ const VideoGrid = ({
                 level: "public",
             });
 
-            const instructor = await fetchInstructorData(video.teacherVideosId);
+            // Instead of fetching instructor data, use the data from the instructors state
+            const instructor = instructors.find(
+                (instructor) => instructor.id === video.teacherVideosId
+            );
             const instructorImage = await fetchInstructorImage(
                 instructor.image
             );
