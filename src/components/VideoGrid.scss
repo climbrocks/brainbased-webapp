@@ -59,6 +59,7 @@
 
 .video-player-fullscreen.visible {
     opacity: 1;
+    z-index: 1001;
 }
 
 .close-button {

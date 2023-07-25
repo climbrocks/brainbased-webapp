@@ -4,7 +4,7 @@ import "@aws-amplify/ui-react/styles.css";
 import { Amplify, Auth } from "aws-amplify";
 import awsconfig from "./aws-exports";
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import React from "react";
+import React, { useEffect } from "react";
 import MainNavigation from "./components/MainNavigation.js";
 import AuthStatus from "./components/AuthStatus";
 import Footer from "./components/Footer";
@@ -19,6 +19,11 @@ import Play from "./pages/Play";
 
 Amplify.configure(awsconfig);
 const App = () => {
+    /* Change app title */
+    useEffect(() => {
+        document.title = "Brain Based Wellness";
+    }, []);
+
     return (
         <Router>
             <MainNavigation />
