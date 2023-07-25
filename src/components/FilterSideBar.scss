@@ -3,8 +3,8 @@
 
 .filter-side-bar-container {
     width: 360px;
-    background: rgba(255, 255, 255, 0.75);
-    height: 100%;
+    background: #f9f6f2;
+    height: calc(100% - 72px);
     overflow: scroll;
     grid-area: sidebar;
     left: 0;
@@ -12,7 +12,10 @@
     position: fixed;
     transition: all 0.3s ease-in-out;
     display: grid;
-    grid-template-columns: auto 25px;
+    grid-template-columns: auto 20px;
+
+    .right {
+    }
 
     .filter-side-bar-content {
         display: flex;
@@ -49,10 +52,16 @@
                 opacity: 0.7;
                 transition: all 0.3s ease-in-out;
                 cursor: pointer;
+                border: 3px solid variables.$main-blue;
             }
 
             .pill:hover {
                 opacity: 1;
+            }
+
+            .pill.active {
+                opacity: 1;
+                border: 3px solid rgba(0, 0, 0, 0.2);
             }
         }
 
@@ -64,6 +73,29 @@
             }
         }
     }
+
+    .favorites p {
+        padding: 10px 15px;
+        text-align: center;
+        width: 100%;
+        background-color: variables.$main-red;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        opacity: 0.7;
+        border: 3px solid variables.$main-red;
+
+        &.active {
+            background-color: variables.$main-red;
+            border: 3px solid rgba(0, 0, 0, 0.2);
+            opacity: 1;
+        }
+    }
+    .favorites p:hover {
+        background-color: variables.$main-red;
+        opacity: 1;
+    }
 }
 
 /* Style for the open state */
@@ -73,20 +105,37 @@
 
 /* Style for the closed state */
 .filter-side-bar-container.closed {
-    left: -335px;
+    left: -340px;
 }
 
 /* Style for the toggle button */
 .filter-toggle-button {
     width: 100%; /* Make the button the same width as the FilterSideBar */
-    padding: 10px;
+    //padding: 10px;
+    height: calc(100vh - 72px);
     text-align: center;
-    background-color: #ccc;
+    background-color: white;
     border: none;
     cursor: pointer;
+    margin-right: -5px;
+    transition: all 0.3s ease-in-out;
     /* Add any other styles you need for the button */
 
     span {
         text-orientation: mixed;
+    }
+}
+.filter-toggle-button:hover {
+    background-color: variables.$main-blue;
+}
+
+@media screen and (max-width: 1000px) {
+    .filter-side-bar-container {
+        width: 100%;
+        z-index: 1002;
+    }
+
+    .filter-side-bar-container.closed {
+        left: calc((100% - 20px) * -1);
     }
 }

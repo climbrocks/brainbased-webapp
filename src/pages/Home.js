@@ -137,6 +137,28 @@ const Home = () => {
         setIsOpen((prevIsOpen) => !prevIsOpen);
     };
 
+    useEffect(() => {
+        const handleResize = () => {
+            // Check the current viewport width
+            const width = window.innerWidth;
+
+            // If the viewport width is less than 1000px, close the sidebar by default
+            if (width < 1000) {
+                setIsOpen(false);
+            } else {
+                setIsOpen(true);
+            }
+        };
+
+        // Add the event listener
+        window.addEventListener("resize", handleResize);
+
+        // Clean up the event listener when the component unmounts
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
     return (
         <>
             {/* <FilterBar

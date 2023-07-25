@@ -28,6 +28,15 @@ const Thumbnail = ({
         toggleFavorite(video.id, isFavorite);
     };
 
+    const formatDate = (dateString) => {
+        const options = { year: "numeric", month: "long", day: "numeric" };
+        const formattedDate = new Date(dateString).toLocaleDateString(
+            undefined,
+            options
+        );
+        return formattedDate;
+    };
+
     return (
         <div
             className="thumbnail-container"
@@ -36,7 +45,7 @@ const Thumbnail = ({
         >
             <div className="thumbnail-content">
                 <h3 className="date-and-duration">
-                    {date} | {duration} min
+                    {formatDate(date)} | {duration} min
                 </h3>
                 <button
                     className="thumbnail-favorite-button"

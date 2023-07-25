@@ -87,6 +87,12 @@ const FilterSideBar = ({
         onTagSelect(updatedTags);
     };
 
+    // Handle active and inactive state for My Favorites
+    const [favoritesActive, setFavoritesActive] = useState(false);
+    const handleFavoritesToggle = () => {
+        setFavoritesActive((prevFavoritesActive) => !prevFavoritesActive);
+    };
+
     return (
         <div
             className={`filter-side-bar-container ${
@@ -96,7 +102,11 @@ const FilterSideBar = ({
             <div className="left">
                 <div className="filter-side-bar-content">
                     <div className="filter-section favorites">
-                        <p>
+                        {/* Apply the 'active' class based on the favoritesActive state */}
+                        <p
+                            className={favoritesActive ? "active" : ""}
+                            onClick={handleFavoritesToggle}
+                        >
                             <FontAwesomeIcon
                                 style={{ marginRight: "5px" }}
                                 icon={faHeart}
