@@ -89,8 +89,15 @@ const FilterSideBar = ({
 
     // Handle active and inactive state for My Favorites
     const [favoritesActive, setFavoritesActive] = useState(false);
+
     const handleFavoritesToggle = () => {
         setFavoritesActive((prevFavoritesActive) => !prevFavoritesActive);
+
+        const updatedFilters = {
+            ...selectedFilters,
+            favorites: !favoritesActive, // Set the 'favorites' property in selectedFilters to the opposite value of favoritesActive
+        };
+        onFilterSelect(updatedFilters);
     };
 
     return (

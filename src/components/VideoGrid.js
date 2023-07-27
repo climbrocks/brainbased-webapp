@@ -13,19 +13,23 @@ import useFavorites from "../FavoritesUtils";
 const VideoGrid = ({
     videos,
     filters,
-    initialFavorites,
+    //initialFavorites,
     videoId,
     onFavoriteToggle,
     selectedTags,
     videoTags,
     isOpen,
     instructors,
+    favorites,
+    toggleFavorites,
 }) => {
     const [filteredVideos, setFilteredVideos] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [isPlayerVisible, setPlayerVisible] = useState(false);
 
-    const { favorites, toggleFavorite } = useFavorites(initialFavorites);
+    //const { favorites, toggleFavorite } = useFavorites(initialFavorites);
+    //const { favorites, toggleFavorite } = useFavorites({ CognitoData });
+
     const getVideoDurationInMinutes = (duration) => {
         return parseInt(duration, 10);
     };
@@ -159,6 +163,9 @@ const VideoGrid = ({
                             return false;
                         }
                     }
+                    if (filters.favorites && !favorites.includes(video.id)) {
+                        return false;
+                    }
 
                     return true;
                 }
@@ -243,12 +250,19 @@ const VideoGrid = ({
         }, 300); // Delay the reset of selectedVideo to allow the fade-out animation to complete
     };
 
+    /*
     const handleFavoriteClick = (videoId, isFavorite) => {
         if (isFavorite) {
             toggleFavorite(videoId, true); // Call toggleFavorite with the videoId and true
         } else {
             toggleFavorite(videoId, false); // Call toggleFavorite with the videoId and false
         }
+    };
+    */
+
+    const handleFavoriteClick = (videoId, isFavorite) => {
+        // Call the toggleFavorite function and pass the correct value of isFavorite
+        onFavoriteToggle(videoId, !isFavorite);
     };
 
     return (
@@ -267,6 +281,8 @@ const VideoGrid = ({
                                 video.instructor ? video.instructor.name : ""
                             }
                             instructorImage={video.instructorImage}
+                            favorites={favorites}
+                            toggleFavorites={toggleFavorites}
                             isFavorite={favorites.includes(video.id)}
                             onFavoriteToggle={handleFavoriteClick}
                             onClick={() => handleVideoSelect(video)}
@@ -287,6 +303,7 @@ const VideoGrid = ({
                                     : ""
                             }
                             isFavorite={favorites.includes(selectedVideo.id)}
+                            favorites={favorites}
                         />
                         <VideoPlayer
                             videoUrl={selectedVideo.url}
