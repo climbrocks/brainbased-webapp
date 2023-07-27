@@ -14,18 +14,25 @@ const Thumbnail = ({
     image,
     instructorImage,
     onClick,
+    isFavorite,
+    onFavoriteToggle,
+    favorites,
+    toggleFavorites,
 }) => {
     const thumbnailStyle = {
         backgroundImage: `linear-gradient(-90deg, transparent, rgba(0, 0, 0, .7)), url(${image})`,
     };
 
-    const { favorites, toggleFavorite } = useFavorites(); // Use useFavorites without passing any props
+    //const { favorites, toggleFavorite } = useFavorites(); // Use useFavorites without passing any props
 
-    const isFavorite = favorites.includes(video.id);
+    //const isFavorite = favorites.includes(video.id);
+    const [localIsFavorite, setLocalIsFavorite] = useState(isFavorite);
 
     const handleButtonClicked = (e) => {
         e.stopPropagation();
-        toggleFavorite(video.id, isFavorite);
+        // Update localIsFavorite and call onFavoriteToggle to update the favorite state in the parent
+        setLocalIsFavorite(!localIsFavorite);
+        toggleFavorites(video.id, favorites.includes(video.id));
     };
 
     const formatDate = (dateString) => {
@@ -54,8 +61,8 @@ const Thumbnail = ({
                     <FontAwesomeIcon
                         className="heart-icon"
                         icon={faHeart}
-                        color={isFavorite ? "#ae564a" : "rgba(0,0,0,0.5)"}
-                        strokeWidth={isFavorite ? 0 : 2}
+                        color={localIsFavorite ? "#ae564a" : "rgba(0,0,0,0.5)"}
+                        strokeWidth={localIsFavorite ? 0 : 2}
                     />
                 </button>
                 <div className="title-and-instructor-container">

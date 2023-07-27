@@ -70,7 +70,13 @@ const Home = () => {
                     graphqlOperation(listTags)
                 );
                 const tagsData = tagsResponse.data.listTags.items;
-                setTags(tagsData);
+
+                // Sort the tags array by name before setting it to state
+                const sortedTagsData = tagsData.sort((a, b) =>
+                    a.name.localeCompare(b.name)
+                );
+
+                setTags(sortedTagsData);
             } catch (error) {
                 console.log("Error fetching tags:", error);
             }
@@ -201,6 +207,8 @@ const Home = () => {
                         selectedTags={selectedTags}
                         onTagSelect={handleTagSelect}
                         instructors={instructors}
+                        favoritesActive={selectedFilters.favorites}
+                        favorites={favorites}
                     />
                 </div>
                 <div
@@ -215,10 +223,12 @@ const Home = () => {
                     <VideoGrid
                         videos={videos}
                         filters={selectedFilters}
-                        initialFavorites={favorites}
+                        //initialFavorites={favorites}
+                        favorites={favorites}
                         videoTags={videoTags}
                         videoId={videoId}
                         onFavoriteToggle={handleFavoriteToggle}
+                        toggleFavorites={toggleFavorite}
                         selectedTags={selectedTags}
                         instructors={instructors}
                         isOpen={isOpen}

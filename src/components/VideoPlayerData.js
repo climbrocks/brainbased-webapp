@@ -14,104 +14,24 @@ import CognitoData from "./CognitoData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faShare } from "@fortawesome/free-solid-svg-icons";
 
-const VideoPlayerData = ({ video, instructor, isFavorite }) => {
-    const [favoriteStatus, setFavoriteStatus] = useState(isFavorite);
-    const [favorites, setFavorites] = useState([]);
-
-    const cognitoData = CognitoData();
-
-    useEffect(() => {
-        if (cognitoData && video) {
-            const fetchUserData = async () => {
-                try {
-                    const existingUserData = await API.graphql(
-                        graphqlOperation(listUserData, {
-                            filter: {
-                                cognitoSub: {
-                                    eq: cognitoData.sub,
-                                },
-                            },
-                        })
-                    );
-
-                    if (existingUserData.data.listUserData.items.length > 0) {
-                        const userData =
-                            existingUserData.data.listUserData.items[0];
-                        setFavorites(userData.favorites);
-                        setFavoriteStatus(
-                            userData.favorites.includes(video.id)
-                        );
-                    }
-                } catch (error) {
-                    console.log("Error fetching user data:", error);
-                }
-            };
-
-            fetchUserData();
-        }
-    }, [cognitoData, video]);
+const VideoPlayerData = ({
+    video,
+    instructor,
+    isFavorite,
+    favorites,
+    toggleFavorite,
+}) => {
+    const [favoriteStatus, setFavoriteStatus] = useState(
+        favorites ? favorites.includes(video.id) : isFavorite
+    );
 
     const handleFavoriteClick = async () => {
-        if (cognitoData) {
-            try {
-                let updatedFavorites = [...favorites];
-
-                if (favoriteStatus) {
-                    // Remove the video ID from favorites
-                    updatedFavorites = updatedFavorites.filter(
-                        (fav) => fav !== video.id
-                    );
-                } else {
-                    // Add the video ID to favorites if it doesn't already exist
-                    if (!updatedFavorites.includes(video.id)) {
-                        updatedFavorites.push(video.id);
-                    }
-                }
-
-                // Update the state immediately to reflect the current status of the favorite
-                setFavoriteStatus(!favoriteStatus);
-                setFavorites(updatedFavorites);
-
-                const existingUserData = await API.graphql(
-                    graphqlOperation(listUserData, {
-                        filter: {
-                            cognitoSub: {
-                                eq: cognitoData.sub,
-                            },
-                        },
-                    })
-                );
-
-                if (existingUserData.data.listUserData.items.length > 0) {
-                    const existingRowId =
-                        existingUserData.data.listUserData.items[0].id;
-                    const existingVersion =
-                        existingUserData.data.listUserData.items[0]._version;
-
-                    await API.graphql(
-                        graphqlOperation(updateUserData, {
-                            input: {
-                                id: existingRowId,
-                                _version: existingVersion,
-                                favorites: updatedFavorites,
-                            },
-                        })
-                    );
-                } else {
-                    const input = {
-                        cognitoSub: cognitoData.sub,
-                        favorites: updatedFavorites,
-                    };
-
-                    await API.graphql(
-                        graphqlOperation(createUserData, {
-                            input,
-                        })
-                    );
-                }
-            } catch (error) {
-                console.log("Error updating favorite status:", error);
-            }
+        // Use the toggleFavorite function from the Home component to update favorites
+        try {
+            setFavoriteStatus(!favoriteStatus);
+            await toggleFavorite(video.id, favoriteStatus);
+        } catch (error) {
+            console.log("Error updating favorite status:", error);
         }
     };
 
