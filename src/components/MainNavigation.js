@@ -141,10 +141,7 @@ const Navigation = () => {
                                 />
                                 Account
                             </Link>
-                            <Link
-                                className="dropdown-content-link"
-                                to="/dropdown2"
-                            >
+                            <Link className="dropdown-content-link" to="">
                                 <FontAwesomeIcon
                                     className="dropdown-content-link-icon"
                                     icon={faCog}
@@ -180,13 +177,13 @@ const Navigation = () => {
                             </Link>
                             <Link
                                 className="dropdown-content-link"
-                                to="/dropdown3"
+                                // onClick={props.signOut}
                             >
                                 <FontAwesomeIcon
                                     className="dropdown-content-link-icon"
                                     icon={faWindowClose}
                                 />
-                                Logout
+                                Log Out
                             </Link>
                         </div>
                     </div>

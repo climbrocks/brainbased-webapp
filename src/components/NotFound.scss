@@ -1,0 +1,42 @@
+@use "../global-styles/variables";
+@use "../global-styles/mixins";
+
+.not-found-container {
+    @include mixins.grid-for-components;
+    margin: 0 auto;
+    width: 640px;
+    height: 100vh;
+
+    .not-found-content {
+        @include mixins.grid-area-for-components;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column;
+
+        .not-found {
+            text-align: center;
+            background-color: variables.$background-light;
+            padding: 45px;
+            border-radius: 8px;
+
+            img {
+                width: 100%;
+            }
+
+            h2 {
+                padding: 45px 0;
+            }
+
+            .go-home {
+                padding: 15px 10px;
+                display: inline-block;
+                background: variables.$main-red;
+                border-radius: 8px;
+                color: #fff;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+}
