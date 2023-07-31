@@ -4,6 +4,14 @@ import "./VideoPlayerData.scss";
 // React Imports
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
+import {
+    EmailShareButton,
+    FacebookShareButton,
+    TwitterShareButton,
+    EmailIcon,
+    FacebookIcon,
+    TwitterIcon,
+} from "react-share";
 
 // Component Imports
 import { createUserData, updateUserData } from "../graphql/mutations";
@@ -13,6 +21,14 @@ import CognitoData from "./CognitoData";
 // Font Awesome Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faShare } from "@fortawesome/free-solid-svg-icons";
+
+const MyFacebookShareButton = ({ url }) => {
+    return (
+        <FacebookShareButton url={url}>
+            <FacebookIcon />
+        </FacebookShareButton>
+    );
+};
 
 const VideoPlayerData = ({
     video,
@@ -40,10 +56,10 @@ const VideoPlayerData = ({
 
         if (navigator.clipboard) {
             navigator.clipboard.writeText(shareUrl);
-            alert("Share link copied to clipboard!");
+            //alert("Share link copied to clipboard!");
         } else {
             // Fallback for browsers that don't support clipboard API
-            alert(`Share link: ${shareUrl}`);
+            //alert(`Share link: ${shareUrl}`);
         }
     };
 
@@ -52,6 +68,9 @@ const VideoPlayerData = ({
     }
 
     const { title, description } = video;
+
+    // Social Sharing Buttons
+    const urlForShareButtons = `${window.location.origin}/play/${video.id}`;
 
     return (
         <div className="video-data-container">
@@ -85,6 +104,8 @@ const VideoPlayerData = ({
                         />
                         <span className="social-text">Share</span>
                     </button>
+
+                    <MyFacebookShareButton url={urlForShareButtons} />
                 </div>
             </div>
         </div>

@@ -112,15 +112,13 @@ const App = () => {
                 <Route path="/" exact element={<Home />} />
                 <Route path="/home/:videoId?" element={<Home />} />
                 {/* <Route path="/UserAccount" element={<UserAccount />} />
-                <Route path="/videoplayer" element={<VideoPlayer />} />
-                <Route path="/play/:videoId?" element={<Play />} /> */}
+                <Route path="/videoplayer" element={<VideoPlayer />} /> */}
+                <Route path="/play/:videoId?" element={<Play />} />}
                 <Route path="/contact" />
                 <Route path="/auth" element={<AuthStatus />} />
-
                 <Route path="/UserAccount" element={renderUserAccount} />
                 <Route path="/videoplayer" element={renderVideoPlayer} />
                 <Route path="/play/:videoId?" element={renderPlay} />
-
                 {/* 404 Not Found */}
                 <Route path="/*" element={<NotFound />} />
             </Routes>
