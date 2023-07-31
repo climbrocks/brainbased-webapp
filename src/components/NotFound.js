@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 // Component Imports
 
 // Image Imports
-import yoga from "../images/not-found.png";
+import yoga from "../images/not-found.webp";
 
 // Font Awesome Icons
 
@@ -27,7 +27,7 @@ const NotFound = () => {
                     </h2>
 
                     <Link className="go-home" to="/home">
-                        Go to Home
+                        Go to Video Library
                     </Link>
                 </div>
             </div>
