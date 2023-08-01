@@ -77,7 +77,7 @@ const withSSOAuthenticator = (WrappedComponent) => {
 const App = () => {
     /* Change app title */
     useEffect(() => {
-        document.title = "Brain Based Wellness";
+        document.title = "Brain Based Wellness | Home Page";
     }, []);
 
     const [isSignedIn, setIsSignedIn] = useState(false);
