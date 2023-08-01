@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import CognitoData from "./CognitoData";
 
 // Image Imports
-import logo from "../images/logo-large.webp";
-import smallLogo from "../images/logo-small.webp";
+import logo from "../images/logo-large.png";
+import smallLogo from "../images/logo-small.png";
 
 //Font Awesome Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +19,7 @@ import {
     faUser,
     faWindowClose,
     faHome,
+    faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Navigation = () => {
@@ -171,9 +172,9 @@ const Navigation = () => {
                             <Link className="dropdown-content-link" to="/">
                                 <FontAwesomeIcon
                                     className="dropdown-content-link-icon"
-                                    icon={faHome}
+                                    icon={faPlay}
                                 />
-                                Home
+                                Video Library
                                 {/* May change to Library with new icon */}
                             </Link>
                             <Link className="dropdown-content-link" to="/">

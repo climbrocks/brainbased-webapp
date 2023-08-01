@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 // Component Imports
 
 // Image Imports
-import yoga from "../images/not-found.webp";
+import yoga from "../images/not-found.png";
 
 // Font Awesome Icons
 

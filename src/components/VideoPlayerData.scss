@@ -35,17 +35,22 @@
 
     .video-social-buttons {
         display: grid;
-        grid-template-columns: repeat(100%, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         grid-gap: 15px;
         align-self: end;
 
-        button {
+        @media screen and (max-width: 1024px) {
+            grid-template-columns: 1fr;
+        }
+
+        .social-button {
             border: none;
             background: none;
             border-radius: 15px;
-            background: variables.$main-red;
+            background-color: variables.$main-red;
             padding: 20px 0;
             transition: all 0.3s ease-in-out;
+            width: 100%;
 
             .social-icon {
             }

@@ -20,13 +20,45 @@ import CognitoData from "./CognitoData";
 
 // Font Awesome Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faShare } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faEnvelope, faE } from "@fortawesome/free-solid-svg-icons";
+import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
+// Share Buttons
 const MyFacebookShareButton = ({ url }) => {
     return (
-        <FacebookShareButton url={url}>
-            <FacebookIcon />
+        <FacebookShareButton
+            className="social-button"
+            resetButtonStyle={false}
+            url={url}
+        >
+            <FontAwesomeIcon className="social-icon" icon={faFacebook} />
+            <span className="social-text">Share on Facebook</span>
         </FacebookShareButton>
+    );
+};
+const MyTwitterShareButton = ({ url }) => {
+    return (
+        <TwitterShareButton
+            className="social-button"
+            resetButtonStyle={false}
+            url={url}
+        >
+            <FontAwesomeIcon className="social-icon" icon={faTwitter} />
+            <span className="social-text">Share on Twitter</span>
+        </TwitterShareButton>
+    );
+};
+
+const MyEmailShareButton = ({ url }) => {
+    return (
+        <EmailShareButton
+            className="social-button"
+            resetButtonStyle={false}
+            url={url}
+        >
+            <FontAwesomeIcon className="social-icon" icon={faEnvelope} />
+            <span className="social-text">Share with Email</span>
+        </EmailShareButton>
     );
 };
 
@@ -37,6 +69,12 @@ const VideoPlayerData = ({
     favorites,
     toggleFavorite,
 }) => {
+    /* Change tab title */
+    useEffect(() => {
+        if (video) {
+            document.title = `Brain Based Wellness | ${video.title}`;
+        }
+    }, [video]);
     const [favoriteStatus, setFavoriteStatus] = useState(
         favorites ? favorites.includes(video.id) : isFavorite
     );
@@ -84,7 +122,10 @@ const VideoPlayerData = ({
                 </div>
                 <p className="video-description">{description}</p>
                 <div className="video-social-buttons">
-                    <button onClick={handleFavoriteClick}>
+                    <button
+                        className="social-button"
+                        onClick={handleFavoriteClick}
+                    >
                         <FontAwesomeIcon
                             className={`social-icon ${
                                 favoriteStatus ? "favorite" : ""
@@ -97,15 +138,17 @@ const VideoPlayerData = ({
                                 : "Add Favorite"}
                         </span>
                     </button>
-                    <button onClick={handleShareClick}>
+                    {/* <button onClick={handleShareClick}>
                         <FontAwesomeIcon
                             className="social-icon"
                             icon={faShare}
                         />
                         <span className="social-text">Share</span>
-                    </button>
+                    </button> */}
 
                     <MyFacebookShareButton url={urlForShareButtons} />
+                    <MyTwitterShareButton url={urlForShareButtons} />
+                    <MyEmailShareButton url={urlForShareButtons} />
                 </div>
             </div>
         </div>
