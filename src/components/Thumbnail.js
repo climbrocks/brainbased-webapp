@@ -30,9 +30,7 @@ const Thumbnail = ({
 
     const handleButtonClicked = (e) => {
         e.stopPropagation();
-        // Update localIsFavorite and call onFavoriteToggle to update the favorite state in the parent
-        setLocalIsFavorite(!localIsFavorite);
-        toggleFavorites(video.id, favorites.includes(video.id));
+        onFavoriteToggle(video.id, !isFavorite);
     };
 
     const formatDate = (dateString) => {

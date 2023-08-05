@@ -25,17 +25,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 Amplify.configure(awsconfig);
 
 const withSSOAuthenticator = (WrappedComponent) => {
-    const devLink = () => {
-        window.open(
-            "https://brainbased.auth.us-east-1.amazoncognito.com/oauth2/authorize?client_id=1algn769duhhvjloeprslm0d1v&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+profile&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth"
-        );
-    };
-
-    const prodLink = () => {
-        window.open(
-            "https://brainbased.auth.us-east-1.amazoncognito.com/oauth2/authorize?client_id=1algn769duhhvjloeprslm0d1v&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+profile&redirect_uri=https%3A%2F%2Fmain.d1t4o8gwtbnlae.amplifyapp.com%2Fauth"
-        );
-    };
     return (props) => {
         const [signedIn, setSignedIn] = useState(false);
 
@@ -62,12 +51,9 @@ const withSSOAuthenticator = (WrappedComponent) => {
         } else {
             return (
                 <>
-                    <Button onClick={devLink}>
-                        Click here to sign in for local dev environment
-                    </Button>
-                    <Button onClick={prodLink}>
-                        Click here to sign in for live prod environment
-                    </Button>
+                    <button onClick={() => Auth.federatedSignIn()}>
+                        Open Hosted UI
+                    </button>
                 </>
             );
         }
@@ -113,7 +99,7 @@ const App = () => {
                 <Route path="/home/:videoId?" element={<Home />} />
                 {/* <Route path="/UserAccount" element={<UserAccount />} />
                 <Route path="/videoplayer" element={<VideoPlayer />} /> */}
-                <Route path="/play/:videoId?" element={<Play />} />}
+                <Route path="/play/:videoId?" element={<Play />} />
                 <Route path="/contact" />
                 <Route path="/auth" element={<AuthStatus />} />
                 <Route path="/UserAccount" element={renderUserAccount} />

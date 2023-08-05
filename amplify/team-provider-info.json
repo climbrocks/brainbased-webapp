@@ -22,5 +22,29 @@
         "webappstorage": {}
       }
     }
+  },
+  "ssotest": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bbwwebapp-ssotest-00327-authRole",
+      "UnauthRoleArn": "arn:aws:iam::793146548349:role/amplify-bbwwebapp-ssotest-00327-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::793146548349:role/amplify-bbwwebapp-ssotest-00327-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-bbwwebapp-ssotest-00327-deployment",
+      "UnauthRoleName": "amplify-bbwwebapp-ssotest-00327-unauthRole",
+      "StackName": "amplify-bbwwebapp-ssotest-00327",
+      "StackId": "arn:aws:cloudformation:us-east-1:793146548349:stack/amplify-bbwwebapp-ssotest-00327/fb71ced0-327b-11ee-89ba-0e0de7294027",
+      "AmplifyAppId": "d1t4o8gwtbnlae"
+    },
+    "categories": {
+      "auth": {
+        "bbwwebappef8c0482": {}
+      },
+      "api": {
+        "bbwwebapp": {}
+      },
+      "storage": {
+        "webappstorage": {}
+      }
+    }
   }
 }
