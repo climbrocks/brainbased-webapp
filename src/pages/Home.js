@@ -11,12 +11,14 @@ import {
     listTeachers,
 } from "../graphql/queries";
 
+import { createTag } from "../graphql/mutations";
+
 // Component Imports
 import FilterBar from "../components/FilterBar";
 import TagBar from "../components/TagBar";
 import VideoGrid from "../components/VideoGrid";
 import useFavorites from "../FavoritesUtils";
-import CognitoData from "../components/CognitoData";
+//import CognitoData from "../components/CognitoData";
 import FilterSideBar from "../components/FilterSideBar";
 
 const Home = () => {
@@ -29,7 +31,7 @@ const Home = () => {
         duration: [], // Array to store selected duration filters
         teacher: [], // Array to store selected teacher filters
     });
-    const { favorites, toggleFavorite } = useFavorites({ CognitoData });
+    const { favorites, toggleFavorite } = useFavorites();
     const [selectedTags, setSelectedTags] = useState([]);
     const [videoTags, setVideoTags] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
