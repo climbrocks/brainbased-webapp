@@ -49,11 +49,6 @@ const Home = () => {
             console.error("Error fetching user info:", error);
         }
     };
-    let num = 0;
-    while (num == 0) {
-        getUserInfo();
-        num = 1;
-    }
 
     useEffect(() => {
         const fetchVideos = async () => {

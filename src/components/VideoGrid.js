@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Storage, API, graphqlOperation } from "aws-amplify";
+import { Storage, API, graphqlOperation, Auth } from "aws-amplify";
 import { useParams } from "react-router-dom";
 
 import { getTeacher, listCategories } from "../graphql/queries";
@@ -203,6 +203,31 @@ const VideoGrid = ({
 
     const handleVideoSelect = async (video) => {
         try {
+            // Fetch the current user, bypassing the cache to ensure the most recent information
+            const user = await Auth.currentAuthenticatedUser({
+                bypassCache: true,
+            });
+            const token = user.signInUserSession.idToken.jwtToken; // Extract the JWT token
+
+            const myInit = {
+                headers: {
+                    Authorization: token, // Include the token in the Authorization header
+                },
+            };
+
+            // Make the API call to check access
+            const response = await API.get(
+                "bbwvideoauthapi",
+                "/videoaccess",
+                myInit
+            );
+
+            if (response !== "Access granted") {
+                alert("You do not have access to this video.");
+                return; // Exit the function early if access is not granted
+            }
+
+            // If access is granted, proceed with fetching the video details
             const videoUrl = await Storage.get(video.url, { level: "public" });
             const imageUrl = await Storage.get(video.poster, {
                 level: "public",
