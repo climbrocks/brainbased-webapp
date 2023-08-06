@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "paths": {
+    "/videoaccess": {
+      "name": "/videoaccess",
+      "lambdaFunction": "bbwwebappvideoauthfunction",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
+    }
+  }
+}
