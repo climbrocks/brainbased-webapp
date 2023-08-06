@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation, Auth } from "aws-amplify";
 import { useParams } from "react-router-dom";
 import "./Home.scss";
 
@@ -38,6 +38,22 @@ const Home = () => {
     const [instructors, setInstructors] = useState([]);
 
     const [filteredVideos, setFilteredVideos] = useState([]);
+
+    const getUserInfo = async () => {
+        try {
+            const user = await Auth.currentAuthenticatedUser();
+            const token = user.signInUserSession.idToken.jwtToken; // This can vary based on your specific setup
+            console.log(token);
+            // Now you can use the token to make a request to your Lambda function
+        } catch (error) {
+            console.error("Error fetching user info:", error);
+        }
+    };
+    let num = 0;
+    while (num == 0) {
+        getUserInfo();
+        num = 1;
+    }
 
     useEffect(() => {
         const fetchVideos = async () => {

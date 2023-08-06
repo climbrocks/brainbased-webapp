@@ -1,5 +1,19 @@
 {
   "api": {
+    "bbwvidoeauthapi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "bbwwebappvideoauthfunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "bbwwebapp": {
       "dependsOn": [
         {
@@ -60,6 +74,31 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "bbwwebappvideoauthfunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_bbwwebappvideoauthfunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "bbwwebappvideoauthfunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_bbwwebappvideoauthfunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "bbwwebappvideoauthfunction"
+        }
+      ]
     }
   },
   "storage": {

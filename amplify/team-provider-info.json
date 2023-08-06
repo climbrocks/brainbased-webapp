@@ -33,17 +33,25 @@
       "UnauthRoleName": "amplify-bbwwebapp-ssotest-00327-unauthRole",
       "StackName": "amplify-bbwwebapp-ssotest-00327",
       "StackId": "arn:aws:cloudformation:us-east-1:793146548349:stack/amplify-bbwwebapp-ssotest-00327/fb71ced0-327b-11ee-89ba-0e0de7294027",
-      "AmplifyAppId": "d1t4o8gwtbnlae"
+      "AmplifyAppId": "d1t4o8gwtbnlae",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-bbwwebapp-ssotest-00327-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
         "bbwwebappef8c0482": {}
       },
       "api": {
-        "bbwwebapp": {}
+        "bbwwebapp": {},
+        "bbwvidoeauthapi": {}
       },
       "storage": {
         "webappstorage": {}
+      },
+      "function": {
+        "bbwwebappvideoauthfunction": {
+          "deploymentBucketName": "amplify-bbwwebapp-ssotest-00327-deployment",
+          "s3Key": "amplify-builds/bbwwebappvideoauthfunction-44472b3555694137774d-build.zip"
+        }
       }
     }
   }
