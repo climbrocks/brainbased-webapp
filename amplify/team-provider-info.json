@@ -42,7 +42,7 @@
       },
       "api": {
         "bbwwebapp": {},
-        "bbwvidoeauthapi": {}
+        "bbwvideoauthapi": {}
       },
       "storage": {
         "webappstorage": {}
@@ -51,6 +51,10 @@
         "bbwwebappvideoauthfunction": {
           "deploymentBucketName": "amplify-bbwwebapp-ssotest-00327-deployment",
           "s3Key": "amplify-builds/bbwwebappvideoauthfunction-44472b3555694137774d-build.zip"
+        },
+        "bbwwebappvideoaccess": {
+          "deploymentBucketName": "amplify-bbwwebapp-ssotest-00327-deployment",
+          "s3Key": "amplify-builds/bbwwebappvideoaccess-414c4157687a55487972-build.zip"
         }
       }
     }
