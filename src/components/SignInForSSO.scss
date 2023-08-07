@@ -1,0 +1,39 @@
+@use "../global-styles/mixins";
+@use "../global-styles/variables";
+
+.signin-sso-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signin-sso {
+    width: 480px;
+    padding: 45px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    background-color: variables.$background-light;
+    border-radius: 8px;
+
+    img {
+        padding-bottom: 45px;
+    }
+
+    button {
+        width: 100%;
+        padding: 15px 25px;
+        color: variables.$text-light;
+        background-color: variables.$main-red;
+        border: none;
+        border-radius: 8px;
+        opacity: 0.8;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+    }
+    button:hover {
+        opacity: 1;
+    }
+}
