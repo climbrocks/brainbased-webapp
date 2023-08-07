@@ -30,6 +30,7 @@ const MyFacebookShareButton = ({ url }) => {
             className="social-button"
             resetButtonStyle={false}
             url={url}
+            quote="Check Out this Video from Brainbased Wellness"
         >
             <FontAwesomeIcon className="social-icon" icon={faFacebook} />
             <span className="social-text">Share on Facebook</span>
@@ -42,6 +43,7 @@ const MyTwitterShareButton = ({ url }) => {
             className="social-button"
             resetButtonStyle={false}
             url={url}
+            title="Check Out this Video from Brainbased Wellness"
         >
             <FontAwesomeIcon className="social-icon" icon={faTwitter} />
             <span className="social-text">Share on Twitter</span>
@@ -55,6 +57,8 @@ const MyEmailShareButton = ({ url }) => {
             className="social-button"
             resetButtonStyle={false}
             url={url}
+            subject="Check Out this Video from Brainbased Wellness"
+            body={url}
         >
             <FontAwesomeIcon className="social-icon" icon={faEnvelope} />
             <span className="social-text">Share with Email</span>
