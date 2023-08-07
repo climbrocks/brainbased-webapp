@@ -1,6 +1,6 @@
 export type AmplifyDependentResourcesAttributes = {
   "api": {
-    "bbwvideoauthapi": {
+    "bbwvidoeauthapi": {
       "ApiId": "string",
       "ApiName": "string",
       "RootUrl": "string"
@@ -25,13 +25,6 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
-    "bbwwebappvideoaccess": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
-    },
     "bbwwebappvideoauthfunction": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
