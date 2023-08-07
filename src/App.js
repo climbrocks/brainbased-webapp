@@ -11,6 +11,7 @@ import awsconfig from "./aws-exports";
 import React, { useEffect, useState } from "react";
 import MainNavigation from "./components/MainNavigation.js";
 import AuthStatus from "./components/AuthStatus";
+import SignInForSSO from "./components/SignInForSSO";
 import Footer from "./components/Footer";
 
 // Routing
@@ -46,14 +47,19 @@ const withSSOAuthenticator = (WrappedComponent) => {
                 .catch(() => setSignedIn(false));
         }, []);
 
+        const handleFederatedSignIn = () => {
+            Auth.federatedSignIn();
+        };
+
         if (signedIn) {
             return <WrappedComponent {...props} />;
         } else {
             return (
                 <>
-                    <button onClick={() => Auth.federatedSignIn()}>
+                    {/* <button onClick={() => Auth.federatedSignIn()}>
                         Open Hosted UI
-                    </button>
+                    </button> */}
+                    <SignInForSSO federatedSignIn={handleFederatedSignIn} />
                 </>
             );
         }
