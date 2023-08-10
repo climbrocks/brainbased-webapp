@@ -14,7 +14,7 @@ const AccessDeniedModal = ({ onClose }) => {
     return (
         <div className="modal-overlay">
             <div className="modal">
-                <h2>Oh no!</h2>
+                <h1>Oh no!</h1>
                 <p>
                     You do not have an active subscription to view this video.
                 </p>
