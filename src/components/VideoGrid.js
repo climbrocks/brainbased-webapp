@@ -8,6 +8,7 @@ import "./VideoGrid.scss";
 import Thumbnail from "./Thumbnail";
 import VideoPlayer from "../pages/VideoPlayer";
 import VideoPlayerData from "./VideoPlayerData";
+import AccessDeniedModal from "./AccessDeniedModal";
 import useFavorites from "../FavoritesUtils";
 
 const VideoGrid = ({
@@ -26,6 +27,7 @@ const VideoGrid = ({
     const [filteredVideos, setFilteredVideos] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [isPlayerVisible, setPlayerVisible] = useState(false);
+    const [showAccessDeniedModal, setShowAccessDeniedModal] = useState(false);
 
     //const { favorites, toggleFavorite } = useFavorites(initialFavorites);
     //const { favorites, toggleFavorite } = useFavorites({ CognitoData });
@@ -223,7 +225,9 @@ const VideoGrid = ({
             );
 
             if (response !== "Access granted") {
-                alert("You do not have access to this video.");
+                //alert("You do not have access to this video.");
+
+                setShowAccessDeniedModal(true);
                 return; // Exit the function early if access is not granted
             }
 
@@ -293,6 +297,11 @@ const VideoGrid = ({
     return (
         <>
             <div className="video-grid-container">
+                {showAccessDeniedModal && (
+                    <AccessDeniedModal
+                        onClose={() => setShowAccessDeniedModal(false)}
+                    />
+                )}
                 <div className="video-grid">
                     {filteredVideos.map((video, index) => (
                         <Thumbnail

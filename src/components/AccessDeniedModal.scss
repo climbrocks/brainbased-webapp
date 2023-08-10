@@ -1,0 +1,52 @@
+@use "../global-styles/mixins";
+@use "../global-styles/variables";
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background-color: variables.$background-light;
+    font-family: "Comfortaa", sans-serif;
+    padding: 45px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+
+    a {
+        padding: 25px 0;
+        width: 100%;
+        display: inline-block;
+        color: #fff;
+        background-color: variables.$main-red;
+        opacity: 0.8;
+        transition: all 0.3s ease-in-out;
+    }
+    a:hover {
+        opacity: 1;
+    }
+}
+
+.exit-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    cursor: pointer;
+    color: variables.$main-red;
+    opacity: 0.8;
+    transition: all 0.3s ease-in-out;
+}
+.exit-button:hover {
+    opacity: 1;
+}
