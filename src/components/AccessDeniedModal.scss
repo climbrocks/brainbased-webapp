@@ -11,17 +11,36 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 9999;
 }
 
 .modal {
     background-color: variables.$background-light;
     font-family: "Comfortaa", sans-serif;
+    color: variables.$text-dark;
     padding: 45px;
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
 
+    h2 {
+        font-family: "Yeseva One", serif;
+        color: variables.$main-red;
+        margin-bottom: 45px;
+        line-height: 1;
+        padding: 0;
+    }
+
+    p {
+        margin-bottom: 20px;
+    }
+
     a {
+        margin-bottom: 15px;
+    }
+
+    a,
+    button {
         padding: 25px 0;
         width: 100%;
         display: inline-block;
@@ -29,24 +48,10 @@
         background-color: variables.$main-red;
         opacity: 0.8;
         transition: all 0.3s ease-in-out;
+        border-radius: 8px;
     }
-    a:hover {
+    a:hover,
+    button:hover {
         opacity: 1;
     }
-}
-
-.exit-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: none;
-    background: transparent;
-    font-size: 16px;
-    cursor: pointer;
-    color: variables.$main-red;
-    opacity: 0.8;
-    transition: all 0.3s ease-in-out;
-}
-.exit-button:hover {
-    opacity: 1;
 }
