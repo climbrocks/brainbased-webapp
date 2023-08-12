@@ -41,26 +41,39 @@ const useFavorites = () => {
 
     const toggleFavorite = async (videoId) => {
         try {
-            let updatedFavorites = [...new Set(favorites ?? [])];   // Make sure there are no duplicate entries.
-            if (favorites.includes(videoId)) {
-                updatedFavorites = updatedFavorites.filter((fav) => fav !== videoId);   // Don't pull from favorites, use filter updatedFavorites.
-            } else {
-                updatedFavorites = [...updatedFavorites, videoId]; // Just append this video id to the updated favorites.
-            }
-
             const user = await Auth.currentAuthenticatedUser();
             const userSub = user.attributes.sub; // user's unique sub
 
+            // Fetch current user data including _version
+            const { data } = await API.graphql(
+                graphqlOperation(listUserData, {
+                    filter: { cognitoSub: { eq: userSub } },
+                })
+            );
+            const userData = data.listUserData.items[0];
+            let updatedFavorites = [...(userData.favorites ?? [])]; // Use the favorites from fetched userData
+
+            if (updatedFavorites.includes(videoId)) {
+                updatedFavorites = updatedFavorites.filter(
+                    (fav) => fav !== videoId
+                );
+            } else {
+                updatedFavorites.push(videoId);
+            }
+
+            // Use the current _version to update user data
             await API.graphql(
                 graphqlOperation(updateUserData, {
                     input: {
                         id: userSub,
                         cognitoSub: userSub,
                         favorites: updatedFavorites,
+                        _version: userData._version, // Include the current version in the update
                     },
                 })
             );
-            setFavorites(updatedFavorites); // move this here
+
+            setFavorites(updatedFavorites);
         } catch (error) {
             console.log("Error toggling favorite:", error);
         }
