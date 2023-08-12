@@ -10,7 +10,6 @@ const useFavorites = () => {
         try {
             const user = await Auth.currentAuthenticatedUser();
             const userSub = user.attributes.sub; // user's unique sub
-
             const { data } = await API.graphql(
                 graphqlOperation(listUserData, {
                     filter: { cognitoSub: { eq: userSub } },
@@ -42,12 +41,11 @@ const useFavorites = () => {
 
     const toggleFavorite = async (videoId) => {
         try {
-            let updatedFavorites = [...(favorites ?? [])];
-
+            let updatedFavorites = [...new Set(favorites ?? [])];   // Make sure there are no duplicate entries.
             if (favorites.includes(videoId)) {
-                updatedFavorites = favorites.filter((fav) => fav !== videoId);
+                updatedFavorites = updatedFavorites.filter((fav) => fav !== videoId);   // Don't pull from favorites, use filter updatedFavorites.
             } else {
-                updatedFavorites = [...favorites, videoId];
+                updatedFavorites = [...updatedFavorites, videoId]; // Just append this video id to the updated favorites.
             }
 
             const user = await Auth.currentAuthenticatedUser();
@@ -62,7 +60,6 @@ const useFavorites = () => {
                     },
                 })
             );
-
             setFavorites(updatedFavorites); // move this here
         } catch (error) {
             console.log("Error toggling favorite:", error);
