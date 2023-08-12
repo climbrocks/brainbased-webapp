@@ -26,7 +26,7 @@ const Thumbnail = ({
     //const { favorites, toggleFavorite } = useFavorites(); // Use useFavorites without passing any props
 
     //const isFavorite = favorites.includes(video.id);
-    const [localIsFavorite, setLocalIsFavorite] = useState(isFavorite);
+    //const [localIsFavorite, setLocalIsFavorite] = useState(isFavorite); // I think this is dead?
 
     const handleButtonClicked = (e) => {
         e.stopPropagation();
@@ -59,8 +59,8 @@ const Thumbnail = ({
                     <FontAwesomeIcon
                         className="heart-icon"
                         icon={faHeart}
-                        color={localIsFavorite ? "#ae564a" : "rgba(0,0,0,0.5)"}
-                        strokeWidth={localIsFavorite ? 0 : 2}
+                        color={isFavorite ? "#ae564a" : "rgba(0,0,0,0.5)"}
+                        strokeWidth={isFavorite ? 0 : 2}
                     />
                 </button>
                 <div className="title-and-instructor-container">
