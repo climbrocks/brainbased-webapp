@@ -99,6 +99,11 @@ const Navigation = () => {
             .catch((err) => console.log(err));
     };
 
+    const redirectHome = () => {
+        window.location.href =
+            "https://brainbased-prod-ssotest.auth.us-east-1.amazoncognito.com/oauth2/authorize?client_id=5aoevc1lemubiht32gnc05khuc&response_type=token&scope=email+openid+profile&redirect_uri=https%3A%2F%2Fstaging.brainbased-wellness.com%2Fcognito-intermediate%2F";
+    };
+
     return (
         <div className="navigation-container">
             <nav ref={navigationBarRef} className="navigation-bar">
@@ -185,7 +190,11 @@ const Navigation = () => {
                                 Video Library
                                 {/* May change to Library with new icon */}
                             </Link>
-                            <Link className="dropdown-content-link" to="/">
+                            <Link
+                                className="dropdown-content-link"
+                                to="/"
+                                onClick={redirectHome}
+                            >
                                 <FontAwesomeIcon
                                     className="dropdown-content-link-icon"
                                     icon={faHome}
