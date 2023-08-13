@@ -22,6 +22,8 @@ import {
     faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { Auth } from "aws-amplify";
+
 const Navigation = () => {
     const [isAccountDropdownOpen, setAccountDropdownOpen] = useState(false);
     const [isMainMenuOpen, setMainMenuOpen] = useState(false);
@@ -89,6 +91,12 @@ const Navigation = () => {
             return `${rightValue}px`;
         }
         return "auto";
+    };
+
+    const handleSignOut = () => {
+        Auth.signOut()
+            //.then(() => setIsSignedIn(false))
+            .catch((err) => console.log(err));
     };
 
     return (
@@ -186,7 +194,7 @@ const Navigation = () => {
                             </Link>
                             <Link
                                 className="dropdown-content-link"
-                                // onClick={props.signOut}
+                                onClick={handleSignOut}
                             >
                                 <FontAwesomeIcon
                                     className="dropdown-content-link-icon"
