@@ -1,8 +1,10 @@
+// App.js
 import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Navigate,
+    Outlet,
+    //useNavigate,
 } from "react-router-dom";
 import "./App.scss";
 import "@aws-amplify/ui-react/styles.css";
@@ -13,6 +15,7 @@ import MainNavigation from "./components/MainNavigation.js";
 import AuthStatus from "./components/AuthStatus";
 import SignInForSSO from "./components/SignInForSSO";
 import Footer from "./components/Footer";
+//import { NavigationProvider, useNavigation } from "./NavigationContext";
 
 // Routing
 import Home from "./pages/Home";
@@ -21,7 +24,6 @@ import VideoPlayer from "./pages/VideoPlayer";
 import Play from "./pages/Play";
 import { Button } from "@aws-amplify/ui-react";
 import NotFound from "./components/NotFound";
-import ProtectedRoute from "./components/ProtectedRoute";
 
 Amplify.configure(awsconfig);
 
@@ -56,9 +58,7 @@ const withSSOAuthenticator = (WrappedComponent) => {
         } else {
             return (
                 <>
-                    {/* <button onClick={() => Auth.federatedSignIn()}>
-                        Open Hosted UI
-                    </button> */}
+                    {/* Pass the videoId parameter down to the SignInForSSO component */}
                     <SignInForSSO federatedSignIn={handleFederatedSignIn} />
                 </>
             );
@@ -69,53 +69,40 @@ const withSSOAuthenticator = (WrappedComponent) => {
 const App = () => {
     /* Change app title */
     useEffect(() => {
-        document.title = "Brain Based Wellness | Home Page";
+        document.title = "Brain-Based Wellness | Home Page";
     }, []);
 
     const [isSignedIn, setIsSignedIn] = useState(false);
+    const [tempUUID, setTempUUID] = useState(null);
+    //const navigate = useNavigate();
 
     useEffect(() => {
         // Check if the user is signed in
         Auth.currentAuthenticatedUser()
             .then(() => setIsSignedIn(true))
             .catch(() => setIsSignedIn(false));
-    }, []);
-
-    // Helper function to render the UserAccount component or redirect to the login page
-    const renderUserAccount = () => {
-        return isSignedIn ? <UserAccount /> : <Navigate to="/auth" />;
-    };
-
-    // Helper function to render the VideoPlayer component or redirect to the login page
-    const renderVideoPlayer = () => {
-        return isSignedIn ? <VideoPlayer /> : <Navigate to="/auth" />;
-    };
-
-    // Helper function to render the Play component or redirect to the login page
-    const renderPlay = () => {
-        return isSignedIn ? <Play /> : <Navigate to="/auth" />;
-    };
+    }, [isSignedIn]);
 
     return (
         <Router>
             <MainNavigation />
 
             <Routes>
-                <Route path="/" exact element={<Home />} />
-                <Route path="/home/:videoId?" element={<Home />} />
-                {/* <Route path="/UserAccount" element={<UserAccount />} />
-                <Route path="/videoplayer" element={<VideoPlayer />} /> */}
-                <Route path="/play/:videoId?" element={<Play />} />
-                <Route path="/contact" />
-                <Route path="/auth" element={<AuthStatus />} />
-                <Route path="/UserAccount" element={renderUserAccount} />
-                <Route path="/videoplayer" element={renderVideoPlayer} />
-                <Route path="/play/:videoId?" element={renderPlay} />
-                {/* 404 Not Found */}
+                <Route path="/" element={<Outlet />}>
+                    <Route index element={<Home />} />
+                    <Route path="/home/:videoId?" element={<Home />} />
+                    <Route path="play/:videoId?" element={<Play />} />
+                </Route>
+                <Route
+                    path="/UserAccount"
+                    element={withSSOAuthenticator(UserAccount)}
+                />
+                <Route
+                    path="/videoplayer"
+                    element={withSSOAuthenticator(VideoPlayer)}
+                />
                 <Route path="/*" element={<NotFound />} />
             </Routes>
-
-            {/* <Footer /> */}
         </Router>
     );
 };
