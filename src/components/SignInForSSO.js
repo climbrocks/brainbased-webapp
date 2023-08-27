@@ -11,8 +11,19 @@ import logo from "../images/logo-large.png";
 // Font Awesome Icons
 
 const SignInForSSO = ({ federatedSignIn }) => {
+    const urlParts = window.location.pathname.split("/");
+    const videoIdIndex = urlParts.indexOf("play") + 1;
+
+    let videoId = null;
+    if (videoIdIndex !== 0 && videoIdIndex < urlParts.length) {
+        videoId = urlParts[videoIdIndex];
+    }
+
     const handleSignInClick = () => {
-        federatedSignIn(); // Call the federatedSignIn function when the button is clicked
+        if (videoId) {
+            localStorage.setItem("tempUUID", videoId);
+        }
+        federatedSignIn();
     };
 
     return (
@@ -24,4 +35,5 @@ const SignInForSSO = ({ federatedSignIn }) => {
         </div>
     );
 };
+
 export default SignInForSSO;

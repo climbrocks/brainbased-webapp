@@ -20,7 +20,12 @@ import CognitoData from "./CognitoData";
 
 // Font Awesome Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faEnvelope, faE } from "@fortawesome/free-solid-svg-icons";
+import {
+    faHeart,
+    faEnvelope,
+    faE,
+    faLink,
+} from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 // Share Buttons
@@ -98,10 +103,10 @@ const VideoPlayerData = ({
 
         if (navigator.clipboard) {
             navigator.clipboard.writeText(shareUrl);
-            //alert("Share link copied to clipboard!");
+            alert("Share link copied to clipboard!");
         } else {
             // Fallback for browsers that don't support clipboard API
-            //alert(`Share link: ${shareUrl}`);
+            alert(`Share link: ${shareUrl}`);
         }
     };
 
@@ -113,6 +118,12 @@ const VideoPlayerData = ({
 
     // Social Sharing Buttons
     const urlForShareButtons = `${window.location.origin}/play/${video.id}`;
+
+    /*
+    <MyFacebookShareButton url={urlForShareButtons} />
+    <MyTwitterShareButton url={urlForShareButtons} />
+    <MyEmailShareButton url={urlForShareButtons} />
+    */
 
     return (
         <div className="video-data-container">
@@ -142,17 +153,20 @@ const VideoPlayerData = ({
                                 : "Add Favorite"}
                         </span>
                     </button>
-                    {/* <button onClick={handleShareClick}>
-                        <FontAwesomeIcon
-                            className="social-icon"
-                            icon={faShare}
-                        />
-                        <span className="social-text">Share</span>
-                    </button> */}
-
-                    <MyFacebookShareButton url={urlForShareButtons} />
-                    <MyTwitterShareButton url={urlForShareButtons} />
-                    <MyEmailShareButton url={urlForShareButtons} />
+                    {
+                        <button
+                            className="social-button"
+                            onClick={handleShareClick}
+                        >
+                            <FontAwesomeIcon
+                                className={`social-icon ${
+                                    favoriteStatus ? "favorite" : ""
+                                }`}
+                                icon={faLink}
+                            />
+                            <span className="social-text"> Copy Link </span>
+                        </button>
+                    }
                 </div>
             </div>
         </div>

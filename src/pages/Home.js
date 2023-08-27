@@ -22,7 +22,10 @@ import useFavorites from "../FavoritesUtils";
 import FilterSideBar from "../components/FilterSideBar";
 
 const Home = () => {
+    const [tempUUID, setTempUUID] = useState(null);
+    const storedTempUUID = localStorage.getItem("tempUUID");
     const { videoId } = useParams();
+    const [playId, setPlayId] = useState([]);
     const [videos, setVideos] = useState([]);
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
@@ -38,6 +41,20 @@ const Home = () => {
     const [instructors, setInstructors] = useState([]);
 
     const [filteredVideos, setFilteredVideos] = useState([]);
+
+    console.log(useParams());
+
+    useEffect(() => {
+        if (storedTempUUID) {
+            setTempUUID(storedTempUUID);
+            setPlayId(storedTempUUID);
+            localStorage.removeItem("tempUUID");
+        } else {
+            setPlayId(videoId);
+            const newUrl = window.location.origin;
+            window.history.pushState({}, document.title, newUrl);
+        }
+    }, []);
 
     const getUserInfo = async () => {
         try {
@@ -239,7 +256,7 @@ const Home = () => {
                         //initialFavorites={favorites}
                         favorites={favorites}
                         videoTags={videoTags}
-                        videoId={videoId}
+                        videoId={playId}
                         onFavoriteToggle={handleFavoriteToggle}
                         toggleFavorites={toggleFavorite}
                         selectedTags={selectedTags}
