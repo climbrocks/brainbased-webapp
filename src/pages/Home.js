@@ -42,8 +42,6 @@ const Home = () => {
 
     const [filteredVideos, setFilteredVideos] = useState([]);
 
-    console.log(useParams());
-
     useEffect(() => {
         if (storedTempUUID) {
             setTempUUID(storedTempUUID);
