@@ -173,6 +173,12 @@ const VideoGrid = ({
                 }
             );
 
+            filteredVideosByFilters.sort((a, b) => {
+                if (a.date > b.date) return -1; // descending order
+                if (a.date < b.date) return 1;
+                return 0;
+            });
+
             setFilteredVideos(filteredVideosByFilters);
         };
 
