@@ -331,13 +331,10 @@ const VideoGrid = ({
                     >
                         <VideoPlayerData
                             video={selectedVideo}
-                            instructor={
-                                selectedVideo.instructor
-                                    ? selectedVideo.instructor.name
-                                    : ""
-                            }
+                            instructor={selectedVideo.instructor ? selectedVideo.instructor.name : ""}
                             isFavorite={favorites.includes(selectedVideo.id)}
                             favorites={favorites}
+                            onFavoriteToggle={handleFavoriteClick}
                         />
                         <VideoPlayer
                             videoUrl={selectedVideo.url}

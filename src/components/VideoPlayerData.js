@@ -71,7 +71,7 @@ const VideoPlayerData = ({
     instructor,
     isFavorite,
     favorites,
-    toggleFavorite,
+    onFavoriteToggle,
 }) => {
     /* Change tab title */
     useEffect(() => {
@@ -83,15 +83,29 @@ const VideoPlayerData = ({
         favorites ? favorites.includes(video.id) : isFavorite
     );
 
+    const handleFavoriteClick = (e) => {
+        try {
+            setFavoriteStatus(!favoriteStatus);
+            onFavoriteToggle(video.id, !isFavorite);
+        } catch (error) {
+            console.log("Error updating favorite status:", error);
+        }        
+    };
+
+    /*
     const handleFavoriteClick = async () => {
         // Use the toggleFavorite function from the Home component to update favorites
         try {
+            console.log("Trying to favorite this video at least.")
             setFavoriteStatus(!favoriteStatus);
-            await toggleFavorite(video.id, favoriteStatus);
+            console.log(onToggleFavorite);
+            onToggleFavorite(video.id, favoriteStatus);
+            //await toggleFavorite(video.id, favoriteStatus); // TODO THIS NO ONGER EXISTS>
         } catch (error) {
             console.log("Error updating favorite status:", error);
         }
     };
+    */
 
     const handleShareClick = () => {
         const shareUrl = `${window.location.origin}/play/${video.id}`;
