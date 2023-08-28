@@ -344,6 +344,7 @@ const VideoGrid = ({
                             }
                             isFavorite={favorites.includes(selectedVideo.id)}
                             favorites={favorites}
+                            onFavoriteToggle={handleFavoriteClick}
                         />
                         <VideoPlayer
                             videoUrl={selectedVideo.url}
