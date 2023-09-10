@@ -209,12 +209,16 @@ const VideoGrid = ({
         }
     };
 
-    const fetchSubtitleUrl = async () => {
+    const fetchSubtitleUrl = async (video) => {
         try {
+            const videoSplit = video.url.split("/")[1];
+            //console.log("Subtitles/" + videoSplit + ".vtt");
+
             const subtitleUrl = await Storage.get(
-                `Subtitles/GMT20230718-123349_Recording_640x360_Mp4_Avc_Aac_16x9_1280x720p_24Hz_4.5Mbps_qvbr.mp4.vtt`,
+                "Subtitles/" + videoSplit + ".vtt",
                 { level: "public" }
             );
+
             return subtitleUrl;
         } catch (error) {
             console.log("Error fetching subtitle:", error);
@@ -264,7 +268,7 @@ const VideoGrid = ({
                 instructor.image
             );
 
-            const captionsUrl = await fetchSubtitleUrl();
+            const captionsUrl = await fetchSubtitleUrl(video);
             const selectedVideoWithUrls = {
                 ...video,
                 url: videoUrl,
