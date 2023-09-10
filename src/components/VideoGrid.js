@@ -209,6 +209,19 @@ const VideoGrid = ({
         }
     };
 
+    const fetchSubtitleUrl = async () => {
+        try {
+            const subtitleUrl = await Storage.get(
+                `Subtitles/GMT20230718-123349_Recording_640x360_Mp4_Avc_Aac_16x9_1280x720p_24Hz_4.5Mbps_qvbr.mp4.vtt`,
+                { level: "public" }
+            );
+            return subtitleUrl;
+        } catch (error) {
+            console.log("Error fetching subtitle:", error);
+            return "";
+        }
+    };
+
     const handleVideoSelect = async (video) => {
         try {
             // Fetch the current user, bypassing the cache to ensure the most recent information
@@ -251,10 +264,12 @@ const VideoGrid = ({
                 instructor.image
             );
 
+            const captionsUrl = await fetchSubtitleUrl();
             const selectedVideoWithUrls = {
                 ...video,
                 url: videoUrl,
                 imageUrl: imageUrl,
+                captions: captionsUrl,
                 instructor: {
                     ...instructor,
                     image: instructorImage,
@@ -349,6 +364,7 @@ const VideoGrid = ({
                         <VideoPlayer
                             videoUrl={selectedVideo.url}
                             poster={selectedVideo.imageUrl}
+                            captions={selectedVideo.captions}
                         />
                         <button
                             className="close-button"
