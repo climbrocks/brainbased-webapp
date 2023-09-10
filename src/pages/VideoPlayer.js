@@ -20,7 +20,7 @@ const VideoPlayer = ({ videoUrl, poster, captions }) => {
 
     useEffect(() => {
         setTimeout(() => {
-            console.log("Initializing Video.js player...");
+            //console.log("Initializing Video.js player...");
             const player = videojs(videoRef.current, {
                 controls: true,
                 autoplay: true,
@@ -30,8 +30,8 @@ const VideoPlayer = ({ videoUrl, poster, captions }) => {
 
             // Load the source into the player
             player.src({ type: "video/mp4", src: videoUrl });
-            console.log("Player initialized.");
-            console.log(videoUrl);
+            //console.log("Player initialized.");
+            //console.log(videoUrl);
             if (captions) {
                 player.addRemoteTextTrack(
                     {
@@ -47,7 +47,7 @@ const VideoPlayer = ({ videoUrl, poster, captions }) => {
             return () => {
                 if (player) {
                     player.dispose(); // Dispose the player on unmount
-                    console.log("Disposing Video.js player...");
+                    //console.log("Disposing Video.js player...");
                 }
             };
         }, 0);
