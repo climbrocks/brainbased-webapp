@@ -1,0 +1,12 @@
+{
+  "resourceName": "webappstorage",
+  "policyUUID": "6068920c",
+  "bucketName": "bbwwebappstorage",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "READ"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

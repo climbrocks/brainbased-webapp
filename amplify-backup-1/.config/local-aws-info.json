@@ -1,0 +1,12 @@
+{
+  "bbapp": {
+    "configLevel": "project",
+    "useProfile": false,
+    "awsConfigFilePath": "/Users/daltoncasey/.amplify/awscloudformation/eLUKiiNNzB"
+  },
+  "prod": {
+    "configLevel": "project",
+    "useProfile": false,
+    "awsConfigFilePath": "/Users/daltoncasey/.amplify/awscloudformation/VRGt1VitQD"
+  }
+}

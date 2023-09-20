@@ -118,7 +118,9 @@ const FilterSideBar = ({
                                 style={{ marginRight: "5px" }}
                                 icon={faHeart}
                             />
-                            My Favorites
+                            {favoritesActive
+                                ? "Exit Favorites"
+                                : "My Favorites"}
                         </p>
                     </div>
                     <div className="filter-section class-type">
