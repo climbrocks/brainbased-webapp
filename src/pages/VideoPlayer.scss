@@ -3,13 +3,15 @@
 
 .video-player-container {
     display: grid;
-    grid-template-rows: 100vh;
+    grid-template-rows: 95;
+    background: #000;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
 
     .video-container {
         grid-area: 1 / 1 / 2 / 2;
         width: 90%;
         height: 90%;
-        //background: #000;
         display: grid;
 
         .video {

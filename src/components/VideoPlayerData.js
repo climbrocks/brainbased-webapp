@@ -140,7 +140,6 @@ const VideoPlayerData = ({
         <div className="video-data-container">
             <div className="video-data">
                 <div className="video-title-instructor">
-                    <h4 className="breadcrumbs">Videos / Categories</h4>
                     <h1 className="video-title">{title}</h1>
                     <h3 className="video-instructor">
                         Instructor: {instructor}
