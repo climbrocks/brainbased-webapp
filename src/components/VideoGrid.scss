@@ -157,3 +157,15 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 }
+
+@media (max-width: 900px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape) {
+    .video-grid-container {
+        grid-template-columns: minmax(10px, auto) minmax(200px, 1680px) minmax(
+                10px,
+                auto
+            );
+    }
+    .video-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
