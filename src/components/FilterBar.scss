@@ -1,102 +1,142 @@
 @use "../global-styles/variables";
 @use "../global-styles/mixins";
 
-.filter-bar-container {
-    @include mixins.grid-for-components;
-    width: 100%;
-    background-color: variables.$background-light;
-}
-
-.filter-bar {
-    @include mixins.grid-area-for-components;
-    display: grid;
-    grid-template-columns: 75px 1fr;
-    grid-auto-flow: column;
-    overflow-x: auto;
-    white-space: nowrap;
-    align-items: center;
-
-    span {
-        text-transform: uppercase;
-        font-size: 0.8em;
-        font-weight: bold;
-        color: rgba(0, 0, 0, 0.5);
-        display: block;
-        width: auto;
-    }
-
-    .filters {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(auto, 1fr));
-        grid-auto-flow: column;
-        overflow-x: auto;
-        white-space: nowrap;
-        align-items: center;
-    }
-}
-
-.filter-item {
-    cursor: pointer;
-    user-select: none;
-    text-align: center;
+.filter-side-bar-container {
+    width: 360px;
+    background: #f9f6f2;
+    height: calc(100% - 72px);
+    overflow: scroll;
+    grid-area: sidebar;
+    left: 0;
+    color: variables.$text-dark;
+    position: fixed;
     transition: all 0.3s ease-in-out;
-    padding: 30px 0;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-}
-.filter-item:hover {
-    //color: variables.$main-blue;
-    //background-color: rgba(0, 0, 0, 0.02);
-    //box-shadow: inset 0 -5px 0 variables.$main-blue;
+    display: grid;
+    grid-template-columns: auto 30px;
+    z-index: 0;
 
-    background-color: variables.$main-blue;
-    color: #fff;
-}
+    .right {
+    }
 
-.filter-item.active {
-    color: variables.$main-blue;
-    box-shadow: inset 0 -5px 0 variables.$main-blue;
-}
+    .filter-side-bar-content {
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+    }
 
-.favorites-filter {
-    display: flex;
-    justify-self: center;
-}
+    .filter-section {
+        margin-bottom: 30px;
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-.filter-bar::-webkit-scrollbar {
-    display: none;
-}
+        h3 {
+            display: border-box;
+            text-transform: uppercase;
+            border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+        }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-.filter-bar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-}
+        .pill-box {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-wrap: wrap;
 
-@media screen and (max-width: 1279px) {
-    .filter-bar {
-        grid-template-columns: none;
-        grid-template-rows: 30px 1fr;
-        grid-auto-flow: row;
-        align-content: center;
+            .pill {
+                font-size: 0.7em;
+                text-transform: uppercase;
+                background: variables.$main-blue;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 8px;
+                display: table-cell;
+                margin-right: 5px;
+                margin-bottom: 5px;
+                opacity: 0.7;
+                transition: all 0.3s ease-in-out;
+                cursor: pointer;
+                border: 3px solid variables.$main-blue;
+            }
 
-        span {
-            text-align: center;
+            .pill:hover {
+                opacity: 1;
+            }
+
+            .pill.active {
+                opacity: 1;
+                border: 3px solid rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        ul {
+            li {
+                input {
+                    margin-right: 5px;
+                }
+            }
         }
     }
-    .filter-item {
-        padding-left: 30px;
-        padding-right: 30px;
+
+    .favorites p {
+        padding: 10px 15px;
+        text-align: center;
+        width: 100%;
+        background-color: variables.$main-red;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        opacity: 0.7;
+        border: 3px solid variables.$main-red;
+
+        &.active {
+            background-color: variables.$main-red;
+            border: 3px solid rgba(0, 0, 0, 0.2);
+            opacity: 1;
+        }
+    }
+    .favorites p:hover {
+        background-color: variables.$main-red;
+        opacity: 1;
     }
 }
 
-@media screen and (max-width: 460px) {
-    .filter-bar-container {
-        grid-template-columns: minmax(10px, auto) minmax(280px, 1680px) minmax(
-                10px,
-                auto
-            );
+/* Style for the open state */
+.filter-side-bar-container.open {
+    left: 0; /* Keep the width when it's open */
+}
+
+/* Style for the closed state */
+.filter-side-bar-container.closed {
+    left: -330px;
+}
+
+/* Style for the toggle button */
+.filter-toggle-button {
+    width: 100%; /* Make the button the same width as the FilterSideBar */
+    //padding: 10px;
+    height: calc(100vh - 72px);
+    text-align: center;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    margin-right: -5px;
+    transition: all 0.3s ease-in-out;
+    /* Add any other styles you need for the button */
+
+    span {
+        text-orientation: mixed;
+    }
+}
+.filter-toggle-button:hover {
+    background-color: variables.$main-blue;
+}
+
+@media screen and (max-width: 1000px) {
+    .filter-side-bar-container {
+        width: 100%;
+        z-index: 1002;
+    }
+
+    .filter-side-bar-container.closed {
+        left: calc((100% - 20px) * -1);
     }
 }
