@@ -10,7 +10,12 @@ import React, { useState } from "react";
 
 // Font Awesome Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+    faHeart,
+    faTrash,
+    faAngleDoubleLeft,
+    faAngleDoubleRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 const FilterSideBar = ({
     isOpen,
@@ -289,7 +294,9 @@ const FilterSideBar = ({
             <div className="right">
                 {/* Toggle button */}
                 <button className="filter-toggle-button" onClick={handleToggle}>
-                    {isOpen ? "<" : " >"}
+                    <FontAwesomeIcon
+                        icon={isOpen ? faAngleDoubleLeft : faAngleDoubleRight}
+                    />
                 </button>
             </div>
         </div>
