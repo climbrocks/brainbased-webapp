@@ -2,7 +2,7 @@
 @use "../global-styles/mixins";
 
 .filter-side-bar-container {
-    width: 360px;
+    width: 60px;
     background: #f9f6f2;
     height: calc(100% - 72px);
     overflow: scroll;
@@ -75,28 +75,45 @@
         }
     }
 
-    .favorites p {
+    .clear p {
         padding: 10px 15px;
         text-align: center;
         width: 100%;
-        background-color: variables.$main-red;
+        background-color: variables.$main-blue;
         color: white;
         border-radius: 8px;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
         opacity: 0.7;
-        border: 3px solid variables.$main-red;
-
-        &.active {
-            background-color: variables.$main-red;
-            border: 3px solid rgba(0, 0, 0, 0.2);
-            opacity: 1;
-        }
+        border: 3px solid variables.$main-blue;
     }
-    .favorites p:hover {
-        background-color: variables.$main-red;
+    .clear p:hover {
+        background-color: variables.$main-blue;
         opacity: 1;
     }
+}
+
+.favorites p {
+    padding: 10px 15px;
+    text-align: center;
+    width: 100%;
+    background-color: variables.$main-red;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    opacity: 0.7;
+    border: 3px solid variables.$main-red;
+
+    &.active {
+        background-color: variables.$main-red;
+        border: 3px solid rgba(0, 0, 0, 0.2);
+        opacity: 1;
+    }
+}
+.favorites p:hover {
+    background-color: variables.$main-red;
+    opacity: 1;
 }
 
 /* Style for the open state */
@@ -118,7 +135,7 @@
     background-color: white;
     border: none;
     cursor: pointer;
-    margin-right: -5px;
+    margin-right: -10px;
     transition: all 0.3s ease-in-out;
     /* Add any other styles you need for the button */
 

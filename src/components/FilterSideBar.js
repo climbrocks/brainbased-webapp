@@ -10,7 +10,7 @@ import React, { useState } from "react";
 
 // Font Awesome Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const FilterSideBar = ({
     isOpen,
@@ -100,6 +100,28 @@ const FilterSideBar = ({
         onFilterSelect(updatedFilters);
     };
 
+    const handleClearAllFilters = () => {
+        // Clear local state for durations
+        setSelectedDurationFilters([]);
+
+        // Clear the favorites state
+        setFavoritesActive(false);
+
+        // Reset the selectedFilters and selectedTags to their initial state.
+        const resetFilters = {
+            category: [],
+            duration: [],
+            teacher: [],
+            favorites: false, // or whatever initial value it has
+            // Add other filters here if any
+        };
+
+        const resetTags = []; // or whatever initial value it has
+
+        onFilterSelect(resetFilters);
+        onTagSelect(resetTags);
+    };
+
     return (
         <div
             className={`filter-side-bar-container ${
@@ -108,6 +130,15 @@ const FilterSideBar = ({
         >
             <div className="left">
                 <div className="filter-side-bar-content">
+                    <div className="filter-section clear">
+                        <p onClick={handleClearAllFilters}>
+                            <FontAwesomeIcon
+                                style={{ marginRight: "5px" }}
+                                icon={faTrash}
+                            />
+                            Clear All
+                        </p>
+                    </div>
                     <div className="filter-section favorites">
                         {/* Apply the 'active' class based on the favoritesActive state */}
                         <p
