@@ -20,7 +20,6 @@
     "react-share": "^4.4.1",
     "sass": "^1.62.1",
     "uuid": "^9.0.0",
-    "video.js": "^8.5.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -47,6 +46,7 @@
     ]
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.2"
+    "@types/uuid": "^9.0.2",
+    "video.js": "^8.5.2"
   }
 }
