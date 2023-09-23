@@ -19,18 +19,30 @@ import {
     faUser,
     faWindowClose,
     faHome,
-    faPlay,
+    faAngleDoubleLeft,
+    faAngleDoubleRight,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Auth } from "aws-amplify";
+import { faRev } from "@fortawesome/free-brands-svg-icons";
 
-const Navigation = () => {
+const Navigation = ({ isOpen, handleToggle }) => {
     const [isAccountDropdownOpen, setAccountDropdownOpen] = useState(false);
     const [isMainMenuOpen, setMainMenuOpen] = useState(false);
     const dropdownRef = useRef(null);
     const navigationBarRef = useRef(null);
     const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
     const user = CognitoData(); // Fetching user data from CognitoData component
+    const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(isOpen);
+    const toggleFilterSidebar = () => {
+        const newOpenState = !isFilterSidebarOpen;
+        setIsFilterSidebarOpen(newOpenState);
+        handleToggle(newOpenState);
+    };
+
+    useEffect(() => {
+        setIsFilterSidebarOpen(isOpen);
+    }, [isOpen]);
 
     const toggleAccountDropdown = () => {
         setAccountDropdownOpen(!isAccountDropdownOpen);
@@ -182,12 +194,21 @@ const Navigation = () => {
                             className="dropdown-content"
                             style={{ right: calculateRightAttribute() }}
                         >
-                            <Link className="dropdown-content-link" to="/">
+                            <Link
+                                className="dropdown-content-link"
+                                onClick={toggleFilterSidebar}
+                            >
                                 <FontAwesomeIcon
                                     className="dropdown-content-link-icon"
-                                    icon={faPlay}
+                                    icon={
+                                        isFilterSidebarOpen
+                                            ? faAngleDoubleLeft
+                                            : faAngleDoubleRight
+                                    }
                                 />
-                                Video Library
+                                {isFilterSidebarOpen
+                                    ? "Hide Filters"
+                                    : "Show Filters"}
                                 {/* May change to Library with new icon */}
                             </Link>
                             <Link

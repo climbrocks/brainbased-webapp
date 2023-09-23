@@ -12,7 +12,7 @@
     position: fixed;
     transition: all 0.3s ease-in-out;
     display: grid;
-    grid-template-columns: auto 20px;
+    grid-template-columns: auto 40px;
     z-index: 0;
 
     .right {
@@ -106,7 +106,7 @@
 
 /* Style for the closed state */
 .filter-side-bar-container.closed {
-    left: -340px;
+    left: -320px;
 }
 
 /* Style for the toggle button */
@@ -114,6 +114,7 @@
     width: 100%; /* Make the button the same width as the FilterSideBar */
     //padding: 10px;
     height: calc(100vh - 72px);
+    font-size: 1.8em;
     text-align: center;
     background-color: white;
     border: none;
@@ -137,6 +138,6 @@
     }
 
     .filter-side-bar-container.closed {
-        left: calc((100% - 20px) * -1);
+        left: calc((100% - 40px) * -1);
     }
 }

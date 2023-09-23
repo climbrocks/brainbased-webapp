@@ -83,14 +83,55 @@ const App = () => {
             .catch(() => setIsSignedIn(false));
     }, [isSignedIn]);
 
+    const [isOpen, setIsOpen] = useState(true);
+
+    const handleToggle = () => {
+        setIsOpen((prevIsOpen) => !prevIsOpen);
+    };
+    useEffect(() => {
+        const handleResize = () => {
+            // Check the current viewport width
+            const width = window.innerWidth;
+
+            // If the viewport width is less than 1000px, close the sidebar by default
+            if (width < 1000) {
+                setIsOpen(false);
+                //handleToggle();
+            } else {
+                setIsOpen(true);
+                //handleToggle();
+            }
+        };
+        // Immediately call handleResize to set the correct state on initial render
+        handleResize();
+
+        // Add the event listener
+        window.addEventListener("resize", handleResize);
+
+        // Clean up the event listener when the component unmounts
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
     return (
         <Router>
-            <MainNavigation />
+            <MainNavigation isOpen={isOpen} handleToggle={handleToggle} />
 
             <Routes>
                 <Route path="/" element={<Outlet />}>
-                    <Route index element={<Home />} />
-                    <Route path="/home/:videoId?" element={<Home />} />
+                    <Route
+                        index
+                        element={
+                            <Home isOpen={isOpen} handleToggle={handleToggle} />
+                        }
+                    />
+                    <Route
+                        path="/home/:videoId?"
+                        element={
+                            <Home isOpen={isOpen} handleToggle={handleToggle} />
+                        }
+                    />
                     <Route path="play/:videoId?" element={<Play />} />
                 </Route>
                 <Route

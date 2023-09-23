@@ -21,7 +21,7 @@ import useFavorites from "../FavoritesUtils";
 //import CognitoData from "../components/CognitoData";
 import FilterSideBar from "../components/FilterSideBar";
 
-const Home = () => {
+const Home = ({ isOpen, handleToggle }) => {
     const [tempUUID, setTempUUID] = useState(null);
     const storedTempUUID = localStorage.getItem("tempUUID");
     const { videoId } = useParams();
@@ -165,12 +165,12 @@ const Home = () => {
         toggleFavorite(videoId, isFavorite);
     };
 
-    const [isOpen, setIsOpen] = useState(true);
+    //const [isOpen, setIsOpen] = useState(true);
 
-    const handleToggle = () => {
-        setIsOpen((prevIsOpen) => !prevIsOpen);
-    };
-
+    //const handleToggle = () => {
+    //  setIsOpen((prevIsOpen) => !prevIsOpen);
+    //};
+    /*
     useEffect(() => {
         const handleResize = () => {
             // Check the current viewport width
@@ -178,11 +178,15 @@ const Home = () => {
 
             // If the viewport width is less than 1000px, close the sidebar by default
             if (width < 1000) {
-                setIsOpen(false);
+                //setIsOpen(false);
+                handleToggle();
             } else {
-                setIsOpen(true);
+                //setIsOpen(true);
+                handleToggle();
             }
         };
+        // Immediately call handleResize to set the correct state on initial render
+        handleResize();
 
         // Add the event listener
         window.addEventListener("resize", handleResize);
@@ -192,7 +196,7 @@ const Home = () => {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
-
+*/
     return (
         <>
             {/* <FilterBar
@@ -205,6 +209,7 @@ const Home = () => {
                 selectedTags={selectedTags}
                 onTagSelect={handleTagSelect}
             /> */}
+
             <div
                 style={{
                     display: "grid",
