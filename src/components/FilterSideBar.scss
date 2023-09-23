@@ -136,8 +136,10 @@
         width: 100%;
         z-index: 1002;
     }
-
+    .filter-toggle-button {
+        font-size: 1.2em;
+    }
     .filter-side-bar-container.closed {
-        left: calc((100% - 40px) * -1);
+        left: calc((100% - 30px) * -1);
     }
 }
