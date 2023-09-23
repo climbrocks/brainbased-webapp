@@ -8,6 +8,7 @@
     height: 100%;
     display: grid;
     justify-content: space-between;
+    overflow-y: auto;
 
     .video-title-instructor {
         .video-title {
@@ -40,7 +41,7 @@
             background: none;
             border-radius: 15px;
             background-color: variables.$main-red;
-            padding: 20px 0;
+            padding: 10px 0;
             transition: all 0.3s ease-in-out;
             width: 100%;
 
@@ -68,5 +69,10 @@
 @media screen and (max-width: 1024px) {
     .video-description {
         padding: 30px 0;
+    }
+    .video-data {
+        max-height: 70%vh;
+        overflow-y: auto;
+        padding-bottom: 50px;
     }
 }

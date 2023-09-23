@@ -5,7 +5,7 @@
     width: 60px;
     background: #f9f6f2;
     height: calc(100% - 72px);
-    overflow: scroll;
+    overflow-y: auto;
     grid-area: sidebar;
     left: 0;
     color: variables.$text-dark;
@@ -93,6 +93,11 @@
     }
 }
 
+/* Hide scrollbar for Chrome, Safari, and Opera */
+.filter-side-bar-container::-webkit-scrollbar {
+    width: 0; // For Vertical scrollbars
+    height: 0; // For Horizontal scrollbars
+}
 .favorites p {
     padding: 10px 15px;
     text-align: center;
@@ -130,7 +135,8 @@
 .filter-toggle-button {
     width: 100%; /* Make the button the same width as the FilterSideBar */
     //padding: 10px;
-    height: calc(100vh - 72px);
+    //height: calc(100vh - 72px);
+    height: 100vh;
     text-align: center;
     background-color: white;
     border: none;
