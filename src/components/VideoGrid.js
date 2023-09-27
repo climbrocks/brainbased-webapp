@@ -14,7 +14,6 @@ import useFavorites from "../FavoritesUtils";
 const VideoGrid = ({
     videos,
     filters,
-    //initialFavorites,
     videoId,
     onFavoriteToggle,
     selectedTags,
@@ -28,9 +27,7 @@ const VideoGrid = ({
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [isPlayerVisible, setPlayerVisible] = useState(false);
     const [showAccessDeniedModal, setShowAccessDeniedModal] = useState(false);
-
-    //const { favorites, toggleFavorite } = useFavorites(initialFavorites);
-    //const { favorites, toggleFavorite } = useFavorites({ CognitoData });
+    const [noMatchingVideos, setNoMatchingVideos] = useState(false);
 
     const getVideoDurationInMinutes = (duration) => {
         return parseInt(duration, 10);
@@ -95,13 +92,6 @@ const VideoGrid = ({
                             .filter((tag) => tag.video.id === video.id)
                             .map((tag) => tag.tag.id);
 
-                        //console.log("Video ID:", video.id);
-                        //console.log("Video Tags IDs:", videoTagsIds);
-                        //console.log(
-                        //  "Selected Tags:",
-                        // selectedTags.map((tag) => tag.id)
-                        //);
-
                         if (
                             !selectedTags.every((tag) =>
                                 videoTagsIds.includes(tag.id)
@@ -117,7 +107,6 @@ const VideoGrid = ({
                             video.duration
                         );
 
-                        // Check if the video duration falls within the selected range
                         if (
                             !filters.duration.some((selectedDuration) => {
                                 if (
@@ -173,32 +162,15 @@ const VideoGrid = ({
                 }
             );
 
-            filteredVideosByFilters.sort((a, b) => {
-                if (a.date > b.date) return -1; // descending order
-                if (a.date < b.date) return 1;
-                return 0;
-            });
-
             setFilteredVideos(filteredVideosByFilters);
+
+            // Update the state to indicate if there are no matching videos
+            setNoMatchingVideos(filteredVideosByFilters.length === 0);
         };
 
         fetchVideoData();
     }, [videos, filters, selectedTags]);
 
-    /*
-    const fetchInstructorData = async (teacherVideosId) => {
-        try {
-            const response = await API.graphql(
-                graphqlOperation(getTeacher, { id: teacherVideosId })
-            );
-            const { getTeacher: teacher } = response.data;
-            return teacher;
-        } catch (error) {
-            console.log("Error fetching instructor data:", error);
-            return null;
-        }
-    };
-*/
     const fetchInstructorImage = async (image) => {
         try {
             const imageUrl = await Storage.get(image, { level: "public" });
@@ -212,8 +184,6 @@ const VideoGrid = ({
     const fetchSubtitleUrl = async (video) => {
         try {
             const videoSplit = video.url.split("/")[1];
-            //console.log("Subtitles/" + videoSplit + ".vtt");
-
             const subtitleUrl = await Storage.get(
                 "Subtitles/" + videoSplit + ".vtt",
                 { level: "public" }
@@ -228,19 +198,17 @@ const VideoGrid = ({
 
     const handleVideoSelect = async (video) => {
         try {
-            // Fetch the current user, bypassing the cache to ensure the most recent information
             const user = await Auth.currentAuthenticatedUser({
                 bypassCache: true,
             });
-            const token = user.signInUserSession.idToken.jwtToken; // Extract the JWT token
+            const token = user.signInUserSession.idToken.jwtToken;
 
             const myInit = {
                 headers: {
-                    Authorization: token, // Include the token in the Authorization header
+                    Authorization: token,
                 },
             };
 
-            // Make the API call to check access
             const response = await API.get(
                 "bbwvideoauthapi",
                 "/videoaccess",
@@ -248,19 +216,15 @@ const VideoGrid = ({
             );
 
             if (response !== "Access granted") {
-                //alert("You do not have access to this video.");
-
                 setShowAccessDeniedModal(true);
-                return; // Exit the function early if access is not granted
+                return;
             }
 
-            // If access is granted, proceed with fetching the video details
             const videoUrl = await Storage.get(video.url, { level: "public" });
             const imageUrl = await Storage.get(video.poster, {
                 level: "public",
             });
 
-            // Instead of fetching instructor data, use the data from the instructors state
             const instructor = instructors.find(
                 (instructor) => instructor.id === video.teacherVideosId
             );
@@ -301,21 +265,10 @@ const VideoGrid = ({
         setPlayerVisible(false);
         setTimeout(() => {
             setSelectedVideo(null);
-        }, 300); // Delay the reset of selectedVideo to allow the fade-out animation to complete
+        }, 300);
     };
 
-    /*
     const handleFavoriteClick = (videoId, isFavorite) => {
-        if (isFavorite) {
-            toggleFavorite(videoId, true); // Call toggleFavorite with the videoId and true
-        } else {
-            toggleFavorite(videoId, false); // Call toggleFavorite with the videoId and false
-        }
-    };
-    */
-
-    const handleFavoriteClick = (videoId, isFavorite) => {
-        // Call the toggleFavorite function and pass the correct value of isFavorite
         onFavoriteToggle(videoId, !isFavorite);
     };
 
@@ -327,27 +280,40 @@ const VideoGrid = ({
                         onClose={() => setShowAccessDeniedModal(false)}
                     />
                 )}
-                <div className="video-grid">
-                    {filteredVideos.map((video, index) => (
-                        <Thumbnail
-                            key={index}
-                            video={video}
-                            title={video.title}
-                            date={video.date}
-                            duration={video.duration}
-                            image={video.imageUrl}
-                            instructor={
-                                video.instructor ? video.instructor.name : ""
-                            }
-                            instructorImage={video.instructorImage}
-                            favorites={favorites}
-                            toggleFavorites={toggleFavorites}
-                            isFavorite={favorites.includes(video.id)}
-                            onFavoriteToggle={handleFavoriteClick}
-                            onClick={() => handleVideoSelect(video)}
-                        />
-                    ))}
-                </div>
+
+                {noMatchingVideos && (
+                    <div className="no-matching-videos-message">
+                        There are no videos matching the filters you've
+                        selected. Please refine your filters.
+                    </div>
+                )}
+
+                {filteredVideos.length > 0 && (
+                    <div className="video-grid">
+                        {filteredVideos.map((video, index) => (
+                            <Thumbnail
+                                key={index}
+                                video={video}
+                                title={video.title}
+                                date={video.date}
+                                duration={video.duration}
+                                image={video.imageUrl}
+                                instructor={
+                                    video.instructor
+                                        ? video.instructor.name
+                                        : ""
+                                }
+                                instructorImage={video.instructorImage}
+                                favorites={favorites}
+                                toggleFavorites={toggleFavorites}
+                                isFavorite={favorites.includes(video.id)}
+                                onFavoriteToggle={handleFavoriteClick}
+                                onClick={() => handleVideoSelect(video)}
+                            />
+                        ))}
+                    </div>
+                )}
+
                 {selectedVideo && (
                     <div
                         className={`video-player-fullscreen ${
