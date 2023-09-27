@@ -10,7 +10,7 @@
         "mfaTypes": ["SMS Text Message"],
         "smsAuthenticationMessage": "Your authentication code is {####}",
         "smsVerificationMessage": "Your verification code is {####}",
-        "emailVerificationSubject": "Your verification code",
+        "emailVerificationSubject": "Brain Based Wellness verification code",
         "emailVerificationMessage": "Your verification code is {####}",
         "defaultPasswordPolicy": false,
         "passwordPolicyMinLength": 8,
@@ -44,6 +44,6 @@
         "authProvidersUserPool": [],
         "hostedUIProviderMeta": "[]",
         "authProviders": [],
-        "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://main.d1t4o8gwtbnlae.amplifyapp.com/\"],\"LogoutURLs\":[\"https://main.d1t4o8gwtbnlae.amplifyapp.com/\"]}"
+        "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://library.brainbased-wellness.com/\"],\"LogoutURLs\":[\"https://library.brainbased-wellness.com/\"]}"
     }
 }
