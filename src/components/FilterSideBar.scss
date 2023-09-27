@@ -1,11 +1,19 @@
 @use "../global-styles/variables";
 @use "../global-styles/mixins";
 
+.filter-side-bar-container::-webkit-scrollbar {
+    display: none;
+}
+
+.left::-webkit-scrollbar {
+    display: none;
+}
+
 .filter-side-bar-container {
     width: 360px;
     background: #f9f6f2;
     height: calc(100% - 72px);
-    overflow: scroll;
+    //overflow: scroll;
     grid-area: sidebar;
     left: 0;
     color: variables.$text-dark;
@@ -16,6 +24,12 @@
     z-index: 0;
 
     .right {
+        height: 100%;
+        background-color: white;
+    }
+
+    .left {
+        overflow: scroll;
     }
 
     .filter-side-bar-content {
@@ -120,7 +134,6 @@
     cursor: pointer;
     margin-right: -5px;
     transition: all 0.3s ease-in-out;
-    /* Add any other styles you need for the button */
 
     span {
         text-orientation: mixed;
