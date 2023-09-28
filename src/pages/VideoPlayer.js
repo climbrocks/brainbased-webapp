@@ -26,6 +26,7 @@ const VideoPlayer = ({ videoUrl, poster, captions }) => {
                 autoplay: true,
                 preload: "auto",
                 poster: poster,
+                nativeControlsForTouch: true,
             });
 
             // Load the source into the player
