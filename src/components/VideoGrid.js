@@ -162,6 +162,13 @@ const VideoGrid = ({
                 }
             );
 
+            //filter in descending order
+            filteredVideosByFilters.sort((a, b) => {
+                if (a.date > b.date) return -1; // descending order
+                if (a.date < b.date) return 1;
+                return 0;
+            });
+
             setFilteredVideos(filteredVideosByFilters);
 
             // Update the state to indicate if there are no matching videos
