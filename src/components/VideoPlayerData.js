@@ -113,12 +113,44 @@ const VideoPlayerData = ({
         const shareUrl = `${window.location.origin}/play/${video.id}`;
 
         if (navigator.clipboard) {
-            navigator.clipboard.writeText(shareUrl);
-            alert("Share link copied to clipboard!");
+            navigator.clipboard
+                .writeText(shareUrl)
+                .then(() => {
+                    alert("Share link copied to clipboard!");
+                })
+                .catch((err) => {
+                    // Clipboard API failed, so use fallback
+                    fallbackCopyTextToClipboard(shareUrl);
+                });
         } else {
             // Fallback for browsers that don't support clipboard API
-            alert(`Share link: ${shareUrl}`);
+            fallbackCopyTextToClipboard(shareUrl);
         }
+    };
+
+    const fallbackCopyTextToClipboard = (text) => {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+
+        // Make the textarea offscreen.
+        textArea.style.position = "fixed";
+        textArea.style.left = "-9999px";
+        document.body.appendChild(textArea);
+
+        textArea.focus();
+        textArea.select();
+
+        try {
+            const successful = document.execCommand("copy");
+            const msg = successful
+                ? "Share link copied to clipboard!"
+                : `Share link: ${text}`;
+            alert(msg);
+        } catch (err) {
+            alert(`Share link: ${text}`);
+        }
+
+        document.body.removeChild(textArea);
     };
 
     if (!video) {
