@@ -113,7 +113,7 @@ const Navigation = ({ isOpen, handleToggle }) => {
 
     const redirectHome = () => {
         window.location.href =
-            "https://brainbased-prod-ssotest.auth.us-east-1.amazoncognito.com/oauth2/authorize?client_id=5aoevc1lemubiht32gnc05khuc&response_type=token&scope=email+openid+profile&redirect_uri=https%3A%2F%2Fstaging.brainbased-wellness.com%2Fcognito-intermediate%2F";
+            "https://brainbased-prod-ssotest.auth.us-east-1.amazoncognito.com/oauth2/authorize?client_id=3flqa7mpf4l5g969mbq34vuph0&response_type=token&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fbrainbased-wellness.com%2Fcognito-intermediate%2F";
     };
 
     return (
