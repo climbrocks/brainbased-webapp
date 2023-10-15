@@ -94,7 +94,7 @@ const App = () => {
             const width = window.innerWidth;
 
             // If the viewport width is less than 1000px, close the sidebar by default
-            if (width < 1000) {
+            if (width < 1250) {
                 setIsOpen(false);
                 //handleToggle();
             } else {
