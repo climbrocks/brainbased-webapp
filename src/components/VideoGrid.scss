@@ -103,13 +103,13 @@
     text-align: center;
     border: 3px solid #f9f6f2;
 }
-
+/*
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
     .video-grid {
         grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
     }
 }
-
+*/
 @media screen and (max-width: 1024px) {
     .video-player-fullscreen {
         grid-template-columns: none;
@@ -161,7 +161,7 @@
         background-color: rgba(0, 0, 0, 0.7);
     }
 }
-
+/*
 @media screen and (max-width: 460px) {
     .video-grid-container {
         grid-template-columns: minmax(10px, auto) minmax(200px, 1680px) minmax(
@@ -173,7 +173,7 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 }
-
+*/
 @media (max-width: 900px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape) {
     .video-grid-container {
         grid-template-columns: minmax(10px, auto) minmax(200px, 1680px) minmax(
