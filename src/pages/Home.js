@@ -69,7 +69,7 @@ const Home = ({ isOpen, handleToggle }) => {
         const fetchVideos = async () => {
             try {
                 const videosResponse = await API.graphql(
-                    graphqlOperation(listVideos)
+                    graphqlOperation(listVideos, { limit: 10000 })
                 );
                 const videosData = videosResponse.data.listVideos.items;
                 setVideos(videosData);
