@@ -17,13 +17,9 @@ const useFavorites = () => {
                 })
             );
 
-            console.log("Query data:", data);
-
             let userData = data.listUserData.items[0];
             if (!userData) {
                 // Create new userData
-
-                console.log(`No userData found for cognitoSub: ${userSub}`);
 
                 const createResponse = await API.graphql(
                     graphqlOperation(createUserData, {
@@ -59,13 +55,6 @@ const useFavorites = () => {
                 })
             );
 
-            console.log("userData fetched:", data.listUserData.items); // This will log the fetched data
-
-            if (!data.listUserData.items.length) {
-                console.error("No userData found for this user:", userSub);
-                // Potentially handle the case where userData is not found
-                return; // Exit the function if userData is not found
-            }
             const userData = data.listUserData.items[0];
             let updatedFavorites = [...(userData.favorites ?? [])]; // Use the favorites from fetched userData
 
