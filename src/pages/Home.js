@@ -82,7 +82,7 @@ const Home = ({ isOpen, handleToggle }) => {
         const fetchCategories = async () => {
             try {
                 const categoriesResponse = await API.graphql(
-                    graphqlOperation(listCategories)
+                    graphqlOperation(listCategories, { limit: 10000 })
                 );
                 const categoriesData =
                     categoriesResponse.data.listCategories.items;
@@ -95,7 +95,7 @@ const Home = ({ isOpen, handleToggle }) => {
         const fetchTags = async () => {
             try {
                 const tagsResponse = await API.graphql(
-                    graphqlOperation(listTags)
+                    graphqlOperation(listTags, { limit: 10000 })
                 );
                 const tagsData = tagsResponse.data.listTags.items;
 
@@ -113,7 +113,7 @@ const Home = ({ isOpen, handleToggle }) => {
         const fetchVideoTags = async () => {
             try {
                 const videoTagsResponse = await API.graphql(
-                    graphqlOperation(listVideoTags)
+                    graphqlOperation(listVideoTags, { limit: 10000 })
                 );
                 const videoTagsData =
                     videoTagsResponse.data.listVideoTags.items;
@@ -128,7 +128,7 @@ const Home = ({ isOpen, handleToggle }) => {
         const fetchInstructors = async () => {
             try {
                 const instructorsResponse = await API.graphql(
-                    graphqlOperation(listTeachers)
+                    graphqlOperation(listTeachers, { limit: 10000 })
                 );
                 const instructorsData =
                     instructorsResponse.data.listTeachers.items;
