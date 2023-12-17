@@ -66,7 +66,7 @@ const VideoGrid = ({
 
         fetchAllVideoURLs().then((fullList) => {
             setVideoURLsData(fullList); // Set the full list of items
-            console.log("Full list of items:", fullList); // Log the full list
+            //console.log("Full list of items:", fullList); // Log the full list
         });
     }, []);
 
@@ -264,9 +264,9 @@ const VideoGrid = ({
                 return;
             }
 
-            //const videoUrl = await Storage.get(video.url, { level: "public" });
+            const videoUrl = await Storage.get(video.url, { level: "public" });
             //console.log("current format:", videoURLsData);
-            const videoURLsList = videoURLsData;
+            /*const videoURLsList = videoURLsData;
             let videoUrl = "";
             const urlParts = video.url.split("/");
             const filenamePart = urlParts[urlParts.length - 1]; // Extracts the last part of the URL
@@ -274,14 +274,14 @@ const VideoGrid = ({
             const matchedVideo = videoURLsList.find((item) => {
                 const itemUrlParts = item.MP4.split("/");
                 const itemFilenamePart = itemUrlParts[itemUrlParts.length - 1]; // Extracts the filename part of the item URL
-                /*console.log(
+                console.log(
                     "Comparing:",
                     itemFilenamePart,
                     "with",
                     filenamePart
-                ); */
+                ); 
                 return itemFilenamePart === filenamePart; // Compares the filename parts
-            });
+            }); 
 
             // If a match is found, set videoUrl to the .CMAF value
             if (matchedVideo) {
@@ -295,7 +295,7 @@ const VideoGrid = ({
                 );
                 console.log(videoURLsList);
             }
-
+*/
             const imageUrl = await Storage.get(video.poster, {
                 level: "public",
             });
