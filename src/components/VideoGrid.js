@@ -264,22 +264,23 @@ const VideoGrid = ({
                 return;
             }
 
-            //const videoUrl = await Storage.get(video.url, { level: "public" });
+            const videoUrl = await Storage.get(video.url, { level: "public" });
             //console.log("current format:", videoURLsData);
             const videoURLsList = videoURLsData;
-            let videoUrl = "";
+
+            /*let videoUrl = "";
             const urlParts = video.url.split("/");
             const filenamePart = urlParts[urlParts.length - 1]; // Extracts the last part of the URL
 
             const matchedVideo = videoURLsList.find((item) => {
                 const itemUrlParts = item.MP4.split("/");
                 const itemFilenamePart = itemUrlParts[itemUrlParts.length - 1]; // Extracts the filename part of the item URL
-                /*console.log(
+                console.log(
                     "Comparing:",
                     itemFilenamePart,
                     "with",
                     filenamePart
-                );*/
+                );
                 return itemFilenamePart === filenamePart; // Compares the filename parts
             });
 
@@ -295,7 +296,7 @@ const VideoGrid = ({
                 );
                 console.log(videoURLsList);
             }
-
+            */
             const imageUrl = await Storage.get(video.poster, {
                 level: "public",
             });
