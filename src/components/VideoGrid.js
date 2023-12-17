@@ -43,7 +43,7 @@ const VideoGrid = ({
                 const response = await API.graphql(
                     graphqlOperation(listVideoURLs, { limit: 10000, nextToken })
                 );
-                console.log("API response:", response); // Log the API response
+                //console.log("API response:", response); // Log the API response
 
                 const items = response.data.listVideoURLs.items;
                 const newNextToken = response.data.listVideoURLs.nextToken;
@@ -264,9 +264,9 @@ const VideoGrid = ({
                 return;
             }
 
-            const videoUrl = await Storage.get(video.url, { level: "public" });
+            //const videoUrl = await Storage.get(video.url, { level: "public" });
             //console.log("current format:", videoURLsData);
-            /*const videoURLsList = videoURLsData;
+            const videoURLsList = videoURLsData;
             let videoUrl = "";
             const urlParts = video.url.split("/");
             const filenamePart = urlParts[urlParts.length - 1]; // Extracts the last part of the URL
@@ -274,19 +274,19 @@ const VideoGrid = ({
             const matchedVideo = videoURLsList.find((item) => {
                 const itemUrlParts = item.MP4.split("/");
                 const itemFilenamePart = itemUrlParts[itemUrlParts.length - 1]; // Extracts the filename part of the item URL
-                console.log(
+                /*console.log(
                     "Comparing:",
                     itemFilenamePart,
                     "with",
                     filenamePart
-                ); 
+                );*/
                 return itemFilenamePart === filenamePart; // Compares the filename parts
-            }); 
+            });
 
             // If a match is found, set videoUrl to the .CMAF value
             if (matchedVideo) {
                 videoUrl = matchedVideo.HLS;
-                console.log("successful match: ", videoUrl);
+                //console.log("successful match: ", videoUrl);
             } else {
                 videoUrl = await Storage.get(video.url, { level: "public" }); // Fallback to original URL
                 console.log("no match");
@@ -295,7 +295,7 @@ const VideoGrid = ({
                 );
                 console.log(videoURLsList);
             }
-*/
+
             const imageUrl = await Storage.get(video.poster, {
                 level: "public",
             });
