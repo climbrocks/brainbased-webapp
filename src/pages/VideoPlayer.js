@@ -27,10 +27,19 @@ const VideoPlayer = ({ videoUrl, poster, captions }) => {
                 preload: "auto",
                 poster: poster,
                 nativeControlsForTouch: true,
+                width: 1280,
             });
 
             // Load the source into the player
-            player.src({ type: "video/mp4", src: videoUrl });
+            // Determine the video type based on the file extension
+            let videoType = "";
+            if (videoUrl.endsWith(".m3u8")) {
+                videoType = "application/x-mpegURL";
+            } else if (videoUrl.endsWith(".mp4")) {
+                videoType = "video/mp4";
+            }
+
+            player.src({ type: videoType, src: videoUrl });
             //console.log("Player initialized.");
             //console.log(videoUrl);
             if (captions) {

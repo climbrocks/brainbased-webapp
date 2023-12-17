@@ -6,6 +6,46 @@ import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@a
 
 
 
+type EagerVideoURLs = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<VideoURLs, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly guid: string;
+  readonly srcvideo?: string | null;
+  readonly MP4?: string | null;
+  readonly CMAF?: string | null;
+  readonly HLS?: string | null;
+  readonly DASH?: string | null;
+  readonly MSS?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyVideoURLs = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<VideoURLs, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly guid: string;
+  readonly srcvideo?: string | null;
+  readonly MP4?: string | null;
+  readonly CMAF?: string | null;
+  readonly HLS?: string | null;
+  readonly DASH?: string | null;
+  readonly MSS?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type VideoURLs = LazyLoading extends LazyLoadingDisabled ? EagerVideoURLs : LazyVideoURLs
+
+export declare const VideoURLs: (new (init: ModelInit<VideoURLs>) => VideoURLs) & {
+  copyOf(source: VideoURLs, mutator: (draft: MutableModel<VideoURLs>) => MutableModel<VideoURLs> | void): VideoURLs;
+}
+
 type EagerVideo = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Video, 'id'>;
