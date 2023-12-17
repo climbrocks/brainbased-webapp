@@ -66,7 +66,7 @@ const VideoGrid = ({
 
         fetchAllVideoURLs().then((fullList) => {
             setVideoURLsData(fullList); // Set the full list of items
-            console.log("Full list of items:", fullList); // Log the full list
+            //console.log("Full list of items:", fullList); // Log the full list
         });
     }, []);
 
@@ -266,7 +266,8 @@ const VideoGrid = ({
 
             //const videoUrl = await Storage.get(video.url, { level: "public" });
             //console.log("current format:", videoURLsData);
-            const videoURLsList = videoURLsData;
+            //const videoURLsList = videoURLsData;
+            const videoURLsList = "";
             let videoUrl = "";
             const urlParts = video.url.split("/");
             const filenamePart = urlParts[urlParts.length - 1]; // Extracts the last part of the URL
