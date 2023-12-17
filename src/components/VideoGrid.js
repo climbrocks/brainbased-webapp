@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Storage, API, graphqlOperation, Auth } from "aws-amplify";
 import { useParams } from "react-router-dom";
 
-import { getTeacher, listCategories } from "../graphql/queries";
+import { getTeacher, listCategories, listVideoURLs } from "../graphql/queries";
 
 import "./VideoGrid.scss";
 import Thumbnail from "./Thumbnail";
@@ -28,10 +28,47 @@ const VideoGrid = ({
     const [isPlayerVisible, setPlayerVisible] = useState(false);
     const [showAccessDeniedModal, setShowAccessDeniedModal] = useState(false);
     const [noMatchingVideos, setNoMatchingVideos] = useState(false);
+    const [videoURLsData, setVideoURLsData] = useState(false);
 
     const getVideoDurationInMinutes = (duration) => {
         return parseInt(duration, 10);
     };
+
+    useEffect(() => {
+        const fetchAllVideoURLs = async (
+            nextToken = null,
+            accumulatedItems = []
+        ) => {
+            try {
+                const response = await API.graphql(
+                    graphqlOperation(listVideoURLs, { limit: 10000, nextToken })
+                );
+                console.log("API response:", response); // Log the API response
+
+                const items = response.data.listVideoURLs.items;
+                const newNextToken = response.data.listVideoURLs.nextToken;
+
+                // Accumulate items
+                const currentItems = accumulatedItems.concat(items);
+
+                if (newNextToken) {
+                    // If there's more data, fetch the next page
+                    return await fetchAllVideoURLs(newNextToken, currentItems);
+                } else {
+                    // If there's no more data, return the accumulated items
+                    return currentItems;
+                }
+            } catch (error) {
+                console.error("Error fetching video URLs:", error);
+                return [];
+            }
+        };
+
+        fetchAllVideoURLs().then((fullList) => {
+            setVideoURLsData(fullList); // Set the full list of items
+            console.log("Full list of items:", fullList); // Log the full list
+        });
+    }, []);
 
     useEffect(() => {
         const fetchVideoData = async () => {
@@ -227,7 +264,38 @@ const VideoGrid = ({
                 return;
             }
 
-            const videoUrl = await Storage.get(video.url, { level: "public" });
+            //const videoUrl = await Storage.get(video.url, { level: "public" });
+            //console.log("current format:", videoURLsData);
+            const videoURLsList = videoURLsData;
+            let videoUrl = "";
+            const urlParts = video.url.split("/");
+            const filenamePart = urlParts[urlParts.length - 1]; // Extracts the last part of the URL
+
+            const matchedVideo = videoURLsList.find((item) => {
+                const itemUrlParts = item.MP4.split("/");
+                const itemFilenamePart = itemUrlParts[itemUrlParts.length - 1]; // Extracts the filename part of the item URL
+                /*console.log(
+                    "Comparing:",
+                    itemFilenamePart,
+                    "with",
+                    filenamePart
+                ); */
+                return itemFilenamePart === filenamePart; // Compares the filename parts
+            });
+
+            // If a match is found, set videoUrl to the .CMAF value
+            if (matchedVideo) {
+                videoUrl = matchedVideo.HLS;
+                console.log("successful match: ", videoUrl);
+            } else {
+                videoUrl = await Storage.get(video.url, { level: "public" }); // Fallback to original URL
+                console.log("no match");
+                const targetEntry = videoURLsList.find(
+                    (item) => item.id === "8989d768-4fba-4a30-a724-7fcd166d1464"
+                );
+                console.log(videoURLsList);
+            }
+
             const imageUrl = await Storage.get(video.poster, {
                 level: "public",
             });

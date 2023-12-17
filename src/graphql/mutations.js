@@ -1,6 +1,72 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createVideoURLs = /* GraphQL */ `
+  mutation CreateVideoURLs(
+    $input: CreateVideoURLsInput!
+    $condition: ModelVideoURLsConditionInput
+  ) {
+    createVideoURLs(input: $input, condition: $condition) {
+      id
+      guid
+      srcvideo
+      MP4
+      CMAF
+      HLS
+      DASH
+      MSS
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateVideoURLs = /* GraphQL */ `
+  mutation UpdateVideoURLs(
+    $input: UpdateVideoURLsInput!
+    $condition: ModelVideoURLsConditionInput
+  ) {
+    updateVideoURLs(input: $input, condition: $condition) {
+      id
+      guid
+      srcvideo
+      MP4
+      CMAF
+      HLS
+      DASH
+      MSS
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteVideoURLs = /* GraphQL */ `
+  mutation DeleteVideoURLs(
+    $input: DeleteVideoURLsInput!
+    $condition: ModelVideoURLsConditionInput
+  ) {
+    deleteVideoURLs(input: $input, condition: $condition) {
+      id
+      guid
+      srcvideo
+      MP4
+      CMAF
+      HLS
+      DASH
+      MSS
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const createVideo = /* GraphQL */ `
   mutation CreateVideo(
     $input: CreateVideoInput!

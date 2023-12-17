@@ -5,6 +5,8 @@
  **************************************************************************/
 
 export { default as studioTheme } from "./studioTheme";
+export { default as VideoURLsCreateForm } from "./VideoURLsCreateForm";
+export { default as VideoURLsUpdateForm } from "./VideoURLsUpdateForm";
 export { default as VideoCreateForm } from "./VideoCreateForm";
 export { default as VideoUpdateForm } from "./VideoUpdateForm";
 export { default as CategoryCreateForm } from "./CategoryCreateForm";

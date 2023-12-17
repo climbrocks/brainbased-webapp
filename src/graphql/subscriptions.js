@@ -1,6 +1,69 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateVideoURLs = /* GraphQL */ `
+  subscription OnCreateVideoURLs(
+    $filter: ModelSubscriptionVideoURLsFilterInput
+  ) {
+    onCreateVideoURLs(filter: $filter) {
+      id
+      guid
+      srcvideo
+      MP4
+      CMAF
+      HLS
+      DASH
+      MSS
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateVideoURLs = /* GraphQL */ `
+  subscription OnUpdateVideoURLs(
+    $filter: ModelSubscriptionVideoURLsFilterInput
+  ) {
+    onUpdateVideoURLs(filter: $filter) {
+      id
+      guid
+      srcvideo
+      MP4
+      CMAF
+      HLS
+      DASH
+      MSS
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteVideoURLs = /* GraphQL */ `
+  subscription OnDeleteVideoURLs(
+    $filter: ModelSubscriptionVideoURLsFilterInput
+  ) {
+    onDeleteVideoURLs(filter: $filter) {
+      id
+      guid
+      srcvideo
+      MP4
+      CMAF
+      HLS
+      DASH
+      MSS
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const onCreateVideo = /* GraphQL */ `
   subscription OnCreateVideo($filter: ModelSubscriptionVideoFilterInput) {
     onCreateVideo(filter: $filter) {

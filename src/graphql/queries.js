@@ -1,6 +1,85 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getVideoURLs = /* GraphQL */ `
+  query GetVideoURLs($id: ID!) {
+    getVideoURLs(id: $id) {
+      id
+      guid
+      srcvideo
+      MP4
+      CMAF
+      HLS
+      DASH
+      MSS
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listVideoURLs = /* GraphQL */ `
+  query ListVideoURLs(
+    $filter: ModelVideoURLsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listVideoURLs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        guid
+        srcvideo
+        MP4
+        CMAF
+        HLS
+        DASH
+        MSS
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncVideoURLs = /* GraphQL */ `
+  query SyncVideoURLs(
+    $filter: ModelVideoURLsFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncVideoURLs(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        guid
+        srcvideo
+        MP4
+        CMAF
+        HLS
+        DASH
+        MSS
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getVideo = /* GraphQL */ `
   query GetVideo($id: ID!) {
     getVideo(id: $id) {
