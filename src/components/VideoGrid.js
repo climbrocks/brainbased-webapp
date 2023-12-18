@@ -264,23 +264,17 @@ const VideoGrid = ({
                 return;
             }
 
-            const videoUrl = await Storage.get(video.url, { level: "public" });
+            //const videoUrl = await Storage.get(video.url, { level: "public" });
             //console.log("current format:", videoURLsData);
-            const videoURLsList = videoURLsData;
+            /*const videoURLsList = videoURLsData;
 
-            /*let videoUrl = "";
+            let videoUrl = "";
             const urlParts = video.url.split("/");
             const filenamePart = urlParts[urlParts.length - 1]; // Extracts the last part of the URL
 
             const matchedVideo = videoURLsList.find((item) => {
                 const itemUrlParts = item.MP4.split("/");
                 const itemFilenamePart = itemUrlParts[itemUrlParts.length - 1]; // Extracts the filename part of the item URL
-                console.log(
-                    "Comparing:",
-                    itemFilenamePart,
-                    "with",
-                    filenamePart
-                );
                 return itemFilenamePart === filenamePart; // Compares the filename parts
             });
 
@@ -290,13 +284,44 @@ const VideoGrid = ({
                 //console.log("successful match: ", videoUrl);
             } else {
                 videoUrl = await Storage.get(video.url, { level: "public" }); // Fallback to original URL
-                console.log("no match");
-                const targetEntry = videoURLsList.find(
-                    (item) => item.id === "8989d768-4fba-4a30-a724-7fcd166d1464"
-                );
-                console.log(videoURLsList);
+                
             }
             */
+
+            const videoURLsList = videoURLsData;
+            let videoUrl = "";
+            const urlParts = video.url.split("/");
+            const filenamePart = urlParts[urlParts.length - 1]; // Extracts the last part of the URL
+
+            // Check if the filenamePart matches the specific filename
+            if (
+                filenamePart ===
+                "GMT20230226-153042_Recording_640x360_Mp4_Avc_Aac_16x9_1280x720p_24Hz_4.5Mbps_qvbr.mp4"
+            ) {
+                const matchedVideo = videoURLsList.find((item) => {
+                    const itemUrlParts = item.MP4.split("/");
+                    const itemFilenamePart =
+                        itemUrlParts[itemUrlParts.length - 1]; // Extracts the filename part of the item URL
+                    return itemFilenamePart === filenamePart; // Compares the filename parts
+                });
+
+                // If a match is found, set videoUrl to the .HLS value
+                if (matchedVideo) {
+                    videoUrl = matchedVideo.HLS;
+                    //console.log("successful match: ", videoUrl);
+                } else {
+                    videoUrl = await Storage.get(video.url, {
+                        level: "public",
+                    }); // Fallback to original URL
+                }
+            } else {
+                // Handle the case where the filenamePart does not match the specific filename
+                // For example, set videoUrl to a default value or handle the error
+                videoUrl = await Storage.get(video.url, {
+                    level: "public",
+                }); // Modify as needed
+            }
+
             const imageUrl = await Storage.get(video.poster, {
                 level: "public",
             });
