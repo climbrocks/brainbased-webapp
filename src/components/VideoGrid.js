@@ -307,7 +307,7 @@ const VideoGrid = ({
 
                 // If a match is found, set videoUrl to the .HLS value
                 if (matchedVideo) {
-                    videoUrl = matchedVideo.MP4;
+                    videoUrl = matchedVideo.HLS;
                     //console.log("successful match: ", videoUrl);
                 } else {
                     videoUrl = await Storage.get(video.url, {
