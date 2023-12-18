@@ -306,8 +306,9 @@ const VideoGrid = ({
                 });
 
                 // If a match is found, set videoUrl to the .HLS value
+                //testing with CMAF
                 if (matchedVideo) {
-                    videoUrl = matchedVideo.HLS;
+                    videoUrl = matchedVideo.CMAF;
                     //console.log("successful match: ", videoUrl);
                 } else {
                     videoUrl = await Storage.get(video.url, {
