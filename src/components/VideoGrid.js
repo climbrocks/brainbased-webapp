@@ -293,34 +293,18 @@ const VideoGrid = ({
             const urlParts = video.url.split("/");
             const filenamePart = urlParts[urlParts.length - 1]; // Extracts the last part of the URL
 
-            // Check if the filenamePart matches the specific filename
-            if (
-                filenamePart ===
-                "GMT20230226-153042_Recording_640x360_Mp4_Avc_Aac_16x9_1280x720p_24Hz_4.5Mbps_qvbr.mp4"
-            ) {
-                const matchedVideo = videoURLsList.find((item) => {
-                    const itemUrlParts = item.MP4.split("/");
-                    const itemFilenamePart =
-                        itemUrlParts[itemUrlParts.length - 1]; // Extracts the filename part of the item URL
-                    return itemFilenamePart === filenamePart; // Compares the filename parts
-                });
+            const matchedVideo = videoURLsList.find((item) => {
+                const itemUrlParts = item.MP4.split("/");
+                const itemFilenamePart = itemUrlParts[itemUrlParts.length - 1]; // Extracts the filename part of the item URL
+                return itemFilenamePart === filenamePart; // Compares the filename parts
+            });
 
-                // If a match is found, set videoUrl to the .HLS value
-                //testing with CMAF
-                if (matchedVideo) {
-                    videoUrl = matchedVideo.HLS;
-                    //console.log("successful match: ", videoUrl);
-                } else {
-                    videoUrl = await Storage.get(video.url, {
-                        level: "public",
-                    }); // Fallback to original URL
-                }
+            // If a match is found, set videoUrl to the .CMAF value
+            if (matchedVideo) {
+                videoUrl = matchedVideo.HLS;
+                //console.log("successful match: ", videoUrl);
             } else {
-                // Handle the case where the filenamePart does not match the specific filename
-                // For example, set videoUrl to a default value or handle the error
-                videoUrl = await Storage.get(video.url, {
-                    level: "public",
-                }); // Modify as needed
+                videoUrl = await Storage.get(video.url, { level: "public" }); // Fallback to original URL
             }
 
             const imageUrl = await Storage.get(video.poster, {
