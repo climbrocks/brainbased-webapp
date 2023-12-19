@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Storage, API, graphqlOperation, Auth } from "aws-amplify";
 import { useParams } from "react-router-dom";
-
+import Lottie from "lottie-react";
+import brainAnimation from "../images/brain-lottie.json";
 import { getTeacher, listCategories, listVideoURLs } from "../graphql/queries";
 
 import "./VideoGrid.scss";
@@ -29,6 +30,9 @@ const VideoGrid = ({
     const [showAccessDeniedModal, setShowAccessDeniedModal] = useState(false);
     const [noMatchingVideos, setNoMatchingVideos] = useState(false);
     const [videoURLsData, setVideoURLsData] = useState(false);
+    const [isLoadingVideos, setIsLoadingVideos] = useState(true);
+    const [isLoadingVideoURLs, setIsLoadingVideoURLs] = useState(true);
+    const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
     const getVideoDurationInMinutes = (duration) => {
         return parseInt(duration, 10);
@@ -66,6 +70,7 @@ const VideoGrid = ({
 
         fetchAllVideoURLs().then((fullList) => {
             setVideoURLsData(fullList); // Set the full list of items
+            setIsLoadingVideoURLs(false);
             //console.log("Full list of items:", fullList); // Log the full list
         });
     }, []);
@@ -96,11 +101,16 @@ const VideoGrid = ({
                         const instructorImage = await fetchInstructorImage(
                             instructor.image
                         );
+                        const category = categories.find(
+                            (c) => c.id === video.categoryVideosId
+                        );
+                        const categoryName = category ? category.name : "";
                         const videoWithImageUrl = {
                             ...video,
                             imageUrl,
                             instructor,
                             instructorImage,
+                            category: categoryName,
                         };
                         return videoWithImageUrl;
                     } catch (error) {
@@ -212,12 +222,15 @@ const VideoGrid = ({
             setNoMatchingVideos(filteredVideosByFilters.length === 0);
         };
 
-        fetchVideoData();
+        fetchVideoData().then(() => {
+            setInitialLoadComplete(true);
+        });
     }, [videos, filters, selectedTags]);
 
     const fetchInstructorImage = async (image) => {
         try {
             const imageUrl = await Storage.get(image, { level: "public" });
+            setIsLoadingVideos(false);
             return imageUrl;
         } catch (error) {
             console.log("Error fetching instructor image:", error);
@@ -366,70 +379,107 @@ const VideoGrid = ({
                         onClose={() => setShowAccessDeniedModal(false)}
                     />
                 )}
-
-                {noMatchingVideos && (
-                    <div className="no-matching-videos-message">
-                        There are no videos matching the filters you've
-                        selected. Please refine your filters.
-                    </div>
-                )}
-
-                {filteredVideos.length > 0 && (
-                    <div className="video-grid">
-                        {filteredVideos.map((video, index) => (
-                            <Thumbnail
-                                key={index}
-                                video={video}
-                                title={video.title}
-                                date={video.date}
-                                duration={video.duration}
-                                image={video.imageUrl}
-                                instructor={
-                                    video.instructor
-                                        ? video.instructor.name
-                                        : ""
-                                }
-                                instructorImage={video.instructorImage}
-                                favorites={favorites}
-                                toggleFavorites={toggleFavorites}
-                                isFavorite={favorites.includes(video.id)}
-                                onFavoriteToggle={handleFavoriteClick}
-                                onClick={() => handleVideoSelect(video)}
-                            />
-                        ))}
-                    </div>
-                )}
-
-                {selectedVideo && (
-                    <div
-                        className={`video-player-fullscreen ${
-                            isPlayerVisible ? "visible" : ""
-                        }`}
-                    >
-                        <VideoPlayerData
-                            video={selectedVideo}
-                            instructor={
-                                selectedVideo.instructor
-                                    ? selectedVideo.instructor.name
-                                    : ""
-                            }
-                            isFavorite={favorites.includes(selectedVideo.id)}
-                            favorites={favorites}
-                            onFavoriteToggle={handleFavoriteClick}
+                {(isLoadingVideos || isLoadingVideoURLs) && (
+                    <div className="loading-videos">
+                        Loading videos...
+                        <Lottie
+                            animationData={brainAnimation}
+                            style={{
+                                width: 200,
+                                height: 200,
+                            }}
                         />
-                        <VideoPlayer
-                            videoUrl={selectedVideo.url}
-                            poster={selectedVideo.imageUrl}
-                            captions={selectedVideo.captions}
-                        />
-                        <button
-                            className="close-button"
-                            onClick={closeVideoPlayer}
-                        >
-                            X
-                        </button>
-                    </div>
+                    </div> // This is the placeholder/loader
                 )}
+                {!isLoadingVideos &&
+                    !isLoadingVideoURLs &&
+                    initialLoadComplete && (
+                        <>
+                            {noMatchingVideos &&
+                                filteredVideos.length === 0 && (
+                                    <div className="no-matching-videos-message">
+                                        Sorry! There are no videos with this
+                                        specific combination of tags. <br></br>
+                                        To get videos to populate, remove a few
+                                        of the tags. We love to create
+                                        programming around your needs! If you
+                                        would like a class to focus on this
+                                        specific group of topics, please email
+                                        support@brainbased-wellness.com and let
+                                        us know what you want a class on. We
+                                        will create it for you soon!
+                                    </div>
+                                )}
+
+                            {filteredVideos.length > 0 && (
+                                <div className="video-grid">
+                                    {filteredVideos.map((video, index) => (
+                                        <Thumbnail
+                                            key={index}
+                                            video={video}
+                                            title={video.title}
+                                            category={video.category}
+                                            date={video.date}
+                                            duration={video.duration}
+                                            image={video.imageUrl}
+                                            instructor={
+                                                video.instructor
+                                                    ? video.instructor.name
+                                                    : ""
+                                            }
+                                            instructorImage={
+                                                video.instructorImage
+                                            }
+                                            favorites={favorites}
+                                            toggleFavorites={toggleFavorites}
+                                            isFavorite={favorites.includes(
+                                                video.id
+                                            )}
+                                            onFavoriteToggle={
+                                                handleFavoriteClick
+                                            }
+                                            onClick={() =>
+                                                handleVideoSelect(video)
+                                            }
+                                        />
+                                    ))}
+                                </div>
+                            )}
+
+                            {selectedVideo && (
+                                <div
+                                    className={`video-player-fullscreen ${
+                                        isPlayerVisible ? "visible" : ""
+                                    }`}
+                                >
+                                    <VideoPlayerData
+                                        video={selectedVideo}
+                                        instructor={
+                                            selectedVideo.instructor
+                                                ? selectedVideo.instructor.name
+                                                : ""
+                                        }
+                                        isFavorite={favorites.includes(
+                                            selectedVideo.id
+                                        )}
+                                        favorites={favorites}
+                                        onFavoriteToggle={handleFavoriteClick}
+                                    />
+                                    <VideoPlayer
+                                        videoUrl={selectedVideo.url}
+                                        poster={selectedVideo.imageUrl}
+                                        captions={selectedVideo.captions}
+                                    />
+                                    <button
+                                        className="close-button"
+                                        onClick={closeVideoPlayer}
+                                    >
+                                        X
+                                    </button>
+                                </div>
+                            )}
+                        </>
+                    )}
             </div>
         </>
     );

@@ -8,6 +8,7 @@ import useFavorites from "../FavoritesUtils";
 const Thumbnail = ({
     video,
     title,
+    category,
     instructor,
     date,
     duration,
@@ -51,6 +52,8 @@ const Thumbnail = ({
             <div className="thumbnail-content">
                 <h3 className="date-and-duration">
                     {formatDate(date)} | {duration} min
+                    <br></br>
+                    {category}
                 </h3>
                 <button
                     className="thumbnail-favorite-button"
