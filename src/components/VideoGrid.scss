@@ -103,6 +103,21 @@
     text-align: center;
     border: 3px solid #f9f6f2;
 }
+.loading-videos {
+    //background-color: #f9f6f2;
+    background-color: transparent;
+    border-radius: 8px;
+    padding: 10px;
+    grid-area: 1 / 2 / 2 / 3;
+    //box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    //border: 3px solid #f9f6f2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: larger;
+}
 /*
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
     .video-grid {
