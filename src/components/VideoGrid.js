@@ -345,6 +345,8 @@ const VideoGrid = ({
 
             setSelectedVideo(selectedVideoWithUrls);
             setPlayerVisible(true);
+            const playUrl = `${window.location.origin}/play/${video.id}`;
+            window.history.pushState({}, "", playUrl);
         } catch (error) {
             console.log("Error fetching video or image:", error);
         }
@@ -365,6 +367,8 @@ const VideoGrid = ({
         setTimeout(() => {
             setSelectedVideo(null);
         }, 300);
+        const newUrl = window.location.origin;
+        window.history.pushState({}, document.title, newUrl);
     };
 
     const handleFavoriteClick = (videoId, isFavorite) => {
