@@ -50,7 +50,7 @@ const Home = ({ isOpen, handleToggle }) => {
         } else {
             setPlayId(videoId);
             const newUrl = window.location.origin;
-            window.history.pushState({}, document.title, newUrl);
+            //window.history.pushState({}, document.title, newUrl);
         }
     }, []);
 
