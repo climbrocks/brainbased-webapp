@@ -39,6 +39,17 @@ const VideoGrid = ({
     };
 
     useEffect(() => {
+        if (!isLoadingVideos && videoId) {
+            const foundVideo = videos.find((video) => video.id === videoId);
+            //console.log("orig: ", videoId);
+            //console.log("found: ", foundVideo);
+            if (foundVideo) {
+                handleVideoSelect(foundVideo);
+            }
+        }
+    }, [videos, videoId, isLoadingVideos]);
+
+    useEffect(() => {
         const fetchAllVideoURLs = async (
             nextToken = null,
             accumulatedItems = []
@@ -73,7 +84,7 @@ const VideoGrid = ({
             setIsLoadingVideoURLs(false);
             //console.log("Full list of items:", fullList); // Log the full list
         });
-    }, []);
+    }, [videoId]);
 
     useEffect(() => {
         const fetchVideoData = async () => {

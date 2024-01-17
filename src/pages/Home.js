@@ -41,6 +41,7 @@ const Home = ({ isOpen, handleToggle }) => {
     const [instructors, setInstructors] = useState([]);
 
     const [filteredVideos, setFilteredVideos] = useState([]);
+    const [isLoadingVideos, setIsLoadingVideos] = useState(true);
 
     useEffect(() => {
         if (storedTempUUID) {
@@ -49,7 +50,7 @@ const Home = ({ isOpen, handleToggle }) => {
             localStorage.removeItem("tempUUID");
         } else {
             setPlayId(videoId);
-            const newUrl = window.location.origin;
+            //const newUrl = window.location.origin;
             //window.history.pushState({}, document.title, newUrl);
         }
     }, []);
@@ -73,6 +74,7 @@ const Home = ({ isOpen, handleToggle }) => {
                 );
                 const videosData = videosResponse.data.listVideos.items;
                 setVideos(videosData);
+                setIsLoadingVideos(false);
                 //console.log(videosData);
             } catch (error) {
                 console.log("Error fetching videos:", error);
@@ -255,6 +257,7 @@ const Home = ({ isOpen, handleToggle }) => {
                 >
                     <VideoGrid
                         videos={videos}
+                        isLoadingVideos={isLoadingVideos}
                         filters={selectedFilters}
                         //initialFavorites={favorites}
                         favorites={favorites}
