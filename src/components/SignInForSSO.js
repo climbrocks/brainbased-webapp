@@ -138,7 +138,9 @@ const SignInForSSO = ({ federatedSignIn }) => {
                     //localStorage.removeItem("redirectToAfterLogin");
                     localStorage.setItem("isNewLogin", "true");
                     localStorage.setItem("isTokenVerified", "false");
-                    if (redirectToAfterLogin) {
+                    if (isTokenVerified) {
+                        redirectUrl = "/";
+                    } else if (redirectToAfterLogin) {
                         redirectUrl = redirectToAfterLogin;
                         localStorage.removeItem("redirectToAfterLogin");
                     } else {
