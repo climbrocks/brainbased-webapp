@@ -26,7 +26,7 @@ import {
 import { Auth } from "aws-amplify";
 import { faRev } from "@fortawesome/free-brands-svg-icons";
 
-const Navigation = ({ isOpen, handleToggle }) => {
+const Navigation = ({ isOpen, handleToggle, onSignOut }) => {
     const [isAccountDropdownOpen, setAccountDropdownOpen] = useState(false);
     const [isMainMenuOpen, setMainMenuOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -38,6 +38,14 @@ const Navigation = ({ isOpen, handleToggle }) => {
         const newOpenState = !isFilterSidebarOpen;
         setIsFilterSidebarOpen(newOpenState);
         handleToggle(newOpenState);
+    };
+    const handleSignOut = async () => {
+        try {
+            await Auth.signOut();
+            onSignOut(); // Call the callback passed from App.js
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     useEffect(() => {
@@ -105,15 +113,30 @@ const Navigation = ({ isOpen, handleToggle }) => {
         return "auto";
     };
 
-    const handleSignOut = () => {
-        Auth.signOut()
-            //.then(() => setIsSignedIn(false))
-            .catch((err) => console.log(err));
-    };
-
     const redirectHome = () => {
-        window.location.href =
-            "https://brainbased-prod-ssotest.auth.us-east-1.amazoncognito.com/oauth2/authorize?client_id=3flqa7mpf4l5g969mbq34vuph0&response_type=token&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fbrainbased-wellness.com%2Fcognito-intermediate%2F";
+        //window.location.href =
+        //  "https://brainbased-prod-ssotest.auth.us-east-1.amazoncognito.com/oauth2/authorize?client_id=3flqa7mpf4l5g969mbq34vuph0&response_type=token&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fbrainbased-wellness.com%2Fcognito-intermediate%2F";
+
+        let idToken = null;
+        for (var i = 0; i < localStorage.length; i++) {
+            var key = localStorage.key(i);
+            if (/CognitoIdentityServiceProvider\..*\.idToken/.test(key)) {
+                idToken = localStorage.getItem(key);
+                console.log(idToken);
+                break; // Assuming you need only one token, break the loop once found
+            }
+        }
+        if (idToken) {
+            // Construct the URL with the idToken
+            const redirectUrl = `https://brainbased-wellness.com/cognito-intermediate/#id_token=${encodeURIComponent(
+                idToken
+            )}`;
+            window.location.href = redirectUrl;
+        } else {
+            // Handle the case where the idToken is not found
+            console.error("idToken not found in localStorage");
+            // Optional: Redirect to a fallback URL or show an error message
+        }
     };
 
     return (

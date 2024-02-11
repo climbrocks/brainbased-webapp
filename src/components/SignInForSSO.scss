@@ -21,9 +21,21 @@
     img {
         padding-bottom: 45px;
     }
-
-    button {
+    form {
         width: 100%;
+        display: flex;
+        flex-flow: column nowrap; /* Ensures vertical layout for form elements */
+        align-items: center; /* Centers form elements horizontally */
+    }
+
+    input {
+        width: 100%; /* Ensures inputs take full width of the form */
+        margin-bottom: 10px; /* Adds space between inputs */
+        /* Additional styling here */
+    }
+    button {
+        margin-top: 10px;
+        //width: 100%;
         padding: 15px 25px;
         color: variables.$text-light;
         background-color: variables.$main-red;
@@ -36,4 +48,16 @@
     button:hover {
         opacity: 0.9;
     }
+}
+
+.forgot-links {
+    text-align: center;
+}
+
+.small-link {
+    color: blue !important;
+    background-color: transparent !important;
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+    text-align: center;
 }

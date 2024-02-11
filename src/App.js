@@ -4,6 +4,7 @@ import {
     Routes,
     Route,
     Outlet,
+    Navigate,
     //useNavigate,
 } from "react-router-dom";
 import "./App.scss";
@@ -15,6 +16,7 @@ import MainNavigation from "./components/MainNavigation.js";
 import AuthStatus from "./components/AuthStatus";
 import SignInForSSO from "./components/SignInForSSO";
 import Footer from "./components/Footer";
+import axios from "axios";
 //import { NavigationProvider, useNavigation } from "./NavigationContext";
 
 // Routing
@@ -26,7 +28,7 @@ import { Button } from "@aws-amplify/ui-react";
 import NotFound from "./components/NotFound";
 
 Amplify.configure(awsconfig);
-
+/*
 const withSSOAuthenticator = (WrappedComponent) => {
     return (props) => {
         const [signedIn, setSignedIn] = useState(false);
@@ -45,10 +47,26 @@ const withSSOAuthenticator = (WrappedComponent) => {
                 }
             });
             Auth.currentAuthenticatedUser()
+                .then(() => {
+                    setSignedIn(true);
+                    // Check if it's a new login
+                    if (localStorage.getItem("isNewLogin") === "true") {
+                        // Redirect to the desired URL
+                        console.log("flag was set");
+                        //window.location.href = 'http://your-redirect-url.com';
+                        // Clear the flag
+                        //localStorage.removeItem('isNewLogin');
+                    }
+                })
+                .catch(() => setSignedIn(false));
+        }, []);
+        /*
+            Auth.currentAuthenticatedUser()
                 .then(() => setSignedIn(true))
                 .catch(() => setSignedIn(false));
         }, []);
-
+*/
+/*
         const handleFederatedSignIn = () => {
             Auth.federatedSignIn();
         };
@@ -58,11 +76,35 @@ const withSSOAuthenticator = (WrappedComponent) => {
         } else {
             return (
                 <>
-                    {/* Pass the videoId parameter down to the SignInForSSO component */}
+                    {/* Pass the videoId parameter down to the SignInForSSO component }
                     <SignInForSSO federatedSignIn={handleFederatedSignIn} />
                 </>
             );
         }
+    };
+};
+*/
+
+const withSSOAuthenticator = (WrappedComponent) => {
+    return (props) => {
+        const [signedIn, setSignedIn] = useState(false);
+
+        useEffect(() => {
+            Auth.currentAuthenticatedUser()
+                .then(() => {
+                    setSignedIn(true);
+                    if (localStorage.getItem("isNewLogin") === "true") {
+                        localStorage.removeItem("isNewLogin");
+                    }
+                })
+                .catch(() => setSignedIn(false));
+        }, []);
+
+        if (!signedIn) {
+            return <SignInForSSO federatedSignIn={Auth.federatedSignIn} />;
+        }
+
+        return <WrappedComponent {...props} />;
     };
 };
 
@@ -73,15 +115,19 @@ const App = () => {
     }, []);
 
     const [isSignedIn, setIsSignedIn] = useState(false);
+    const [redirectToHome, setRedirectToHome] = useState(false);
+    //const navigate = useNavigate();
     const [tempUUID, setTempUUID] = useState(null);
     //const navigate = useNavigate();
-
-    useEffect(() => {
-        // Check if the user is signed in
-        Auth.currentAuthenticatedUser()
-            .then(() => setIsSignedIn(true))
-            .catch(() => setIsSignedIn(false));
-    }, [isSignedIn]);
+    const handleSignOut = async () => {
+        try {
+            await Auth.signOut();
+            setIsSignedIn(false);
+            window.location.reload();
+        } catch (err) {
+            console.error("Error signing out: ", err);
+        }
+    };
 
     const [isOpen, setIsOpen] = useState(true);
 
@@ -116,7 +162,11 @@ const App = () => {
 
     return (
         <Router>
-            <MainNavigation isOpen={isOpen} handleToggle={handleToggle} />
+            <MainNavigation
+                onSignOut={handleSignOut}
+                isOpen={isOpen}
+                handleToggle={handleToggle}
+            />
 
             <Routes>
                 <Route path="/" element={<Outlet />}>
