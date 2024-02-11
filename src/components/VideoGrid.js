@@ -39,6 +39,17 @@ const VideoGrid = ({
     };
 
     useEffect(() => {
+        if (!isLoadingVideos && videoId) {
+            const foundVideo = videos.find((video) => video.id === videoId);
+            //console.log("orig: ", videoId);
+            //console.log("found: ", foundVideo);
+            if (foundVideo) {
+                handleVideoSelect(foundVideo);
+            }
+        }
+    }, [videos, videoId, isLoadingVideos]);
+
+    useEffect(() => {
         const fetchAllVideoURLs = async (
             nextToken = null,
             accumulatedItems = []
@@ -73,7 +84,7 @@ const VideoGrid = ({
             setIsLoadingVideoURLs(false);
             //console.log("Full list of items:", fullList); // Log the full list
         });
-    }, []);
+    }, [videoId]);
 
     useEffect(() => {
         const fetchVideoData = async () => {
@@ -345,6 +356,8 @@ const VideoGrid = ({
 
             setSelectedVideo(selectedVideoWithUrls);
             setPlayerVisible(true);
+            const playUrl = `${window.location.origin}/play/${video.id}`;
+            window.history.pushState({}, "", playUrl);
         } catch (error) {
             console.log("Error fetching video or image:", error);
         }
@@ -365,6 +378,8 @@ const VideoGrid = ({
         setTimeout(() => {
             setSelectedVideo(null);
         }, 300);
+        const newUrl = window.location.origin;
+        window.history.pushState({}, document.title, newUrl);
     };
 
     const handleFavoriteClick = (videoId, isFavorite) => {
