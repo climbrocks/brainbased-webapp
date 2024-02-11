@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./SignInForSSO.scss";
-import logo from "../images/logo-large.png";
+import logo from "../images/logo.png";
 
 const ForgotUsername = ({ onUsernameRetrieval, onBack }) => {
     const [email, setEmail] = useState("");

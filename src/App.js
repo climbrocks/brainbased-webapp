@@ -16,6 +16,7 @@ import MainNavigation from "./components/MainNavigation.js";
 import AuthStatus from "./components/AuthStatus";
 import SignInForSSO from "./components/SignInForSSO";
 import Footer from "./components/Footer";
+import axios from "axios";
 //import { NavigationProvider, useNavigation } from "./NavigationContext";
 
 // Routing
@@ -107,6 +108,9 @@ const withSSOAuthenticator = (WrappedComponent) => {
     };
 };
 
+const VERIFY_TOKEN_ENDPOINT =
+    "https://staging.brainbased-wellness.com/cognito-sso/v1/verify-token";
+
 const App = () => {
     /* Change app title */
     useEffect(() => {
@@ -128,7 +132,45 @@ const App = () => {
         }
     };
 
+    // Function to handle token authentication
+    const authenticateWithToken = async () => {
+        const searchParams = new URLSearchParams(window.location.search);
+        const token = searchParams.get("token");
+        console.log("Token from URL:", token);
+
+        if (token) {
+            try {
+                // Send the token to your backend for verification
+                console.log("Sending token for verification:", token);
+                const response = await axios.post(VERIFY_TOKEN_ENDPOINT, {
+                    token,
+                });
+                console.log("Verification response:", response.data);
+
+                if (response.data.isValid) {
+                    // If the token is valid, set the user as signed in
+                    setIsSignedIn(true);
+                    // Optionally, you can store user info in the state or context
+                    // setUser(response.data.user);
+
+                    // Clear the token from the URL to prevent token reuse
+                    window.history.replaceState(
+                        null,
+                        null,
+                        window.location.pathname
+                    );
+                } else {
+                    console.log("Token is invalid or verification failed.");
+                }
+            } catch (error) {
+                console.error("Error verifying token:", error);
+            }
+        }
+    };
+
     useEffect(() => {
+        console.log("trying token");
+        authenticateWithToken(); // Attempt to authenticate with a token first
         // Check if the user is signed in
         Auth.currentAuthenticatedUser()
             .then(() => setIsSignedIn(true))

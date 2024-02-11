@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
-import logo from "../images/logo-large.png";
+import logo from "../images/logo.png";
 import ForgotUsername from "./ForgotUsername";
 import ForgotPassword from "./ForgotPassword";
 import "./SignInForSSO.scss";
+import axios from "axios";
+
+const VERIFY_TOKEN_ENDPOINT =
+    "https://staging.brainbased-wellness.com/wp-json/cognito-sso/v1/verify-token";
 
 const SignInForSSO = ({ federatedSignIn }) => {
     const [loading, setLoading] = useState(false);
@@ -13,6 +17,62 @@ const SignInForSSO = ({ federatedSignIn }) => {
     const [showSignIn, setShowSignIn] = useState(true); // New state for toggling forms
     const [showForgotUsername, setShowForgotUsername] = useState(false);
     const [showForgotPassword, setShowForgotPassword] = useState(false);
+    const [user, setUser] = useState(null); // State to hold user data if already logged in
+
+    const verifyTokenAndAuthenticateUser = async () => {
+        const searchParams = new URLSearchParams(window.location.search);
+        const token = searchParams.get("token");
+
+        // First, check if the user is already authenticated
+        try {
+            const currentUser = await Auth.currentAuthenticatedUser();
+            setUser(currentUser); // Update state with current user
+            setLoading(false); // Since user is already authenticated, stop loading
+            // No need to verify token since user is already authenticated
+            console.log("User already authenticated:", currentUser);
+            const clearURLParams = () => {
+                if (searchParams.has("token")) {
+                    window.history.replaceState(
+                        null,
+                        null,
+                        window.location.origin
+                    );
+                }
+            };
+            clearURLParams();
+            return; // Exit the function early
+        } catch (error) {
+            console.log(
+                "No authenticated user found, proceeding with token verification"
+            );
+        }
+        if (token) {
+            setLoading(true);
+            try {
+                const response = await axios.post(VERIFY_TOKEN_ENDPOINT, {
+                    token,
+                });
+
+                if (response.data.isValid) {
+                    console.log("Token verified successfully:", response.data);
+                    localStorage.setItem("isTokenVerified", "true");
+                } else {
+                    // Token invalid, show error or fallback to regular sign-in
+                    setError("Session expired. Please sign in again.");
+                }
+            } catch (error) {
+                console.error("Error during token verification:", error);
+                setError("An error occurred during authentication.");
+            } finally {
+                setLoading(false);
+            }
+        }
+    };
+
+    useEffect(() => {
+        // Trigger the token verification when component mounts
+        verifyTokenAndAuthenticateUser();
+    }, []);
 
     const handleToggleForms = (formToShow) => {
         setShowSignIn(formToShow === "signIn");
@@ -60,11 +120,18 @@ const SignInForSSO = ({ federatedSignIn }) => {
             await Auth.signIn(username, password)
                 .then(() => Auth.currentSession())
                 .then((session) => {
+                    const isTokenVerified =
+                        localStorage.getItem("isTokenVerified") === "true";
+                    let redirectUrl = "";
                     localStorage.setItem("isNewLogin", "true");
-                    const idToken = session.getIdToken().getJwtToken();
-                    const redirectUrl = `https://brainbased-wellness.com/cognito-intermediate/#id_token=${encodeURIComponent(
-                        idToken
-                    )}`;
+                    if (isTokenVerified) {
+                        redirectUrl = "/";
+                    } else {
+                        const idToken = session.getIdToken().getJwtToken();
+                        redirectUrl = `https://brainbased-wellness.com/cognito-intermediate/#id_token=${encodeURIComponent(
+                            idToken
+                        )}`;
+                    }
                     window.location.href = redirectUrl;
                 });
         } catch (error) {

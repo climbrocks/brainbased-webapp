@@ -3,7 +3,7 @@ import { Auth } from "aws-amplify";
 import zxcvbn from "zxcvbn";
 import "./ForgotPassword.scss";
 import "./SignInForSSO.scss";
-import logo from "../images/logo-large.png";
+import logo from "../images/logo.png";
 
 const ForgotPassword = ({ onBack }) => {
     const [username, setUsername] = useState("");
