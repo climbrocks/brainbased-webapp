@@ -378,6 +378,7 @@ const VideoGrid = ({
         setTimeout(() => {
             setSelectedVideo(null);
         }, 300);
+        localStorage.removeItem("redirectToAfterLogin");
         const newUrl = window.location.origin;
         window.history.pushState({}, document.title, newUrl);
     };

@@ -22,6 +22,12 @@ const SignInForSSO = ({ federatedSignIn }) => {
     const verifyTokenAndAuthenticateUser = async () => {
         const searchParams = new URLSearchParams(window.location.search);
         const token = searchParams.get("token");
+        if (window.location.pathname.includes("play")) {
+            localStorage.setItem(
+                "redirectToAfterLogin",
+                window.location.pathname + window.location.search
+            );
+        }
 
         // First, check if the user is already authenticated
         try {
@@ -47,7 +53,9 @@ const SignInForSSO = ({ federatedSignIn }) => {
             );
         }
         if (token) {
-            setLoading(true);
+            //setLoading(true);
+            localStorage.setItem("isTokenVerified", "true");
+            /*
             try {
                 const response = await axios.post(VERIFY_TOKEN_ENDPOINT, {
                     token,
@@ -66,6 +74,7 @@ const SignInForSSO = ({ federatedSignIn }) => {
             } finally {
                 setLoading(false);
             }
+            */
         }
     };
 
@@ -122,16 +131,23 @@ const SignInForSSO = ({ federatedSignIn }) => {
                 .then((session) => {
                     const isTokenVerified =
                         localStorage.getItem("isTokenVerified") === "true";
-                    let redirectUrl = "";
+                    const redirectToAfterLogin = localStorage.getItem(
+                        "redirectToAfterLogin"
+                    );
+                    let redirectUrl = redirectToAfterLogin || "/";
+                    //localStorage.removeItem("redirectToAfterLogin");
                     localStorage.setItem("isNewLogin", "true");
-                    if (isTokenVerified) {
-                        redirectUrl = "/";
+                    localStorage.setItem("isTokenVerified", "false");
+                    if (redirectToAfterLogin) {
+                        redirectUrl = redirectToAfterLogin;
+                        localStorage.removeItem("redirectToAfterLogin");
                     } else {
                         const idToken = session.getIdToken().getJwtToken();
                         redirectUrl = `https://brainbased-wellness.com/cognito-intermediate/#id_token=${encodeURIComponent(
                             idToken
                         )}`;
                     }
+
                     window.location.href = redirectUrl;
                 });
         } catch (error) {
